@@ -1,0 +1,613 @@
+﻿@model NewPersonWeb.Models.Shop
+@{
+    Layout = "_Layout";
+}
+
+@section Styles{
+
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/extensions/nouislider.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/ui/prism.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/plugins/extensions/noui-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/pages/app-ecommerce-shop.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/scrollbar.css" />
+
+}
+
+@*<form id="myForm" asp-action="ProductList" asp-controller="Shop" method="post">
+    </form>*@
+
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            @*<p>Insert note Heare</p>*@
+        </div>
+        <div class="content-detached content-right">
+            <div class="content-body">
+                <!-- Ecommerce Content Section Starts -->
+                <section id="ecommerce-header">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="ecommerce-header-items">
+                                <div class="result-toggler">
+                                    <button class="navbar-toggler shop-sidebar-toggler" type="button" data-toggle="collapse">
+                                        <span class="navbar-toggler-icon d-block d-lg-none"><i class="feather icon-menu"></i></span>
+                                    </button>
+                                    <div class="search-results">
+                                        <span>در مجموع تعداد</span>
+                                        <span>@Model.paging.TotalCount</span>
+                                        <span>محصول جهت خرید موجود است</span>
+                                    </div>
+                                </div>
+                                <div class="view-options SortOrder">
+                                    <select class="price-options form-control" id="ecommerce-price-options">
+                                        <option value="0" selected>کد کالا</option>
+                                        <option value="1">نام کالا</option>
+                                        <option value="2">ارزان ترین</option>
+                                        <option value="3">گران ترین</option>
+                                        <option value="4">بیشترین مبلغ تخفیف</option>
+                                        <option value="5">بیشترین درصد تخفیف</option>
+                                    </select>
+                                    <div class="view-btn-option">
+                                        <button class="btn btn-white view-btn grid-view-btn active">
+                                            <i class="feather icon-grid"></i>
+                                        </button>
+                                        <button class="btn btn-white list-view-btn view-btn">
+                                            <i class="feather icon-list"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Ecommerce Content Section Starts -->
+                <!-- background Overlay when sidebar is shown  starts-->
+                <div class="shop-content-overlay"></div>
+                <!-- background Overlay when sidebar is shown  ends-->
+                <!-- Ecommerce Search Bar Starts -->
+                <section id="ecommerce-searchbar">
+                    <div class="row mt-1">
+                        <div class="col-sm-12">
+                            <fieldset class="form-group position-relative">
+                                <input id="TxtKeyword" onkeypress="return TxtSearchKeyPress(event)" type="text" asp-for="Filter.Keyword" class="form-control search-product" placeholder="جستجو:نام کالا،کدکالا،برند،وغیره">
+                                <input id="TxtOldKeyword" type="hidden" asp-for="Filter.Keyword">
+                                <div class="form-control-position">
+                                    <i class="feather icon-search"></i>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </section>
+                <!-- Ecommerce Search Bar Ends -->
+                <div id="salar">
+                    <!-- Ecommerce Products Starts -->
+                    <section id="ecommerce-products" class="grid-view">
+
+                        @foreach (var item in Model.Products)
+                        {
+                            string imgName = item.Code + ".jpg";
+                            long Percent = 100 - (item.Price * 100 / item.ConsumerPrices);
+                            string HaveTax;
+                            if (item.HaveTax)
+                            {
+                                HaveTax = "این محصول مشمول 9% ارزش افزوده  میباشد";
+                            }
+                            else
+                            {
+                                HaveTax = "قیمت نهایی";
+                            }
+                            <div class="card ecommerce-card">
+                                <div class="card-content">
+                                    <div class="item-img text-center">
+                                        <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@(item.ID)">
+                                            <img style="max-height:200px" class="img-fluid" src="~/app-assets/images/Products/@imgName" alt="تصویر موجود نمیباشد">
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="item-wrapper">
+                                            <div class="item-rating">
+                                                <div class="badge badge-primary badge-md">
+                                                    <span>@Percent </span> <i class="feather icon-percent"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h6 class="item-price text-danger">
+                                                    <del>@String.Format("{0:n0}", item.ConsumerPrices) ریال</del>
+                                                </h6>
+                                                <h6 class="item-price text-success">
+                                                    @String.Format("{0:n0}", item.Price) ریال
+                                                </h6>
+                                            </div>
+                                        </div>
+                                        <div class="item-name">
+                                            <a href="app-ecommerce-details.html"> @item.GroupName  @item.Name @item.BrandName @item.Weight </a>
+                                            <p class="item-company">نام تجاری: <span class="company-name">@item.BrandName</span></p>
+                                        </div>
+                                        <div>
+                                            <p class="item-description">
+                                                @item.Code
+                                                <br />
+                                                @HaveTax
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="item-options text-center">
+                                        <div class="item-wrapper">
+                                            <div class="item-rating">
+                                                <div class="badge badge-primary badge-md">
+                                                    <span>@Percent</span> <i class="feather icon-percent"></i>
+                                                </div>
+                                            </div>
+                                            <div class="item-cost">
+                                                <h6 class="item-price text-danger">
+                                                    <del>@String.Format("{0:n0}", item.ConsumerPrices) ریال</del>
+                                                </h6>
+                                                <h6 class="item-price text-success">
+                                                    @String.Format("{0:n0}", item.Price) ریال
+                                                </h6>
+                                            </div>
+                                        </div>
+                                        @{
+                                            if (item.IsFavorite)
+                                            {
+                                                <div class="wishlist added" id="@(item.ID)">
+                                                    <i class="fa fa-heart"></i> <span>علاقه مندی ها</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="wishlist" id="@(item.ID)">
+                                                    <i class="fa fa-heart-o"></i> <span>علاقه مندی ها</span>
+                                                </div>
+                                            }
+                                        }
+                                        <div class="cart" id="@(item.ID)">
+                                            <i class="feather icon-shopping-cart"></i>
+                                            @{
+                                                if (item.ExistInBasket)
+                                                {
+                                                    <span class="add-to-cart d-none">افزودن به سبد</span>
+                                                    <a href="app-ecommerce-checkout.html" class="view-in-cart d-none d-inline-block">نمایش در سبد</a>
+                                                }
+                                                else
+                                                {
+                                                    <span class="add-to-cart">افزودن به سبد</span>
+                                                    <a href="app-ecommerce-checkout.html" class="view-in-cart d-none">نمایش در سبد</a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </section>
+                    <!-- Ecommerce Products Ends -->
+                    <!-- Ecommerce Pagination Starts -->
+                    <section id="ecommerce-pagination">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center mt-2" id="Paging">
+                                        <li class="page-item prev-item disabled"><a class="page-link"></a></li>
+                                        @{
+                                            int ShowCount = 4;
+                                            int Curent = Model.paging.CurentPgae;
+                                            for (int i = 1; i <= Model.paging.TotalPageCount; i++)
+                                            {
+                                                if (i > (Curent - ShowCount) && i < (Curent + ShowCount))
+                                                {
+                                                    if (Curent == i)
+                                                    {
+                                                        <li class="page-item active disabled"><a class="page-link">@i</a></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="page-item"><a class="page-link">@i</a></li>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        <li class="page-item next-item"><a class="page-link"></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Ecommerce Pagination Ends -->
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-detached sidebar-left">
+            <div class="sidebar">
+                <!-- Ecommerce Sidebar Starts -->
+                <div class="sidebar-shop" id="ecommerce-sidebar-toggler">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h6 class="filter-heading d-none d-lg-block">فیلترها</h6>
+                        </div>
+                    </div>
+                    <span class="sidebar-close-icon d-block d-md-none">
+                        <i class="feather icon-x"></i>
+                    </span>
+
+                    <div class="mt-4 mt-md-0">
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" style="padding-bottom: 1.5rem;">
+                            <h6 class="filter-title">نام تجاری (برند)</h6>
+                            <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse" class=""><i class="feather icon-chevron-down"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content collapse show" style="">
+                            <div class="card-body">
+                                <!-- Brands -->
+                                <fieldset class="form-group position-relative">
+                                    <input type="text" class="form-control" id="txtSearchBrand" placeholder="جستجوی برند">
+                                    <div class="form-control-position">
+                                        <i class="feather icon-search"></i>
+                                    </div>
+                                </fieldset>
+
+                                <div class="d-flex justify-content-center">
+                                    <button id="BtnCheckAll"
+                                            type="button"
+                                            class="btn btn-icon rounded-circle btn-primary mr-1 mb-1 waves-effect waves-light"
+                                            data-toggle="tooltip"
+                                            data-placement="right"
+                                            title="" data-original-title="انتخاب همه">
+                                        <i class="feather icon-check-square"></i>
+                                    </button>
+                                    <button id="BtnUnCheckAll"
+                                            type="button"
+                                            class="btn btn-icon rounded-circle btn-outline-primary mr-1 mb-1 waves-effect waves-light"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            title="" data-original-title="عدم انتخاب">
+                                        <i class="feather icon-check-square"></i>
+                                    </button>
+                                </div>
+
+                                <div class="brands">
+                                    @*<div class="brand-list scrollbar style-11" id="brands">*@
+                                    <div class="brand-list" id="brands">
+                                        <ul class="list-unstyled">
+                                            @foreach (var item in Model.Filter.Brands)
+                                            {
+                                                <li class="d-flex justify-content-between align-items-center py-25">
+                                                    <span class="vs-checkbox-con vs-checkbox-primary">
+                                                        <input type="checkbox" name="ProductBr" asp-for="@item.Chk" id="@(item.ID)">
+                                                        <span class="vs-checkbox">
+                                                            <span class="vs-checkbox--check">
+                                                                <i class="vs-icon feather icon-check"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="BrName">@item.Name</span>
+                                                    </span>
+                                                    <span>@item.Qty</span>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <div id="clear-filters" class="mt-1">
+                                        <button type="button" id="BtnFilter" class="btn btn-block btn-primary">اعمال فیلتر</button>
+                                    </div>
+                                </div>
+                                <!-- /Brand -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" style="padding-bottom: 1.5rem;">
+                            <h6 class="filter-title">گروه کالایی</h6>
+                            <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse" class=""><i class="feather icon-chevron-down"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content collapse show" style="">
+                            <div class="card-body">
+                                <!-- Categories Starts -->
+                                <div id="product-categories">
+                                    <ul class="list-unstyled categories-list">
+                                        @foreach (var item in Model.Filter.Groups)
+                                        {
+                                            <li>
+                                                <span class="vs-radio-con vs-radio-primary py-25">
+                                                    <input checked="@(item.Chk)" type="radio" asp-for="@item" value="@item.ID" id="Grp@(item.ID)" name="ProductGrp">
+                                                    <span class="vs-radio">
+                                                        <span class="vs-radio--border"></span>
+                                                        <span class="vs-radio--circle"></span>
+                                                    </span>
+                                                    <span class="ml-50">@item.Name</span>
+                                                </span>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <!-- Categories Ends -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Ecommerce Sidebar Ends -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal"><!-- For Ajax Loading --></div>
+
+<button id="btnTop" type="button" class="btn btn-icon float btn-lg btn-info mr-1 mb-1 waves-effect waves-light">
+    <i class="feather icon-chevrons-up"></i>
+</button>
+
+@section Scripts{
+
+    <script>
+
+        var btnTop = document.getElementById("btnTop");
+        window.onscroll = function () { scrollFunction() };
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                btnTop.style.display = "block";
+            } else {
+                btnTop.style.display = "none";
+            }
+        }
+        btnTop.addEventListener('click', function (e) {
+            goToUp(e);
+        });
+
+        function goToUp(e) {
+            //e.preventDefault();
+            var distance = 0 - window.pageYOffset;
+            var increments = distance / (500 / 16);
+            function animateScroll() {
+                window.scrollBy(0, increments);
+                if (window.pageYOffset <= document.body.offsetTop) {
+                    clearInterval(runAnimation);
+                }
+            };
+            var runAnimation = setInterval(animateScroll, 16);
+        }
+
+        function postIt(pageIndex) {
+            //var json = @Html.Raw(Json.Serialize(@Model));
+            //console.log(JSON.stringify(json));
+            var sortOrder = $("#ecommerce-price-options").val();
+            var grp = $('input[name=ProductGrp]:checked').val();
+            var selectedBr = [];
+            var keyword = $('#TxtOldKeyword').val();
+            console.log('keyword is ' + keyword)
+            $('#TxtKeyword').val(keyword);
+
+                if (parseInt(pageIndex) == 0 ) {
+                    return;
+                }
+
+                $('input[name=ProductBr]:checked').each(function () {
+                    selectedBr.push($(this).attr('id'));
+                });
+
+                $.ajax({
+                    url: '/shop/ProductList',
+                    type: 'post',
+                    data: {
+                        GrpID: grp,
+                        BrandID: selectedBr,
+                        Keyword: keyword,
+                        SortOrder: sortOrder,
+                        CurentPgae: pageIndex
+                    },
+                    success: function (data) {
+                        $("#salar").empty();
+                        $("#salar").append(data);
+                        setBasketListener();
+                        // List View
+                        if ($(".list-view-btn").hasClass('active') == true ) {
+                            $("#ecommerce-products").removeClass("grid-view").addClass("list-view");
+                        }
+                        goToUp();
+                    },
+                    error: function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+        };
+        $body = $("body");
+        $(document).on({
+            ajaxStart: function () {
+                $body.addClass("loading");
+                $("#TxtKeyword").attr("disabled", "disabled");
+            },
+            ajaxStop: function () {
+                $body.removeClass("loading");
+                $("#TxtKeyword").removeAttr("disabled");
+            }
+        });
+
+        $(document).ajaxSuccess(function () {
+            setPagingEvents();
+        });
+
+            $(document).ready(function () {
+                setPagingEvents();
+                setBasketListener();
+            $("#BtnFilter").click(function () {
+                postIt(getCurentPage());
+            });
+            $('#ecommerce-price-options').on('change', function () {
+                postIt(1);
+            });
+            $('input[name=ProductGrp]').on('change', function () {
+                var selectedId =  $('input[name=ProductGrp]:checked').val();
+                postIt(1);
+            });
+            //$("ul.list-unstyled > li > span.vs-checkbox-con > span.BrName").css("background-color", "yellow");
+            $("#txtSearchBrand").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                var items = $("ul.list-unstyled > li > span.vs-checkbox-con > span.BrName");
+                items.each(function (i) {
+                    if ($(this).text().toLowerCase().indexOf(value) > -1) {
+                        $(this).parent().parent().removeClass('d-none');
+                        $(this).parent().parent().addClass('d-flex');
+                    } else {
+                        $(this).parent().parent().removeClass('d-flex');
+                        $(this).parent().parent().addClass('d-none');
+                    }
+                });
+            });
+            $("#BtnCheckAll").click(function () {
+                //$('input[name=ProductBr]').attr("checked", "checked");
+                $('input[name=ProductBr]').prop("checked", true);
+            });
+            $("#BtnUnCheckAll").click(function () {
+                //$('input[name=ProductBr]').removeAttr("checked");
+                $('input[name=ProductBr]').prop("checked", false);
+            });
+
+        });
+
+        function getCurentPage() {
+            var CurentPage = $('ul#Paging').find('li.active').text();
+            return parseInt(CurentPage);
+        };
+
+            function setBasketListener() {
+                wishlist = $(".wishlist");
+                cart = $(".cart");
+
+                // For View in cart
+                cart.on("click", function () {
+                    var $this = $(this),
+                        addToCart = $this.find(".add-to-cart"),
+                        viewInCart = $this.find(".view-in-cart");
+                    var ID_Product = $this.attr('id');
+                    if (addToCart.is(':visible')) {
+                        $.ajax({
+                            url: '/shop/AddProductToBasket',
+                            type: 'post',
+                            data: {
+                                ID_Product: ID_Product,
+                                Qty: 5
+                            },
+                            success: function (data) {
+                                //alert(data);
+                                var Msg = 'محصول مورد نظر  به سبد اضافه شد';
+                                var Title = 'سبد کالا';
+                                toastr.success(Msg, Title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                                addToCart.addClass("d-none");
+                                viewInCart.addClass("d-inline-block");
+                            },
+                            error: function (request, error) {
+                                alert("Request: " + JSON.stringify(request));
+                            }
+                        });
+
+                    }
+                    else {
+                        var href = viewInCart.attr('href');
+                        window.location.href = href;
+                    }
+                });
+
+                // For Wishlist Icon
+                wishlist.on("click", function () {
+                    var $this = $(this)
+                    var ID_Product = $this.attr('id');
+                    if ($this.hasClass('added')) {
+                        $.ajax({
+                            url: '/shop/RemoveProductFromFavorite',
+                            type: 'post',
+                            data: {
+                                ID_Product: ID_Product
+                            },
+                            success: function (data) {
+                                $this.find("i").toggleClass("fa-heart-o fa-heart")
+                                $this.toggleClass("added");
+                                var Msg = 'محصول مورد از لیست علاقه مندی ها حذف شد';
+                                var Title = 'عملیات موفق';
+                                toastr.info(Msg, Title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                            },
+                            error: function (request, error) {
+                                alert("Request: " + JSON.stringify(request));
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            url: '/shop/AddProductToFavorite',
+                            type: 'post',
+                            data: {
+                                ID_Product: ID_Product
+                            },
+                            success: function (data) {
+                                $this.find("i").toggleClass("fa-heart-o fa-heart")
+                                $this.toggleClass("added");
+                                var Msg = 'محصول مورد نظر  به لیست علاقمندی ها اضافه شد';
+                                var Title = 'عملیات موفق';
+                                toastr.success(Msg, Title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                            },
+                            error: function (request, error) {
+                                alert("Request: " + JSON.stringify(request));
+                            }
+                        });
+                    }
+                })
+            }
+
+        function setPagingEvents() {
+            console.log('setEvents');
+            $('.page-item').click(function () {
+                //var pageIndex = $(this).text();
+                if ($(this).hasClass("disabled")) {
+                    return;
+                }
+                if ($(this).hasClass("prev-item")) {
+                    postIt(getCurentPage() - 1);
+                    return;
+                }
+                if ($(this).hasClass("next-item")) {
+                    postIt(getCurentPage() + 1);
+                    return;
+                }
+                else
+                {
+                    $('ul#Paging').find('li.active').removeClass("active");
+                    $(this).addClass("active");
+                    postIt(getCurentPage());
+                }
+            });
+        };
+        function TxtSearchKeyPress(e) {
+            if (e.keyCode == 13) {
+                console.log('keydown');
+                var NewKeyword = $('#TxtKeyword').val()
+                var NewOldword = $('#TxtOldKeyword').val()
+                if (NewKeyword == NewOldword ) {
+                    return false;
+                }
+                $('#TxtOldKeyword').val(NewKeyword);
+                postIt(1);
+                return false;
+            }
+        }
+    </script>
+
+    <script src="~/app-assets/vendors/js/ui/prism.min.js"></script>
+    <script src="~/app-assets/vendors/js/extensions/wNumb.js"></script>
+    <script src="~/app-assets/vendors/js/extensions/nouislider.min.js"></script>
+    <script src="~/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="~/app-assets/js/scripts/pages/app-ecommerce-shop.js"></script>
+
+}

@@ -1,0 +1,150 @@
+﻿@model NewPersonWeb.Models.Shop
+@{
+    Layout = null;
+}
+
+<section id="ecommerce-products" class="grid-view">
+
+    @foreach (var item in Model.Products)
+    {
+        string imgName = item.Code + ".jpg";
+        long Percent = 100 - (item.Price * 100 / item.ConsumerPrices);
+        string HaveTax;
+        if (item.HaveTax)
+        {
+            HaveTax = "این محصول مشمول 9% ارزش افزوده  میباشد";
+        }
+        else
+        {
+            HaveTax = "قیمت نهایی";
+        }
+        <div class="card ecommerce-card">
+            <div class="card-content">
+                <div class="item-img text-center">
+                    <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@(item.ID)">
+                        <img style="max-height:200px" class="img-fluid" src="~/app-assets/images/Products/@imgName" alt="تصویر موجود نمیباشد">
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="item-wrapper">
+                        <div class="item-rating">
+                            <div class="badge badge-primary badge-md">
+                                <span>@Percent </span> <i class="feather icon-percent"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="item-price text-danger">
+                                <del>@String.Format("{0:n0}", item.ConsumerPrices) ریال</del>
+                            </h6>
+                            <h6 class="item-price text-success">
+                                @String.Format("{0:n0}", item.Price) ریال
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="item-name">
+                        <a href="app-ecommerce-details.html"> @item.GroupName  @item.Name @item.BrandName @item.Weight </a>
+                        <p class="item-company">نام تجاری: <span class="company-name">@item.BrandName</span></p>
+                    </div>
+                    <div>
+                        <p class="item-description">
+                            @item.Code
+                            <br />
+                            @HaveTax
+                        </p>
+                    </div>
+                </div>
+                <div class="item-options text-center">
+                    <div class="item-wrapper">
+                        <div class="item-rating">
+                            <div class="badge badge-primary badge-md">
+                                <span>@Percent</span> <i class="feather icon-percent"></i>
+                            </div>
+                        </div>
+                        <div class="item-cost">
+                            <h6 class="item-price text-danger">
+                                <del>@String.Format("{0:n0}", item.ConsumerPrices) ریال</del>
+                            </h6>
+                            <h6 class="item-price text-success">
+                                @String.Format("{0:n0}", item.Price) ریال
+                            </h6>
+                        </div>
+                    </div>
+                    @{
+                        if (item.IsFavorite)
+                        {
+                            <div class="wishlist added" id="@(item.ID)">
+                                <i class="fa fa-heart"></i> <span>علاقمندی ها</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="wishlist" id="@(item.ID)">
+                                <i class="fa fa-heart-o"></i> <span>علاقمندی ها</span>
+                            </div>
+                        }
+                    }
+                    <div class="cart" id="@(item.ID)">
+                        <i class="feather icon-shopping-cart"></i>
+                        @{
+                            if (item.ExistInBasket)
+                            {
+                                <span class="add-to-cart d-none">افزودن به سبد</span>
+                                <a href="app-ecommerce-checkout.html" class="view-in-cart d-none d-inline-block">نمایش در سبد</a>
+                            }
+                            else
+                            {
+                                <span class="add-to-cart">افزودن به سبد</span>
+                                <a href="app-ecommerce-checkout.html" class="view-in-cart d-none">نمایش در سبد</a>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+<section id="ecommerce-pagination">
+    <div class="row">
+        <div class="col-sm-12">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center mt-2" id="Paging">
+                    @{
+                        int ShowCount = 4;
+                        int Curent = Model.paging.CurentPgae;
+                        if (Curent == 1)
+                        {
+                            <li class="page-item prev-item disabled"><a class="page-link"></a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item prev-item"><a class="page-link"></a></li>
+                        }
+                        for (int i = 1; i <= Model.paging.TotalPageCount; i++)
+                        {
+                            if (i > (Curent - ShowCount) && i < (Curent + ShowCount))
+                            {
+                                if (Curent == i)
+                                {
+                                    <li class="page-item active disabled"><a class="page-link">@i</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a class="page-link">@i</a></li>
+                                }
+                            }
+                        }
+                        if (Curent == Model.paging.TotalPageCount)
+                        {
+                            <li class="page-item next-item disabled"><a class="page-link"></a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item next-item"><a class="page-link"></a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>

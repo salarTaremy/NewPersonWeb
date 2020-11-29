@@ -1,0 +1,8 @@
+﻿
+.float {
+    position: fixed;
+    background-color: red;
+    bottom: 40px;
+    left: 40px;
+    display:none;
+}

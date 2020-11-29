@@ -1,0 +1,169 @@
+﻿
+
+@{
+    ViewData["Title"] = "SD";
+    Layout = "_Layout";
+}
+
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-body">
+                <div class="row">
+                    <div class="col-xl-2 col-md-4 col-sm-6">
+                        <div class="card text-center">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="avatar bg-rgba-info p-50 m-0 mb-1">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-eye text-info font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="text-bold-700">1,210,000</h2>
+                                    <p class="mb-0 line-ellipsis">پایه حقوق روزانه</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-sm-6">
+                        <div class="card text-center">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="avatar bg-rgba-primary p-50 m-0 mb-1">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-bar-chart text-primary font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="text-bold-700">28,000,000</h2>
+                                    <p class="mb-0 line-ellipsis">اعتبار اولیه</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-sm-6">
+                        <div class="card text-center">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="avatar bg-rgba-danger p-50 m-0 mb-1">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-shopping-bag text-danger font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="text-bold-700">1,200,000</h2>
+                                    <p class="mb-0 line-ellipsis">اقساط وام</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-sm-6">
+                        <div class="card text-center">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="avatar bg-rgba-warning p-50 m-0 mb-1">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-bar-chart-2 text-warning font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="text-bold-700">3,200,000</h2>
+                                    <p class="mb-0 line-ellipsis">بدهی سیستم حسابداری</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-sm-6">
+                        <div class="card text-center">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="avatar bg-rgba-danger p-50 m-0 mb-1">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-file-text text-danger font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="text-bold-700">850,000</h2>
+                                    <p class="mb-0 line-ellipsis">فاکتورهای باز</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-sm-6">
+                        <div class="card text-center">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="avatar bg-rgba-warning p-50 m-0 mb-1">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-file text-warning font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="text-bold-700">0</h2>
+                                    <p class="mb-0 line-ellipsis">درخواست های فاکتور نشده</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-header d-flex align-items-start pb-0">
+                                <div>
+                                    <h2 class="text-bold-700">1,210,000</h2>
+                                    <p class="mb-0">جمع عوامل افزاینده اعتبار</p>
+                                </div>
+                                <div class="avatar bg-rgba-success p-50">
+                                    <div class="avatar-content">
+                                        <i class="feather icon-credit-card text-success font-medium-5"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div id="line-area-chart-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-12">
+                        <div class="card">
+                            <div class="card-header d-flex align-items-start pb-0">
+                                <div>
+                                    <h2 class="text-bold-700">0</h2>
+                                    <p class="mb-0">جمع عوامل کاهنده اعتبار</p>
+                                </div>
+                                <div class="avatar bg-rgba-danger p-50">
+                                    <div class="avatar-content">
+                                        <i class="feather icon-activity text-danger font-medium-5"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div id="line-area-chart-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-header d-flex align-items-start pb-0">
+                                <div>
+                                    <h2 class="text-bold-700">1,210,000</h2>
+                                    <p class="mb-0">مانده اعتبار شما جهت خرید پرسنلی</p>
+                                </div>
+                                <div class="avatar bg-rgba-primary p-50">
+                                    <div class="avatar-content">
+                                        <i class="feather icon-shopping-bag text-primary font-medium-5"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div id="line-area-chart-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @section Scripts{
+        <script src="~/app-assets/js/scripts/cards/card-statistics.js"></script>
+    }

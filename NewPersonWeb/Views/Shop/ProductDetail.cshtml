@@ -1,0 +1,255 @@
+﻿@model Product
+@{
+    Layout = "_Layout";
+    string imgName = Model.Code + ".jpg";
+}
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/pages/app-ecommerce-details.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/ImageZoom.css">
+
+}
+
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                </div>
+            </div>
+            <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                <div class="form-group breadcrum-right">
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <!-- app ecommerce details start -->
+            <section class="app-ecommerce-details">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-5 mt-2">
+                            <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <span class="zoom" id="SpnImg">
+                                        <img src="~/app-assets/images/Products/@imgName" alt="تصویر موجود نمیباشد" class="img-fluid">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <h5>
+                                    @Model.GroupName
+                                    @Model.Name
+                                    @Model.BrandName
+                                    @Model.Weight
+                                </h5>
+                                <h6>
+                                    @Model.Code
+                                </h6>
+                                <p class="text-muted">نام تجاری: @Model.BrandName</p>
+
+                                <div class="ecommerce-details-price d-flex flex-wrap">
+                                    <span class="pl-1 font-medium-3 ">
+                                        @for (int i = 0; i < Model.Rate; i++)
+                                        {
+                                            <i class="feather icon-star text-warning"></i>
+                                        }
+                                        @for (int i = 0; i < 5 - Model.Rate; i++)
+                                        {
+                                            <i class="feather icon-star text-secondary"></i>
+                                        }
+                                    </span>
+                                </div>
+                                <hr>
+                                <p>
+                                    قیمت برای پرسنل:
+                                    @String.Format("{0:n0}", @Model.Price) ریال
+                                </p>
+                                @{if (Model.HaveTax)
+                                    {
+                                        <p class="text-danger">
+                                            <i class="feather icon-trending-up mr-50 font-medium-2"></i>به مبلغ فوق 9% به عنوان ارزش افزوده اضافه خواهد شد
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-success">
+                                            <i class="feather icon-thumbs-up mr-50 font-medium-2"></i>این محصول فاقد ارزش افزوده می باشد
+                                        </p>
+                                    }
+                                }
+
+                                <p>
+                                    قیمت مصرف کننده:
+                                    @String.Format("{0:n0}", @Model.ConsumerPrices) ریال
+                                </p>
+                                <p class="font-weight-bold mb-25">
+                                    <i class="feather icon-truck mr-50 font-medium-2"></i>حمل رایگان
+                                </p>
+                                <p class="font-weight-bold mb-25">
+                                    <i class="fa fa-qrcode mr-50 font-medium-2"></i>@Model.ID
+                                </p>
+                                <p>وضعیت: <span class="text-success">موجود در انبار </span></p>
+
+                                <div class="d-flex flex-column flex-sm-row">
+                                    <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
+                                    <button class="btn btn-outline-danger"><i class="feather icon-heart mr-25"></i>علاقه مندی ها</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @{
+                        long Percent = 100 - (Model.Price * 100 / Model.ConsumerPrices);
+                    }
+                    <div class="item-features py-5">
+                        <div class="row text-center pt-2">
+                            <div class="col-12 col-md-4 mb-4 mb-md-0 ">
+                                <div class="w-75 mx-auto">
+                                    <i class="fa fa-tags text-primary font-large-2"></i>
+                                    <h5 class="mt-2 font-weight-bold">@Percent% تخفیف</h5>
+                                    <p>
+                                        قیمت این محصول برای پرسنل با احتساب @Percent درصد تخفیف بر مبنای قیمت مصرف کننده محاسبه شده است
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 mb-4 mb-md-0">
+                                <div class="w-75 mx-auto">
+                                    <i class="fa fa-history text-primary font-large-2"></i>
+                                    <h5 class="mt-2 font-weight-bold">سقف سفارش <span>@Model.MaxPerDayCount</span> عدد</h5>
+                                    <p>
+                                        این محصول را میتوانید هر @Model.DayCount روز یک بار و به تعداد @Model.MaxPerDayCount عدد(در صورت موجودی) سفارش دهید
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 mb-4 mb-md-0">
+                                <div class="w-75 mx-auto">
+                                    <i class="fa fa-bar-chart-o text-primary font-large-2"></i>
+                                    @{
+                                        if (Model.BuyHistoryCount <= 0 && Model.FavoriteCount <= 0)
+                                        {
+                                            <h5 class="mt-2 font-weight-bold">تجربه جدید</h5>
+                                            <p>
+                                                هیچ کاربری تاکنون این محصول را خریداری نکرده است.
+                                                اولین نفری باشید که این محصول را سفارش میدهید
+                                            </p>
+                                        }
+                                        else if (Model.BuyHistoryCount > 0 && Model.BuyHistoryCount <= 5 && Model.FavoriteCount <= 0)
+                                        {
+                                            <h5 class="mt-2 font-weight-bold">تجربه جدید</h5>
+                                            <p>
+                                                تا کنون @Model.BuyHistoryCount نفر از پرسنل این محصول را تهیه کرده اند. شما هم میتوانید این محصول را تجربه کنید.
+                                            </p>
+                                        }
+                                        else if (Model.BuyHistoryCount > 5 && Model.FavoriteCount <= 0)
+                                        {
+                                            <h5 class="mt-2 font-weight-bold">محصول پر فروش</h5>
+                                            <p>
+                                                بیش از @Model.BuyHistoryCount  نفر از پرسنل این محصول را خریداری کرده اند.
+                                            </p>
+                                        }
+                                        else if (Model.BuyHistoryCount > 5 && Model.FavoriteCount > 0 && Model.FavoriteCount <= 2)
+                                        {
+                                            <h5 class="mt-2 font-weight-bold">محصول پر فروش و محبوب</h5>
+                                            <p>
+                                                بیش از @Model.BuyHistoryCount  نفر از پرسنل این محصول را خریداری کرده اند.
+                                                همچنین در لیست کالاهای محبوب کاربران میباشد
+                                            </p>
+                                        }
+                                        else if (Model.BuyHistoryCount > 5 && Model.FavoriteCount > 2)
+                                        {
+                                            <h5 class="mt-2 font-weight-bold">محصول محبوب</h5>
+                                            <p>
+                                                بیش از @Model.FavoriteCount  نفر از کاربران ایم محصول را به عنوان محصول محبوب انتخاب کرده اند
+                                            </p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.RelatedProducts.Count > 0)
+                        {
+                            <div class="mt-4 mb-2 text-center">
+                                <h2>محصولات مرتبط</h2>
+                                <p>سایر محصولات مرتبط با کالای فوق</p>
+                            </div>
+                        }
+                        <div class="swiper-responsive-breakpoints swiper-container px-4 py-2">
+                            <div class="swiper-wrapper">
+                                @foreach (var item in Model.RelatedProducts)
+                                {
+                                    string ItemImgName = item.Code + ".jpg";
+                                    <div class="swiper-slide rounded swiper-shadow">
+                                        <div class="item-heading">
+                                            <p class="text-truncate mb-0">
+                                                @item.GroupName
+                                                @item.Name
+                                                @item.BrandName
+                                                @item.Weight
+                                            </p>
+                                            <p>
+                                                <small>نام تجاری: @item.BrandName</small>
+                                            </p>
+                                        </div>
+                                        <div class="img-container w-50 mx-auto my-2 py-75"
+                                             style="min-height:150px;">
+                                            <img src="~/app-assets/images/Products/@ItemImgName"
+                                                 alt="تصویر موجود نمیباشد"
+                                                 class="img-fluid">
+                                        </div>
+                                        <div class="item-meta">
+                                            <div class="product-rating">
+                                                @for (int i = 0; i < item.Rate; i++)
+                                                {
+                                                    <i class="feather icon-star text-warning"></i>
+                                                }
+                                                @for (int i = 0; i < 5 - item.Rate; i++)
+                                                {
+                                                    <i class="feather icon-star text-secondary"></i>
+                                                }
+                                            </div>
+                                            <p class="text-primary mb-0">@String.Format("{0:n0}", @Model.Price) ریال</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- app ecommerce details end -->
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <!-- BEGIN: Vendor JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../../../app-assets/vendors/js/ui/jquery.sticky.js"></script>
+    <script src="../../../app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/swiper.min.js"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <script src="../../../app-assets/js/scripts/components.js"></script>
+    <!-- END: Theme JS-->
+    <!-- BEGIN: Page JS-->
+    <script src="~/app-assets/js/scripts/pages/app-ecommerce-details.js"></script>
+    <script src="../../../app-assets/js/scripts/forms/number-input.js"></script>
+    <!-- END: Page JS-->
+    <script src="~/assets/js/jquery.zoom.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#SpnImg').zoom();
+        });
+    </script>
+
+}
