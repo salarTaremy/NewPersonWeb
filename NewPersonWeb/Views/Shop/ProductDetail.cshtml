@@ -85,17 +85,30 @@
                                     @String.Format("{0:n0}", @Model.ConsumerPrices) ریال
                                 </p>
                                 <p class="font-weight-bold mb-25">
-                                    <i class="feather icon-truck mr-50 font-medium-2"></i>حمل رایگان
+                                    <i class="feather icon-truck mr-50 font-medium-2"></i> <span>ارسال از </span><span>@Model.AnbarName</span>
                                 </p>
                                 <p class="font-weight-bold mb-25">
                                     <i class="fa fa-qrcode mr-50 font-medium-2"></i>@Model.ID
                                 </p>
-                                <p>وضعیت: <span class="text-success">موجود در انبار </span></p>
+                                @{
+                                    if (@Model.Inventory > 0)
+                                    {
+                                        <p>وضعیت: <span class="text-success">موجود در انبار </span> <span class="text-success">(@Model.Inventory.ToString())</span></p>
+                                        <div class="d-flex flex-column flex-sm-row">
+                                            <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
+                                            <button class="btn btn-outline-danger"><i class="feather icon-heart mr-25"></i>علاقه مندی ها</button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p>وضعیت: <span class="text-danger">ناموجود </span></p>
+                                        <div class="d-flex flex-column flex-sm-row">
+                                            @*<button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0 disabled"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>*@
+                                            <button class="btn btn-outline-danger"><i class="feather icon-heart mr-25"></i>علاقه مندی ها</button>
+                                        </div>
+                                    }
+                                }
 
-                                <div class="d-flex flex-column flex-sm-row">
-                                    <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
-                                    <button class="btn btn-outline-danger"><i class="feather icon-heart mr-25"></i>علاقه مندی ها</button>
-                                </div>
                             </div>
                         </div>
                     </div>
