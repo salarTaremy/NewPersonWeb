@@ -90,25 +90,32 @@
                                 <p class="font-weight-bold mb-25">
                                     <i class="fa fa-qrcode mr-50 font-medium-2"></i>@Model.ID
                                 </p>
-                                @{
-                                    if (@Model.Inventory > 0)
+                                <p>وضعیت: <span class="text-success">موجود در انبار </span> <span class="text-success">(@Model.Inventory.ToString())</span></p>
+                                <div class="d-flex flex-column flex-sm-row">
+                                    @if (@Model.Inventory > 0)
                                     {
-                                        <p>وضعیت: <span class="text-success">موجود در انبار </span> <span class="text-success">(@Model.Inventory.ToString())</span></p>
-                                        <div class="d-flex flex-column flex-sm-row">
-                                            <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
-                                            <button class="btn btn-outline-danger"><i class="feather icon-heart mr-25"></i>علاقه مندی ها</button>
-                                        </div>
+                                        <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
                                     }
                                     else
                                     {
-                                        <p>وضعیت: <span class="text-danger">ناموجود </span></p>
-                                        <div class="d-flex flex-column flex-sm-row">
-                                            @*<button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0 disabled"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>*@
-                                            <button class="btn btn-outline-danger"><i class="feather icon-heart mr-25"></i>علاقه مندی ها</button>
-                                        </div>
+                                        <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0 disabled"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
                                     }
-                                }
 
+                                    @{
+                                        if (Model.IsFavorite)
+                                        {
+                                            <button class="btn btn-outline-danger wishlist added" id="@(Model.ID)">
+                                                <i class="fa fa-heart mr-25"></i>علاقه مندی ها
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-outline-danger wishlist" id="@(Model.ID)">
+                                                <i class="fa fa-heart-o mr-25"></i>علاقه مندی ها
+                                            </button>
+                                        }
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -208,9 +215,11 @@
                                         </div>
                                         <div class="img-container w-50 mx-auto my-2 py-75"
                                              style="min-height:150px;">
-                                            <img src="~/app-assets/images/Products/@ItemImgName"
-                                                 alt="تصویر موجود نمیباشد"
-                                                 class="img-fluid">
+                                            <a href="@(item.ID)">
+                                                <img src="~/app-assets/images/Products/@ItemImgName"
+                                                     alt="تصویر موجود نمیباشد"
+                                                     class="img-fluid">
+                                            </a>
                                         </div>
                                         <div class="item-meta">
                                             <div class="product-rating">
@@ -241,6 +250,7 @@
 </div>
 
 @section Scripts{
+
     <!-- BEGIN: Vendor JS-->
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
@@ -259,10 +269,99 @@
     <script src="../../../app-assets/js/scripts/forms/number-input.js"></script>
     <!-- END: Page JS-->
     <script src="~/assets/js/jquery.zoom.js"></script>
+
     <script>
         $(document).ready(function () {
             $('#SpnImg').zoom();
         });
+    </script>
+
+    <script src="~/scripts/ajaxLoading.js"></script>
+
+
+    <script>
+        wishlist = $(".wishlist");
+        cart = $(".cart");
+
+        // For View in cart
+        cart.on("click", function () {
+            var $this = $(this),
+                addToCart = $this.find(".add-to-cart"),
+                viewInCart = $this.find(".view-in-cart");
+            var ID_Product = $this.attr('id');
+            if (addToCart.is(':visible')) {
+                $.ajax({
+                    url: '/shop/AddProductToBasket',
+                    type: 'post',
+                    data: {
+                        ID_Product: ID_Product,
+                        Qty: 5
+                    },
+                    success: function (data) {
+                        //alert(data);
+                        var Msg = 'محصول مورد نظر  به سبد اضافه شد';
+                        var Title = 'سبد کالا';
+                        toastr.success(Msg, Title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                        addToCart.addClass("d-none");
+                        viewInCart.addClass("d-inline-block");
+                    },
+                    error: function (request, error) {
+                        //alert("Request: " + JSON.stringify(request));
+                        toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+                    }
+                });
+
+            }
+            else {
+                var href = viewInCart.attr('href');
+                window.location.href = href;
+            }
+        });
+
+        // For Wishlist Icon
+        wishlist.on("click", function () {
+            var $this = $(this)
+            var ID_Product = $this.attr('id');
+            if ($this.hasClass('added')) {
+                $.ajax({
+                    url: '/shop/RemoveProductFromFavorite',
+                    type: 'post',
+                    data: {
+                        ID_Product: ID_Product
+                    },
+                    success: function (data) {
+                        $this.find("i").toggleClass("fa-heart-o fa-heart")
+                        $this.toggleClass("added");
+                        var Msg = 'محصول مورد از لیست علاقه مندی ها حذف شد';
+                        var Title = 'عملیات موفق';
+                        toastr.info(Msg, Title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    },
+                    error: function (request, error) {
+                        //alert("Request: " + JSON.stringify(request));
+                        toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/shop/AddProductToFavorite',
+                    type: 'post',
+                    data: {
+                        ID_Product: ID_Product
+                    },
+                    success: function (data) {
+                        $this.find("i").toggleClass("fa-heart-o fa-heart")
+                        $this.toggleClass("added");
+                        var Msg = 'محصول مورد نظر  به لیست علاقمندی ها اضافه شد';
+                        var Title = 'عملیات موفق';
+                        toastr.success(Msg, Title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    },
+                    error: function (request, error) {
+                        //alert("Request: " + JSON.stringify(request));
+                        toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+                    }
+                });
+            }
+        })
     </script>
 
 }
