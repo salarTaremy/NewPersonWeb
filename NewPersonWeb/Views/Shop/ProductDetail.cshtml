@@ -90,32 +90,58 @@
                                 <p class="font-weight-bold mb-25">
                                     <i class="fa fa-qrcode mr-50 font-medium-2"></i>@Model.ID
                                 </p>
-                                <p>وضعیت: <span class="text-success">موجود در انبار </span> <span class="text-success">(@Model.Inventory.ToString())</span></p>
-                                <div class="d-flex flex-column flex-sm-row">
-                                    @if (@Model.Inventory > 0)
+                                @{
+                                    if (Model.Inventory > 0)
+                                    {
+                                        <p>وضعیت: <span class="text-success">موجود در انبار </span> <span class="text-success">(@Model.Inventory.ToString())</span></p>
+                                    }
+                                    else
+                                    {
+                                        <p>وضعیت: <span class="text-danger">ناموجود </span></p>
+                                    }
+
+                                }
+
+                            <div class="d-flex flex-column flex-sm-row" id="@(Model.ID)">
+                                @if (@Model.Inventory > 0)
+                                {
+                                    @if (Model.ExistInBasket)
+                                    {
+                                        <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0"><i class="feather icon-shopping-cart mr-25"></i>نمایش در سبد</button>
+                                    }
+                                    else
                                     {
                                         <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
+                                    }
+                                }
+                                else
+                                {
+                                    @if (Model.ExistInBasket)
+                                    {
+                                        <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0"><i class="feather icon-shopping-cart mr-25"></i>نمایش در سبد</button>
                                     }
                                     else
                                     {
                                         <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0 disabled"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
                                     }
+                                    
+                                }
 
-                                    @{
-                                        if (Model.IsFavorite)
-                                        {
-                                            <button class="btn btn-outline-danger wishlist added" id="@(Model.ID)">
-                                                <i class="fa fa-heart mr-25"></i>علاقه مندی ها
-                                            </button>
-                                        }
-                                        else
-                                        {
-                                            <button class="btn btn-outline-danger wishlist" id="@(Model.ID)">
-                                                <i class="fa fa-heart-o mr-25"></i>علاقه مندی ها
-                                            </button>
-                                        }
+                                @{
+                                    if (Model.IsFavorite)
+                                    {
+                                        <button class="btn btn-outline-danger wishlist added" id="@(Model.ID)">
+                                            <i class="fa fa-heart mr-25"></i>علاقه مندی ها
+                                        </button>
                                     }
-                                </div>
+                                    else
+                                    {
+                                        <button class="btn btn-outline-danger wishlist" id="@(Model.ID)">
+                                            <i class="fa fa-heart-o mr-25"></i>علاقه مندی ها
+                                        </button>
+                                    }
+                                }
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -278,7 +304,6 @@
 
     <script src="~/scripts/ajaxLoading.js"></script>
 
-
     <script>
         wishlist = $(".wishlist");
         cart = $(".cart");
@@ -289,6 +314,7 @@
                 addToCart = $this.find(".add-to-cart"),
                 viewInCart = $this.find(".view-in-cart");
             var ID_Product = $this.attr('id');
+            console.log(ID_Product);
             if (addToCart.is(':visible')) {
                 $.ajax({
                     url: '/shop/AddProductToBasket',
