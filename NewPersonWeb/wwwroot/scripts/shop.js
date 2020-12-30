@@ -139,7 +139,7 @@ function setBasketListener() {
                 type: 'post',
                 data: {
                     ID_Product: ID_Product,
-                    Qty: 5
+                    Qty: 1
                 },
                 success: function (data) {
                     //alert(data);

@@ -54,7 +54,8 @@ namespace NewPersonWeb.Controllers
             var result = new ShopRepo().AddProductToBasket(ssn, ID_Product, Qty);
             if (result)
             {
-                return Ok(true);
+                //return Ok(true);
+                return Ok(new { status = 1 , Msg = "اضافه شد"});
             }
             else
             {
