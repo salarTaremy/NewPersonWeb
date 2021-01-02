@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NewPersonWeb.Models;
 using NewPersonWeb.Repository;
+using System.Collections.Generic;
 
 namespace NewPersonWeb.Controllers
 {
@@ -54,8 +50,12 @@ namespace NewPersonWeb.Controllers
             var result = new ShopRepo().AddProductToBasket(ssn, ID_Product, Qty);
             if (result)
             {
-                //return Ok(true);
-                return Ok(new { status = 1 , Msg = "اضافه شد"});
+                return Ok(new ApiResult
+                {
+                    Status = 1,
+                    Title = "عملیات موفق",
+                    Message = "محصول مورد نظر با موفقیت به سبد شما اضافه شد"
+                });
             }
             else
             {
@@ -66,10 +66,20 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult AddProductToFavorite(long ID_Product)
         {
+
+            int a = 0;
+            int b = 1;
+            a = b / a;
+                
             var result = new ShopRepo().AddProductToFavorite(ssn, ID_Product);
             if (result)
             {
-                return Ok(true);
+                return Ok(new ApiResult
+                {
+                    Status = 1,
+                    Title = "عملیات موفق",
+                    Message = "محصول مورد نظر با موفقیت به لیست علاقمندی های شما اضافه شد"
+                });
             }
             else
             {
@@ -83,7 +93,12 @@ namespace NewPersonWeb.Controllers
             var result = new ShopRepo().RemoveProductFromeFavorite(ssn, ID_Product);
             if (result)
             {
-                return Ok(true);
+                return Ok(new ApiResult
+                {
+                    Status = 1,
+                    Title = "عملیات موفق",
+                    Message = "محصول مورد نظر با موفقیت از لیست علاقمندی های شما حذف شد"
+                });
             }
             else
             {

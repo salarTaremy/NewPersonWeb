@@ -143,9 +143,9 @@ function setBasketListener() {
                 },
                 success: function (data) {
                     //alert(data);
-                    var Msg = 'محصول مورد نظر  به سبد اضافه شد';
-                    var Title = 'سبد کالا';
-                    toastr.success(Msg, Title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    var result = JSON.stringify(data);
+                    var obj = jQuery.parseJSON(result);
+                    toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
                     addToCart.addClass("d-none");
                     viewInCart.addClass("d-inline-block");
                 },
@@ -175,12 +175,11 @@ function setBasketListener() {
                 success: function (data) {
                     $this.find("i").toggleClass("fa-heart-o fa-heart")
                     $this.toggleClass("added");
-                    var Msg = 'محصول مورد از لیست علاقه مندی ها حذف شد';
-                    var Title = 'عملیات موفق';
-                    toastr.info(Msg, Title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    var result = JSON.stringify(data);
+                    var obj = jQuery.parseJSON(result);
+                    toastr.info(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
                 },
                 error: function (request, error) {
-                    //alert("Request: " + JSON.stringify(request));
                     toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
                 }
             });
@@ -194,12 +193,11 @@ function setBasketListener() {
                 success: function (data) {
                     $this.find("i").toggleClass("fa-heart-o fa-heart")
                     $this.toggleClass("added");
-                    var Msg = 'محصول مورد نظر  به لیست علاقمندی ها اضافه شد';
-                    var Title = 'عملیات موفق';
-                    toastr.success(Msg, Title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    var result = JSON.stringify(data);
+                    var obj = jQuery.parseJSON(result);
+                    toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
                 },
                 error: function (request, error) {
-                    //alert("Request: " + JSON.stringify(request));
                     toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
                 }
             });
