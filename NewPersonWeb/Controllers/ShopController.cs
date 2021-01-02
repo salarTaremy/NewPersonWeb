@@ -46,6 +46,23 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult AddProductToBasket(long ID_Product, short Qty)
         {
+            
+
+            ShopRepo shopRepo = new ShopRepo();
+            var item = shopRepo.GetBasketDetailIfExistsProduct(ssn, ID_Product);
+            if (item != null)
+            {
+                return Ok(new ApiResult
+                {
+                    Status = 2,
+                    Title = "عملیات نا موفق",
+                    Message = "این محصول قبلا به  سبد شما اضافه شده است"
+                });
+            }
+
+
+
+
             Qty = 1;
             var result = new ShopRepo().AddProductToBasket(ssn, ID_Product, Qty);
             if (result)
@@ -67,11 +84,8 @@ namespace NewPersonWeb.Controllers
         public IActionResult AddProductToFavorite(long ID_Product)
         {
 
-            int a = 0;
-            int b = 1;
-            a = b / a;
-                
-            var result = new ShopRepo().AddProductToFavorite(ssn, ID_Product);
+
+            var result =  new ShopRepo().AddProductToFavorite(ssn, ID_Product);
             if (result)
             {
                 return Ok(new ApiResult

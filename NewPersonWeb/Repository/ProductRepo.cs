@@ -52,5 +52,6 @@ namespace NewPersonWeb.Repository
             var param = new DynamicParameters(new { ssn = Ssn });
             return db.GetList<ProductGroup>("Web.GetProductGroup", param, System.Data.CommandType.StoredProcedure);
         }
+
     }
 }

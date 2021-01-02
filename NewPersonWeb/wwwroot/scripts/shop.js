@@ -142,15 +142,18 @@ function setBasketListener() {
                     Qty: 1
                 },
                 success: function (data) {
-                    //alert(data);
-                    var result = JSON.stringify(data);
-                    var obj = jQuery.parseJSON(result);
-                    toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
                     addToCart.addClass("d-none");
                     viewInCart.addClass("d-inline-block");
+                    var result = JSON.stringify(data);
+                    var obj = jQuery.parseJSON(result);
+                    if (obj.status === 1) {
+                        toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    } else {
+                        toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    }
+
                 },
                 error: function (request, error) {
-                    //alert("Request: " + JSON.stringify(request));
                     toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
                 }
             });
@@ -177,7 +180,12 @@ function setBasketListener() {
                     $this.toggleClass("added");
                     var result = JSON.stringify(data);
                     var obj = jQuery.parseJSON(result);
-                    toastr.info(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    if (obj.status === 1) {
+                        toastr.info(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    } else {
+                        toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    }
+                    
                 },
                 error: function (request, error) {
                     toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
@@ -195,9 +203,16 @@ function setBasketListener() {
                     $this.toggleClass("added");
                     var result = JSON.stringify(data);
                     var obj = jQuery.parseJSON(result);
-                    toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    if (obj.status === 1) {
+                        toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    } else {
+                        toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    }
                 },
-                error: function (request, error) {
+                error: function (jqXHR, request, error) {
+                    alert(jqXHR.status);
+                    alert(request);
+                    alert(error);
                     toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
                 }
             });
