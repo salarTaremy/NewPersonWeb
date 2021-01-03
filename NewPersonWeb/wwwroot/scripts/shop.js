@@ -210,9 +210,6 @@ function setBasketListener() {
                     }
                 },
                 error: function (jqXHR, request, error) {
-                    alert(jqXHR.status);
-                    alert(request);
-                    alert(error);
                     toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
                 }
             });
@@ -243,11 +240,11 @@ function setPagingEvents() {
     });
 };
 function TxtSearchKeyPress(e) {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
         console.log('keydown');
         var NewKeyword = $('#TxtKeyword').val()
         var NewOldword = $('#TxtOldKeyword').val()
-        if (NewKeyword == NewOldword) {
+        if (NewKeyword === NewOldword) {
             return false;
         }
         $('#TxtOldKeyword').val(NewKeyword);

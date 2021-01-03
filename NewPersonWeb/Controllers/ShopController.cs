@@ -60,9 +60,6 @@ namespace NewPersonWeb.Controllers
                 });
             }
 
-
-
-
             Qty = 1;
             var result = new ShopRepo().AddProductToBasket(ssn, ID_Product, Qty);
             if (result)
@@ -83,9 +80,29 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult AddProductToFavorite(long ID_Product)
         {
+            ShopRepo shopRepo = new ShopRepo();
+            Product product = shopRepo.GetProduct(ssn, ID_Product);
 
+            if (product == null)
+            {
+                return Ok(new ApiResult
+                {
+                    Status = 2,
+                    Title = "عملیات با خطا مواجه شد",
+                    Message = "محصول معتبر نمیباشد"
+                });
+            }
+            if (product.IsFavorite)
+            {
+                return Ok(new ApiResult
+                {
+                    Status = 3,
+                    Title = "عملیات انجام نشد",
+                    Message = "این محصول قبلا در لیست کالاهای محبوب اضافه شده"
+                });
+            }
 
-            var result =  new ShopRepo().AddProductToFavorite(ssn, ID_Product);
+            var result = shopRepo.AddProductToFavorite(ssn, ID_Product);
             if (result)
             {
                 return Ok(new ApiResult
@@ -104,7 +121,29 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult RemoveProductFromFavorite(long ID_Product)
         {
-            var result = new ShopRepo().RemoveProductFromeFavorite(ssn, ID_Product);
+            ShopRepo shopRepo = new ShopRepo();
+            Product product = shopRepo.GetProduct(ssn, ID_Product);
+
+            if (product == null)
+            {
+                return Ok(new ApiResult
+                {
+                    Status = 2,
+                    Title = "عملیات با خطا مواجه شد",
+                    Message = "محصول معتبر نمیباشد"
+                });
+            }
+            if (product.IsFavorite != true)
+            {
+                return Ok(new ApiResult
+                {
+                    Status = 3,
+                    Title = "عملیات انجام نشد",
+                    Message = "این محصول در لیست کالاهای محبوب شما نمیباشد"
+                });
+            }
+
+            var result = shopRepo.RemoveProductFromeFavorite(ssn, ID_Product);
             if (result)
             {
                 return Ok(new ApiResult
