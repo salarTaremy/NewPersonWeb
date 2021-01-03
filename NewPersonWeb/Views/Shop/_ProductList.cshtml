@@ -89,12 +89,12 @@
                             if (item.ExistInBasket)
                             {
                                 <span class="add-to-cart d-none">افزودن به سبد</span>
-                                <a href="app-ecommerce-checkout.html" class="view-in-cart d-none d-inline-block">نمایش در سبد</a>
+                                <a asp-action="Index" asp-controller="Basket" class="view-in-cart d-none d-inline-block">نمایش در سبد</a>
                             }
                             else
                             {
                                 <span class="add-to-cart">افزودن به سبد</span>
-                                <a href="app-ecommerce-checkout.html" class="view-in-cart d-none">نمایش در سبد</a>
+                                <a asp-action="Index" asp-controller="Basket" class="view-in-cart d-none">نمایش در سبد</a>
                             }
                         }
                     </div>

@@ -16,6 +16,15 @@ namespace NewPersonWeb.Repository
             return db.GetList<Product>("Web.GetProductListPerSsnCode", null, System.Data.CommandType.StoredProcedure);
         }
 
+
+        public List<Product> GetListOfBasketProducts(string Ssn)
+        {
+            var param = new DynamicParameters(
+                new{ssn = Ssn});
+            return db.GetList<Product>("Web.GetListOfBasketProducts", param, System.Data.CommandType.StoredProcedure);
+        }
+
+
         public List<Product> GetAll(string Ssn, int SortOrder = 0, int CountInPage = 15, int CurentPgae = 1)
         {
             var param = new DynamicParameters(

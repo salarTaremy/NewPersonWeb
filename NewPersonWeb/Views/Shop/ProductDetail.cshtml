@@ -108,13 +108,13 @@
                                         @if (Model.ExistInBasket)
                                         {
                                             <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart add-to-basket d-none"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
-                                            <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart view-in-basket"><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</button>
+                                            <a class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart view-in-basket" asp-action="Index" asp-controller="Basket"><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</a>
 
                                         }
                                         else
                                         {
                                             <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart add-to-basket" id="@(Model.ID)"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
-                                            <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart view-in-basket d-none "><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</button>
+                                            <a class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart view-in-basket d-none " asp-action="Index" asp-controller="Basket" ><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</a>
 
                                         }
                                     }
