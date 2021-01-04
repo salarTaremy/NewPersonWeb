@@ -167,9 +167,18 @@
                                 <div class="w-75 mx-auto">
                                     <i class="fa fa-history text-primary font-large-2"></i>
                                     <h5 class="mt-2 font-weight-bold">سقف سفارش <span>@Model.MaxPerDayCount</span> عدد</h5>
-                                    <p>
-                                        این محصول را میتوانید هر @Model.DayCount روز یک بار و به تعداد @Model.MaxPerDayCount عدد(در صورت موجودی) سفارش دهید
-                                    </p>
+                                    @if (@Model.DayCount == 1)
+                                    {
+                                        <p>
+                                            شما میتوانید روزانه تا سقف @Model.MaxPerDayCount عدد از این محصول (در صورت موجود بودن) سفارش دهید
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            این محصول را میتوانید هر @Model.DayCount روز یک بار و تا سقف @Model.MaxPerDayCount عدد(در صورت  موجود بودن) سفارش دهید
+                                        </p>
+                                    }
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 mb-4 mb-md-0">
