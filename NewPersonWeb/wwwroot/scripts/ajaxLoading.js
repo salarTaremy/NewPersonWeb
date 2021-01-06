@@ -1,4 +1,5 @@
 ﻿// you must add this tag in html page
+// or Add :  class="modal"   to any div for load animation
 //  <div class="modal"><!-- For Ajax Loading --></div>
 
 $body = $("body");

@@ -9,11 +9,29 @@ namespace NewPersonWeb.Controllers
 {
     public class BasketController: BaseController
     {
+
+       
         public IActionResult Index()
+        {
+          
+
+            return View();
+           
+        }
+        [HttpPost]
+
+        public IActionResult BasketItems()
         {
             var x = new ProductRepo().GetListOfBasketProducts("0072374586");
 
-            return View(x);
+            return PartialView("_BasketItems" , x);
+
+
         }
+
+
+
+
+
     }
 }
