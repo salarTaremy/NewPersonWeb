@@ -89,7 +89,11 @@
                         @foreach (var item in Model.Products)
                         {
                             string imgName = item.Code + ".jpg";
-                            long Percent = 100 - (item.Price * 100 / item.ConsumerPrices);
+                            long Percent = 0;
+                            if (item.Price < item.ConsumerPrices)
+                            {
+                                Percent =100 - (item.Price * 100 / item.ConsumerPrices);
+                            }
                             string HaveTax;
                             if (item.HaveTax)
                             {
@@ -114,9 +118,12 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <h6 class="item-price text-danger">
-                                                    <del>@String.Format("{0:n0}", item.ConsumerPrices) ریال</del>
-                                                </h6>
+                                                @if (item.ConsumerPrices > item.Price)
+                                                {
+                                                    <h6 class="item-price text-danger">
+                                                        <del>@String.Format("{0:n0}", item.ConsumerPrices) ریال</del>
+                                                    </h6>
+                                                }
                                                 <h6 class="item-price text-success">
                                                     @String.Format("{0:n0}", item.Price) ریال
                                                 </h6>
@@ -142,9 +149,12 @@
                                                 </div>
                                             </div>
                                             <div class="item-cost">
-                                                <h6 class="item-price text-danger">
-                                                    <del>@String.Format("{0:n0}", item.ConsumerPrices) ریال</del>
-                                                </h6>
+                                                @if (item.ConsumerPrices > item.Price)
+                                                {
+                                                    <h6 class="item-price text-danger">
+                                                        <del>@String.Format("{0:n0}", item.ConsumerPrices) ریال</del>
+                                                    </h6>
+                                                }
                                                 <h6 class="item-price text-success">
                                                     @String.Format("{0:n0}", item.Price) ریال
                                                 </h6>

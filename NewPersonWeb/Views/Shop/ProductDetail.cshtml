@@ -158,9 +158,19 @@
                                 <div class="w-75 mx-auto">
                                     <i class="fa fa-tags text-primary font-large-2"></i>
                                     <h5 class="mt-2 font-weight-bold">@Percent% تخفیف</h5>
-                                    <p>
-                                        قیمت این محصول برای پرسنل با احتساب @Percent درصد تخفیف بر مبنای قیمت مصرف کننده محاسبه شده است
-                                    </p>
+                                    @if (Percent > 0)
+                                    {
+                                        <p>
+                                            قیمت این محصول برای پرسنل با احتساب @Percent درصد تخفیف بر مبنای قیمت مصرف کننده محاسبه شده است
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            هیچ تخفیفی برای این محصول در نظر گرفته نشده است
+                                        </p>
+                                    }
+
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 mb-4 mb-md-0">

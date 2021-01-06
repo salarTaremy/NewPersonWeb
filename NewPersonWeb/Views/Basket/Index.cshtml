@@ -33,6 +33,7 @@
 
                          @foreach (var item in Model)
                          {
+                             long Percent = 100 - (item.Price * 100 / item.ConsumerPrices);
                             <div class="card ecommerce-card">
                                 <div class="card-content">
                                     <div class="item-img text-center">
@@ -48,35 +49,63 @@
                                             <p class="stock-status-in">مجاز برای خرید پرسنل</p>
                                         </div>
                                         <div class="item-quantity">
-                                            <p class="quantity-title">تعداد</p>
+                                            <p class="quantity-title">تعداد (عدد)</p>
                                             <div class="input-group quantity-counter-wrapper">
                                                 <input type="text" class="quantity-counter" value="1">
                                             </div>
                                         </div>
-                                        <p class="delivery-date">Delivery by, Wed Apr 25</p>
-                                        <p class="offers">17% off 4 offers Available</p>
+
+
+
+
+                                        @if (item.DayCount == 1)
+                                        {
+                                            <p class="delivery-date">
+                                                سقف سفارش روزانه  @item.MaxPerDayCount عدد 
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="delivery-date">
+                                                سقف سفارش هر @item.DayCount روز یک بار  @item.MaxPerDayCount  عدد
+                                            </p>
+                                        }
+                                        <p class="offers">@Percent.ToString()  % تخفیف بر مبنای قیمت مصرف کننده</p>
                                     </div>
                                     <div class="item-options text-center">
                                         <div class="item-wrapper">
                                             <div class="item-rating">
                                                 <div class="badge badge-primary badge-md">
-                                                    4 <i class="feather icon-star ml-25"></i>
+                                                    @item.Rate
+                                                    <i class="feather icon-star ml-25"></i>
                                                 </div>
                                             </div>
                                             <div class="item-cost">
                                                 <h6 class="item-price">
-                                                    @item.Price
+                                                    @String.Format("{0:n0}", item.Price) ریال
                                                 </h6>
-                                                <p class="shipping">
-                                                    <i class="feather icon-shopping-cart"></i> Free Shipping
-                                                </p>
+
+                                                @{if (item.HaveTax)
+                                                    {
+                                                        <p class="shipping">
+                                                            <i class="feather icon-trending-up"></i> مشمول ارزش افزوده
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="shipping">
+                                                            <i class="feather icon-trending-up"></i> فاقد ارزش افزوده
+                                                        </p>
+                                                    }
+                                                }
+
                                             </div>
                                         </div>
                                         <div class="wishlist remove-wishlist">
-                                            <i class="feather icon-x align-middle"></i> Remove
+                                            <i class="feather icon-x align-middle"></i> حذف از سبد
                                         </div>
                                         <div class="cart remove-wishlist">
-                                            <i class="fa fa-heart-o mr-25"></i> Wishlist
+                                            <i class="fa fa-heart-o mr-25"></i> علاقمندی ها
                                         </div>
                                     </div>
                                 </div>
