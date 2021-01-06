@@ -29,21 +29,20 @@
                     <section id="place-order" class="list-view product-checkout">
                         <div class="checkout-items">
 
-
-
                          @foreach (var item in Model)
                          {
                              long Percent = 100 - (item.Price * 100 / item.ConsumerPrices);
+                             string imgName = item.Code + ".jpg";
                             <div class="card ecommerce-card">
                                 <div class="card-content">
                                     <div class="item-img text-center">
-                                        <a href="app-ecommerce-details.html">
-                                            <img src="~/app-assets/images/pages/eCommerce/9.png" alt="img-placeholder">
+                                        <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@(item.ID)">
+                                            <img style="max-height:200px" class="img-fluid" src="~/app-assets/images/Products/@imgName" alt="تصویر موجود نمیباشد">
                                         </a>
                                     </div>
                                     <div class="card-body">
                                         <div class="item-name">
-                                            <a href="app-ecommerce-details.html"> @item.GroupName   @item.Name  @item.BrandName    @item.Weight.ToString()</a>
+                                            <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@(item.ID)"> @item.GroupName   @item.Name  @item.BrandName    @item.Weight.ToString()</a>
                                             <span></span>
                                             <p class="item-company">نام تجاری : <span class="company-name">@item.BrandName </span></p>
                                             <p class="stock-status-in">مجاز برای خرید پرسنل</p>
@@ -54,8 +53,6 @@
                                                 <input type="text" class="quantity-counter" value="1">
                                             </div>
                                         </div>
-
-
 
 
                                         @if (item.DayCount == 1)

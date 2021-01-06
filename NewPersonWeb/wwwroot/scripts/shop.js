@@ -56,7 +56,7 @@ function postIt(pageIndex) {
             $("#salar").append(data);
             setBasketListener();
             // List View
-            if ($(".list-view-btn").hasClass('active') == true) {
+            if ($(".list-view-btn").hasClass('active') === true) {
                 $("#ecommerce-products").removeClass("grid-view").addClass("list-view");
             }
             goToUp();
