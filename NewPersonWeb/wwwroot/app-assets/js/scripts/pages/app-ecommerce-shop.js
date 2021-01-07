@@ -144,28 +144,28 @@ $(document).ready(function () {
     })
   }
 
-  // checkout quantity counter
-  var quantityCounter = $(".quantity-counter"),
-    CounterMin = 1,
-    CounterMax = 10;
-  if (quantityCounter.length > 0) {
-    quantityCounter.TouchSpin({
-      min: CounterMin,
-      max: CounterMax
-    }).on('touchspin.on.startdownspin', function () {
-      var $this = $(this);
-      $('.bootstrap-touchspin-up').removeClass("disabled-max-min");
-      if ($this.val() == 1) {
-        $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
-      }
-    }).on('touchspin.on.startupspin', function () {
-      var $this = $(this);
-      $('.bootstrap-touchspin-down').removeClass("disabled-max-min");
-      if ($this.val() == 10) {
-        $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
-      }
-    });
-  }
+  //// checkout quantity counter
+  //var quantityCounter = $(".quantity-counter"),
+  //  CounterMin = 1,
+  //  CounterMax = 10;
+  //if (quantityCounter.length > 0) {
+  //  quantityCounter.TouchSpin({
+  //    min: CounterMin,
+  //    max: CounterMax
+  //  }).on('touchspin.on.startdownspin', function () {
+  //    var $this = $(this);
+  //    $('.bootstrap-touchspin-up').removeClass("disabled-max-min");
+  //    if ($this.val() == 1) {
+  //      $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
+  //    }
+  //  }).on('touchspin.on.startupspin', function () {
+  //    var $this = $(this);
+  //    $('.bootstrap-touchspin-down').removeClass("disabled-max-min");
+  //    if ($this.val() == 10) {
+  //      $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
+  //    }
+  //  });
+  //}
 
   // remove items from wishlist page
   //$(".remove-wishlist , .move-cart").on("click", function () {
@@ -303,9 +303,44 @@ $(document).ajaxSuccess(function () {
 
 
 
+
     $('input.quantity-counter').change(function () {
+
         var $this = $(this);
-        console.log($this.attr('id') + '\n' + $this.val() + '\n');
+        var min = 1;
+        var max = parseInt($this.attr('max'));
+        var id = $this.attr('id');
+        //console.log('id:' + id + '\nval:' + parseInt($this.val()) + '\nmax:' + max);
+
+        if (parseInt($this.val()) < min) {
+            $this.val(min);
+        }
+        if (parseInt($this.val()) > max) {
+            $this.val(max);
+        }
+
+        if (parseInt($this.val()) == min && $(this).attr("is-min-value") == "false" ) {
+            $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
+            $(this).siblings().find('.bootstrap-touchspin-up').removeClass("disabled-max-min");
+            $(this).attr("is-min-value", "true");
+            $(this).attr("is-max-value", "false");
+            console.log('Api >>>>>>>  ' + $this.val());
+        }
+        if (parseInt($this.val()) == max && $(this).attr("is-max-value") == "false" ) {
+            $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
+            $(this).siblings().find('.bootstrap-touchspin-down').removeClass("disabled-max-min");
+            $(this).attr("is-min-value", "false");
+            $(this).attr("is-max-value", "true");
+            console.log('Api >>>>>>>  ' + $this.val());
+        }
+        if (parseInt($this.val()) > min && parseInt($this.val()) < max) {
+            $(this).siblings().find('.bootstrap-touchspin-up').removeClass("disabled-max-min");
+            $(this).siblings().find('.bootstrap-touchspin-down').removeClass("disabled-max-min");
+            $(this).attr("is-min-value", "false");
+            $(this).attr("is-max-value", "false");
+            console.log('Api >>>>>>>  ' + $this.val());
+        }
+
     });
 
 
@@ -313,25 +348,27 @@ $(document).ajaxSuccess(function () {
     // checkout quantity counter
     var quantityCounter = $(".quantity-counter"),
         CounterMin = 1,
-        CounterMax = 20;
+        CounterMax = 99;
     if (quantityCounter.length > 0) {
         quantityCounter.TouchSpin({
             min: CounterMin,
             max: CounterMax
         }).on('touchspin.on.startdownspin', function () {
             var $this = $(this);
-            $('.bootstrap-touchspin-up').removeClass("disabled-max-min");
-            if ($this.val() == CounterMin) {
-                $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
-            }
+            //$('.bootstrap-touchspin-up').removeClass("disabled-max-min");
+            //if ($this.val() == CounterMin) {
+            //    $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
+            //}
         }).on('touchspin.on.startupspin', function () {
             var $this = $(this);
-            $('.bootstrap-touchspin-down').removeClass("disabled-max-min");
-            if ($this.val() == CounterMax) {
-                $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
-            }
+            //$('.bootstrap-touchspin-down').removeClass("disabled-max-min");
+            //if ($this.val() == CounterMax) {
+            //    $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
+            //}
         });
     }
+
+
 
     // remove items from wishlist page
     $(".remove-wishlist , .move-cart").on("click", function () {

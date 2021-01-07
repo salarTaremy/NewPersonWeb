@@ -36,7 +36,15 @@
                                 <div class="item-quantity">
                                     <p class="quantity-title">تعداد (عدد)</p>
                                     <div class="input-group quantity-counter-wrapper">
-                                        <input type="text" class="quantity-counter" value="@item.Qty" id="@item.ID">
+                                        <input type="text" 
+                                               class="quantity-counter" 
+                                               id="@item.ID"
+                                               max="@item.MaxPerDayCount"
+                                               min="1"
+                                               is-min-value ="true"
+                                               is-max-value ="false"
+                                               value="@item.Qty" /> 
+                                               
                                     </div>
                                 </div>
 
@@ -50,7 +58,7 @@
                                 else
                                 {
                                     <p class="delivery-date">
-                                        سقف سفارش هر @item.DayCount روز یک بار  @item.MaxPerDayCount  عدد
+                                        سقف سفارش به ازای هر @item.DayCount روز  @item.MaxPerDayCount  عدد
                                     </p>
                                 }
                                 <p class="offers">@Percent.ToString()  % تخفیف بر مبنای قیمت مصرف کننده</p>
