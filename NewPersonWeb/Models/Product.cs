@@ -34,8 +34,10 @@ namespace NewPersonWeb.Models
         public byte? Rate { get; set; }
         public string AnbarName { get; set; }
 
-        public long? @Inventory { get; set; }
+        public long? Inventory { get; set; }
+        public int Qty { get; set; }
 
         public List<Product> RelatedProducts { get; set; }
+
     }
 }

@@ -301,10 +301,19 @@ $(document).ajaxSuccess(function () {
         })
     }
 
+
+
+    $('input.quantity-counter').change(function () {
+        var $this = $(this);
+        console.log($this.attr('id') + '\n' + $this.val() + '\n');
+    });
+
+
+
     // checkout quantity counter
     var quantityCounter = $(".quantity-counter"),
         CounterMin = 1,
-        CounterMax = 10;
+        CounterMax = 20;
     if (quantityCounter.length > 0) {
         quantityCounter.TouchSpin({
             min: CounterMin,
@@ -312,13 +321,13 @@ $(document).ajaxSuccess(function () {
         }).on('touchspin.on.startdownspin', function () {
             var $this = $(this);
             $('.bootstrap-touchspin-up').removeClass("disabled-max-min");
-            if ($this.val() == 1) {
+            if ($this.val() == CounterMin) {
                 $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
             }
         }).on('touchspin.on.startupspin', function () {
             var $this = $(this);
             $('.bootstrap-touchspin-down').removeClass("disabled-max-min");
-            if ($this.val() == 10) {
+            if ($this.val() == CounterMax) {
                 $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
             }
         });

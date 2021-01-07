@@ -163,7 +163,7 @@ namespace NewPersonWeb.Controllers
         [Route("[Controller]/[Action]/{ProductId}")]
         public IActionResult ProductDetail(long ProductId)
         {
-            var Product = new ShopRepo().GetProduct(ssn, ProductId);
+            var Product =  new ShopRepo().GetProduct(ssn, ProductId);
             Product.RelatedProducts = new ProductRepo().GetRelated(ssn, ProductId);
             return View(Product);
         }
