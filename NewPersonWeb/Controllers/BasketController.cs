@@ -13,23 +13,21 @@ namespace NewPersonWeb.Controllers
        
         public IActionResult Index()
         {
-          
-
             return View();
-           
         }
-        [HttpPost]
 
+        [HttpPost]
         public IActionResult BasketItems()
         {
-            var x = new ProductRepo().GetListOfBasketProducts("0072374586");
-
+            var x = new BasketRepo().GetListOfBasketProducts("0072374586");
             return PartialView("_BasketItems" , x);
-
-
         }
 
-
+        [HttpPost]
+        public IActionResult ChangeQty( int Qty)
+        {
+            return BadRequest();
+        }
 
 
 

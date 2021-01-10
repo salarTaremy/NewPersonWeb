@@ -46,10 +46,10 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult AddProductToBasket(long ID_Product, short Qty)
         {
-            
 
-            ShopRepo shopRepo = new ShopRepo();
-            var item = shopRepo.GetBasketDetailIfExistsProduct(ssn, ID_Product);
+
+            BasketRepo basketRepo = new BasketRepo();
+            var item = basketRepo.GetBasketDetailIfExistsProduct(ssn, ID_Product);
             if (item != null)
             {
                 return Ok(new ApiResult

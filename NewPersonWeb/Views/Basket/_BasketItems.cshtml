@@ -33,18 +33,41 @@
                                     <p class="item-company">نام تجاری : <span class="company-name">@item.BrandName </span></p>
                                     <p class="stock-status-in">مجاز برای خرید پرسنل</p>
                                 </div>
+                                @{
+                                    bool IsMinValue;
+                                    bool IsMaxValue;
+                                    if (item.Qty <=1)
+                                    {
+                                        IsMinValue = true;
+                                    }
+                                    else
+                                    {
+                                        IsMinValue = false;
+                                    }
+                                    if (item.Qty >= item.MaxPerDayCount)
+                                    {
+                                        IsMaxValue = true;
+                                    }
+                                    else
+                                    {
+                                        IsMaxValue = false;
+                                    }
+                                }
+
+
+
                                 <div class="item-quantity">
                                     <p class="quantity-title">تعداد (عدد)</p>
                                     <div class="input-group quantity-counter-wrapper">
-                                        <input type="text" 
-                                               class="quantity-counter" 
+                                        <input type="text"
+                                               class="quantity-counter"
                                                id="@item.ID"
                                                max="@item.MaxPerDayCount"
                                                min="1"
-                                               is-min-value ="true"
-                                               is-max-value ="false"
-                                               value="@item.Qty" /> 
-                                               
+                                               is-min-value="@IsMinValue"
+                                               is-max-value="@IsMaxValue"
+                                               value="@item.Qty" />
+
                                     </div>
                                 </div>
 
