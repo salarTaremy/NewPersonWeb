@@ -302,6 +302,28 @@ $(document).ajaxSuccess(function () {
     }
 
 
+    function ChangeQty(ProductID, Qty) {
+        $.ajax({
+            url: '/Basket/ChangeQty',
+            type: 'post',
+            data: {
+                ProductID: ProductID,
+                Qty: Qty
+            },
+            success: function (data) {
+                $(".content-ajax").empty();
+                $(".content-ajax").append(data);
+                // goToUp();
+            },
+            error: function (request, error) {
+                toastr.error(request.responseText, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+            }
+            //error: function (e) {
+            //    console.log(e);
+            //},dataType: "json",contentType: "application/json"
+        });
+    }
+
 
 
     $('input.quantity-counter').change(function () {
@@ -310,7 +332,6 @@ $(document).ajaxSuccess(function () {
         var min = 1;
         var max = parseInt($this.attr('max'));
         var id = $this.attr('id');
-        //console.log('id:' + id + '\nval:' + parseInt($this.val()) + '\nmax:' + max);
 
         if (parseInt($this.val()) < min) {
             $this.val(min);
@@ -319,31 +340,30 @@ $(document).ajaxSuccess(function () {
             $this.val(max);
         }
 
-        if (parseInt($this.val()) == min && $(this).attr("is-min-value") == "false" ) {
+        if (parseInt($this.val()) == min && $(this).attr("is-min-value") == "false") {
             $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
             $(this).siblings().find('.bootstrap-touchspin-up').removeClass("disabled-max-min");
             $(this).attr("is-min-value", "true");
             $(this).attr("is-max-value", "false");
-            console.log('Api >>>>>>>  ' + $this.val());
+            ChangeQty(id, $this.val());
+
         }
-        if (parseInt($this.val()) == max && $(this).attr("is-max-value") == "false" ) {
+        if (parseInt($this.val()) == max && $(this).attr("is-max-value") == "false") {
             $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
             $(this).siblings().find('.bootstrap-touchspin-down').removeClass("disabled-max-min");
             $(this).attr("is-min-value", "false");
             $(this).attr("is-max-value", "true");
-            console.log('Api >>>>>>>  ' + $this.val());
+            ChangeQty(id, $this.val());
         }
         if (parseInt($this.val()) > min && parseInt($this.val()) < max) {
             $(this).siblings().find('.bootstrap-touchspin-up').removeClass("disabled-max-min");
             $(this).siblings().find('.bootstrap-touchspin-down').removeClass("disabled-max-min");
             $(this).attr("is-min-value", "false");
             $(this).attr("is-max-value", "false");
-            console.log('Api >>>>>>>  ' + $this.val());
+            ChangeQty(id, $this.val());
         }
 
     });
-
-
 
     // checkout quantity counter
     var quantityCounter = $(".quantity-counter"),
@@ -355,19 +375,10 @@ $(document).ajaxSuccess(function () {
             max: CounterMax
         }).on('touchspin.on.startdownspin', function () {
             var $this = $(this);
-            //$('.bootstrap-touchspin-up').removeClass("disabled-max-min");
-            //if ($this.val() == CounterMin) {
-            //    $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
-            //}
         }).on('touchspin.on.startupspin', function () {
             var $this = $(this);
-            //$('.bootstrap-touchspin-down').removeClass("disabled-max-min");
-            //if ($this.val() == CounterMax) {
-            //    $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
-            //}
         });
     }
-
 
 
     // remove items from wishlist page

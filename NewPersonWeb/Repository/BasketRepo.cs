@@ -57,5 +57,23 @@ namespace NewPersonWeb.Repository
             return db.GetList<Product>("Web.GetListOfBasketProducts", param, System.Data.CommandType.StoredProcedure);
         }
 
+        public BuyHistory GetBuyHistory(string Ssn, long ProductID)
+        {
+            BuyHistory result = null;
+            string SpName = "Web.[GetBuyHistory]";
+            var param = new DynamicParameters(
+                new
+                {
+                    Ssn = Ssn,
+                    ID_Product = ProductID
+                });
+            using (var con = new SqlConnection(db.GetConnectionString()))
+            {
+                result = con.Query<BuyHistory>(SpName, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+
+            return result;
+        }
+
     }
 }

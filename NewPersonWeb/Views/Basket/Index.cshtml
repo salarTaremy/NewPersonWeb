@@ -51,27 +51,24 @@
     <script>
 
         $(document).ready(function () {
-
+            console.log('ready ');
             $.ajax({
                 url: '/Basket/BasketItems',
                 type: 'post',
                 data: {
-                    GrpID: 1
+                    ProductID: 11111
                 },
                 success: function (data) {
                     $(".content-ajax").empty();
                     $(".content-ajax").append(data);
-
-
                     // goToUp();
                 },
                 error: function (request, error) {
-                    //alert("Request: " + JSON.stringify(request));
-                    toastr.error(ErrorMessageForLogin, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+                    toastr.error(request.stat, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
                 }
             });
-
         });
+
 
     </script>
 
