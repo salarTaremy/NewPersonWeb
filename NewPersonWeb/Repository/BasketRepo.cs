@@ -75,5 +75,23 @@ namespace NewPersonWeb.Repository
             return result;
         }
 
+        public bool ChangeQty(string Ssn, long ID_Product, short Qty)
+        {
+            int affectedRows;
+            string SpName = "Web.ChangeQtyProductInBasket";
+            var param = new DynamicParameters(
+                new
+                {
+                    Ssn = Ssn,
+                    ID_Product = ID_Product,
+                    Qty = Qty
+                });
+            using (var con = new SqlConnection(db.GetConnectionString()))
+            {
+                affectedRows = con.Execute(SpName, param, commandType: CommandType.StoredProcedure);
+            }
+            return (affectedRows != 0);
+        }
+
     }
 }

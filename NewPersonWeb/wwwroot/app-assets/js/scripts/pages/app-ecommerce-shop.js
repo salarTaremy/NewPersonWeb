@@ -7,6 +7,8 @@ $(document).ready(function () {
     direction = 'rtl';
   }
 
+    LoadBasket();
+
   var sidebarShop = $(".sidebar-shop"),
     shopOverlay = $(".shop-content-overlay"),
     sidebarToggler = $(".shop-sidebar-toggler"),
@@ -17,6 +19,8 @@ $(document).ready(function () {
     cart = $(".cart"),
     wishlist = $(".wishlist");
 
+
+ 
 
   // show sidebar
   sidebarToggler.on("click", function () {
@@ -144,34 +148,39 @@ $(document).ready(function () {
     })
   }
 
-  //// checkout quantity counter
-  //var quantityCounter = $(".quantity-counter"),
-  //  CounterMin = 1,
-  //  CounterMax = 10;
-  //if (quantityCounter.length > 0) {
-  //  quantityCounter.TouchSpin({
-  //    min: CounterMin,
-  //    max: CounterMax
-  //  }).on('touchspin.on.startdownspin', function () {
-  //    var $this = $(this);
-  //    $('.bootstrap-touchspin-up').removeClass("disabled-max-min");
-  //    if ($this.val() == 1) {
-  //      $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
-  //    }
-  //  }).on('touchspin.on.startupspin', function () {
-  //    var $this = $(this);
-  //    $('.bootstrap-touchspin-down').removeClass("disabled-max-min");
-  //    if ($this.val() == 10) {
-  //      $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
-  //    }
-  //  });
-  //}
+    function LoadBasket() {
+        console.log('LoadBasketForStart');
+        $.ajax({
+            url: '/Basket/BasketItems',
+            type: 'post',
+            success: function (data) {
+                $(".content-ajax").empty();
+                $(".content-ajax").append(data);
+                // goToUp();
+            },
+            error: function (request, error) {
+                toastr.error(request.stat, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+            }
+        });
+    }
 
-  // remove items from wishlist page
-  //$(".remove-wishlist , .move-cart").on("click", function () {
-  //  $(this).closest(".ecommerce-card").remove();
-  //})
 })
+
+
+
+
+//============================================================================================================================
+//============================================================================================================================
+//============================================================================================================================
+//============================================================================================================================
+//============================================================================================================================
+//============================================================================================================================
+//============================================================================================================================
+
+
+
+
+
 $(document).ajaxSuccess(function () {
     "use strict";
     // RTL Support
@@ -301,6 +310,24 @@ $(document).ajaxSuccess(function () {
         })
     }
 
+   
+              
+    function LoadBasket() {
+        console.log('LoadBasketAfterAjaxLoad');
+        $.ajax({
+            url: '/Basket/BasketItems',
+            type: 'post',
+            success: function (data) {
+                $(".content-ajax").empty();
+                $(".content-ajax").append(data);
+                // goToUp();
+            },
+            error: function (request, error) {
+                toastr.error(request.stat, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+            }
+        });
+    }
+
 
     function ChangeQty(ProductID, Qty) {
         $.ajax({
@@ -311,18 +338,35 @@ $(document).ajaxSuccess(function () {
                 Qty: Qty
             },
             success: function (data) {
-                $(".content-ajax").empty();
-                $(".content-ajax").append(data);
+
+                var result = JSON.stringify(data);
+                var obj = jQuery.parseJSON(result);
+
+
+                if (obj.status === 1) {
+                    toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                  
+                } else {
+                    toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                }
+
+
+                LoadBasket();
                 // goToUp();
             },
             error: function (request, error) {
+
+
+                //console.log(request);
+                console.log(error);
+
                 toastr.error(request.responseText, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
             }
-            //error: function (e) {
-            //    console.log(e);
-            //},dataType: "json",contentType: "application/json"
         });
     }
+
+
+
 
 
 
