@@ -371,6 +371,7 @@ $(document).ajaxSuccess(function () {
 
 
     $('input.quantity-counter').change(function () {
+        console.log('input.quantity-counter');
 
         var $this = $(this);
         var min = 1;
@@ -383,8 +384,9 @@ $(document).ajaxSuccess(function () {
         if (parseInt($this.val()) > max) {
             $this.val(max);
         }
-
-        if (parseInt($this.val()) == min && $(this).attr("is-min-value") == "false") {
+        //if (parseInt($this.val()) == min && $(this).attr("is-min-value") == "false") {
+        if (parseInt($this.val()) == min) {
+            console.log('min');
             $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
             $(this).siblings().find('.bootstrap-touchspin-up').removeClass("disabled-max-min");
             $(this).attr("is-min-value", "true");
@@ -392,7 +394,9 @@ $(document).ajaxSuccess(function () {
             ChangeQty(id, $this.val());
 
         }
-        if (parseInt($this.val()) == max && $(this).attr("is-max-value") == "false") {
+        //if (parseInt($this.val()) == max && $(this).attr("is-max-value") == "false") {
+        if (parseInt($this.val()) == max) {
+            console.log('max');
             $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
             $(this).siblings().find('.bootstrap-touchspin-down').removeClass("disabled-max-min");
             $(this).attr("is-min-value", "false");
@@ -400,6 +404,7 @@ $(document).ajaxSuccess(function () {
             ChangeQty(id, $this.val());
         }
         if (parseInt($this.val()) > min && parseInt($this.val()) < max) {
+            console.log('between');
             $(this).siblings().find('.bootstrap-touchspin-up').removeClass("disabled-max-min");
             $(this).siblings().find('.bootstrap-touchspin-down').removeClass("disabled-max-min");
             $(this).attr("is-min-value", "false");
