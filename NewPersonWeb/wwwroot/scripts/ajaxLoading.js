@@ -1,6 +1,6 @@
-﻿// you must add this tag in html page
+﻿// you must add this tag in html page => <div class="modal"><!-- For Ajax Loading --></div>
 // or Add :  class="modal"   to any div for load animation
-//  <div class="modal"><!-- For Ajax Loading --></div>
+
 
 $body = $("body");
 $(document).on({
