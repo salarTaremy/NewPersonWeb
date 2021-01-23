@@ -48,7 +48,7 @@ namespace NewPersonWeb.Controllers
 
             if (rep.ChangeQty(this.ssn,ProductID,Qty ))
             {
-                return Ok(new ApiResult { Status = 1, Title = "عملیات موفق", Message = "تعداد این محصول با موفقیت تغییر یافت" });
+                return Ok(new ApiResult { Status = 1, Title = "عملیات موفق", Message = $"تعداد این محصول به {Qty} عدد تغییر یافت" });
             }
             else
             {

@@ -115,11 +115,20 @@
 
                                     </div>
                                 </div>
-                                <div class="wishlist remove-wishlist">
+                                @if (item.IsFavorite)
+                                {
+                                    <div class="cart btn-primary wishlist added " id="@item.ID">
+                                        <i class="fa fa-heart    mr-25"></i> علاقمندی ها
+                                    </div>
+                                }
+                                @if (!item.IsFavorite)
+                                {
+                                    <div class="cart btn-primary wishlist " id="@item.ID">
+                                        <i class="fa fa-heart-o mr-25"></i> علاقمندی ها
+                                    </div>
+                                }
+                                <div class=" cart btn-danger text-white ">
                                     <i class="feather icon-x align-middle"></i> حذف از سبد
-                                </div>
-                                <div class="cart remove-wishlist">
-                                    <i class="fa fa-heart-o mr-25"></i> علاقمندی ها
                                 </div>
                             </div>
                         </div>

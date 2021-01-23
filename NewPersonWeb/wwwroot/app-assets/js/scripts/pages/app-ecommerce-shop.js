@@ -259,6 +259,7 @@ $(document).ajaxSuccess(function () {
         e.preventDefault();
     });
 
+
     // For Wishlist Icon
     //wishlist.on("click", function () {
     //    var $this = $(this)
@@ -368,9 +369,65 @@ $(document).ajaxSuccess(function () {
 
 
 
+    $("div.wishlist").click(function myfunction() {
+        console.log('wishlist click');
 
+
+        var $this = $(this)
+        var ID_Product = $this.attr('id');
+        if ($this.hasClass('added')) {
+            $.ajax({
+                url: '/shop/RemoveProductFromFavorite',
+                type: 'post',
+                data: {
+                    ID_Product: ID_Product
+                },
+                success: function (data) {
+                    $this.find("i").toggleClass("fa-heart-o fa-heart")
+                    $this.toggleClass("added");
+                    var result = JSON.stringify(data);
+                    var obj = jQuery.parseJSON(result);
+                    if (obj.status === 1) {
+                        toastr.info(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    } else {
+                        toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    }
+                    LoadBasket();
+                },
+                error: function (request, error) {
+                    toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+                }
+            });
+        } else {
+            $.ajax({
+                url: '/shop/AddProductToFavorite',
+                type: 'post',
+                data: {
+                    ID_Product: ID_Product
+                },
+                success: function (data) {
+                    $this.find("i").toggleClass("fa-heart-o fa-heart")
+                    $this.toggleClass("added");
+                    var result = JSON.stringify(data);
+                    var obj = jQuery.parseJSON(result);
+                    if (obj.status === 1) {
+                        toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    } else {
+                        toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                    }
+                    LoadBasket();
+                },
+                error: function (jqXHR, request, error) {
+                    toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+                }
+            });
+        }
+
+
+    })
 
     $('input.quantity-counter').change(function () {
+        console.log('input.quantity-counter');
 
         var $this = $(this);
         var min = 1;
@@ -383,8 +440,9 @@ $(document).ajaxSuccess(function () {
         if (parseInt($this.val()) > max) {
             $this.val(max);
         }
-
-        if (parseInt($this.val()) == min && $(this).attr("is-min-value") == "false") {
+        //if (parseInt($this.val()) == min && $(this).attr("is-min-value") == "false") {
+        if (parseInt($this.val()) == min) {
+            console.log('min');
             $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
             $(this).siblings().find('.bootstrap-touchspin-up').removeClass("disabled-max-min");
             $(this).attr("is-min-value", "true");
@@ -392,7 +450,9 @@ $(document).ajaxSuccess(function () {
             ChangeQty(id, $this.val());
 
         }
-        if (parseInt($this.val()) == max && $(this).attr("is-max-value") == "false") {
+        //if (parseInt($this.val()) == max && $(this).attr("is-max-value") == "false") {
+        if (parseInt($this.val()) == max) {
+            console.log('max');
             $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
             $(this).siblings().find('.bootstrap-touchspin-down').removeClass("disabled-max-min");
             $(this).attr("is-min-value", "false");
@@ -400,6 +460,7 @@ $(document).ajaxSuccess(function () {
             ChangeQty(id, $this.val());
         }
         if (parseInt($this.val()) > min && parseInt($this.val()) < max) {
+            console.log('between');
             $(this).siblings().find('.bootstrap-touchspin-up').removeClass("disabled-max-min");
             $(this).siblings().find('.bootstrap-touchspin-down').removeClass("disabled-max-min");
             $(this).attr("is-min-value", "false");
