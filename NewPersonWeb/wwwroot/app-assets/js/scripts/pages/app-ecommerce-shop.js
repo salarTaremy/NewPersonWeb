@@ -385,20 +385,7 @@ $(document).ajaxSuccess(function () {
 
     //});
 
-    // checkout quantity counter
-    var quantityCounter = $(".quantity-counter"),
-        CounterMin = 1,
-        CounterMax = 99;
-    if (quantityCounter.length > 0) {
-        quantityCounter.TouchSpin({
-            min: CounterMin,
-            max: CounterMax
-        }).on('touchspin.on.startdownspin', function () {
-            var $this = $(this);
-        }).on('touchspin.on.startupspin', function () {
-            var $this = $(this);
-        });
-    }
+
 
 
     // remove items from wishlist page

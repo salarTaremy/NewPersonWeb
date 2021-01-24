@@ -14,6 +14,38 @@
     });
 }
 
+
+function ChangeQty(ProductID, Qty) {
+    $.ajax({
+        url: '/Basket/ChangeQty',
+        type: 'post',
+        data: {
+            ProductID: ProductID,
+            Qty: Qty
+        },
+        success: function (data) {
+            var result = JSON.stringify(data);
+            var obj = jQuery.parseJSON(result);
+            if (obj.status === 1) {
+                toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+
+            } else {
+                toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+            }
+            LoadBasket();
+            // goToUp();
+        },
+        error: function (request, error) {
+            //console.log(request);
+            console.log(error);
+            toastr.error(request.responseText, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+        }
+    });
+}
+
+
+
+
 $(document).ready(function () {
     LoadBasket();
 });
@@ -21,41 +53,22 @@ $(document).ready(function () {
 
 $(document).ajaxSuccess(function () {
 
-    function ChangeQty(ProductID, Qty) {
-        $.ajax({
-            url: '/Basket/ChangeQty',
-            type: 'post',
-            data: {
-                ProductID: ProductID,
-                Qty: Qty
-            },
-            success: function (data) {
 
-                var result = JSON.stringify(data);
-                var obj = jQuery.parseJSON(result);
-
-
-                if (obj.status === 1) {
-                    toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
-
-                } else {
-                    toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
-                }
-
-
-                LoadBasket();
-                // goToUp();
-            },
-            error: function (request, error) {
-
-
-                //console.log(request);
-                console.log(error);
-
-                toastr.error(request.responseText, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
-            }
+    // checkout quantity counter
+    var quantityCounter = $(".quantity-counter"),
+        CounterMin = 1,
+        CounterMax = 99;
+    if (quantityCounter.length > 0) {
+        quantityCounter.TouchSpin({
+            min: CounterMin,
+            max: CounterMax
+        }).on('touchspin.on.startdownspin', function () {
+            var $this = $(this);
+        }).on('touchspin.on.startupspin', function () {
+            var $this = $(this);
         });
     }
+   
 
     $("div.wishlist").click(function myfunction() {
         console.log('wishlist click');

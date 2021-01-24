@@ -55,13 +55,7 @@ namespace NewPersonWeb.Controllers
                 return Ok(new ApiResult { Status = 5, Title = "عملیات ناموفق", Message = $"متاسفانه عملیات انجام نشد" });
             }
 
-
-            
-            
-
         }
-
-
 
     }
 }
