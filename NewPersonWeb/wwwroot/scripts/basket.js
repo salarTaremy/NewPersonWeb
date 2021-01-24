@@ -19,7 +19,6 @@ $(document).ready(function () {
 });
 
 
-
 $(document).ajaxSuccess(function () {
 
     function ChangeQty(ProductID, Qty) {
@@ -157,8 +156,5 @@ $(document).ajaxSuccess(function () {
         }
 
     });
-
-
-
 
 });
