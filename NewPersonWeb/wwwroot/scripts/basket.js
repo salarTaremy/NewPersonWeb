@@ -58,8 +58,6 @@ $(document).ajaxSuccess(function () {
         });
     }
 
-
-
     $("div.wishlist").click(function myfunction() {
         console.log('wishlist click');
 
@@ -115,11 +113,6 @@ $(document).ajaxSuccess(function () {
         }
 
     })
-
-
-
-
-
 
     $('input.quantity-counter').change(function () {
         console.log('input.quantity-counter');

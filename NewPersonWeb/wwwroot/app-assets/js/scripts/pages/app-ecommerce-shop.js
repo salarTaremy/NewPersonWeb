@@ -311,8 +311,6 @@ $(document).ajaxSuccess(function () {
             }
         });
     }
-
-
     function ChangeQty(ProductID, Qty) {
         $.ajax({
             url: '/Basket/ChangeQty',
@@ -348,12 +346,6 @@ $(document).ajaxSuccess(function () {
             }
         });
     }
-
-
-
-
-
-
     $('input.quantity-counter').change(function () {
 
         var $this = $(this);
