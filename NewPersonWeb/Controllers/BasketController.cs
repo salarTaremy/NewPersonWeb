@@ -26,6 +26,33 @@ namespace NewPersonWeb.Controllers
             return PartialView("_BasketItems" , x);
         }
 
+
+        [HttpPost]
+        public IActionResult RemoveProductFromBasket(long ID_Product)
+        {
+
+            var result = new BasketRepo().RemoveProductFromBasket(ssn, ID_Product);
+            if (result)
+            {
+                return Ok(new ApiResult
+                {
+                    Status = 1,
+                    Title = "عملیات موفق",
+                    Message = "محصول مورد نظر با موفقیت از سبد شما حذف شد"
+                });
+            }
+            else
+            {
+                return Ok(new ApiResult
+                {
+                    Status = 2,
+                    Title = "عملیات با خطا مواجه شد",
+                    Message = "محصول مورد نظر از سبد شما حذف نشد نمیباشد"
+                });
+            }
+        }
+
+
         [HttpPost]
         public IActionResult ChangeQty(long ProductID, short Qty)
         {

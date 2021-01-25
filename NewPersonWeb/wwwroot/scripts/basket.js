@@ -1,5 +1,8 @@
-﻿function LoadBasket() {
-    console.log('LoadBasketForStart');
+﻿
+
+
+function LoadBasket() {
+    console.log('Load Basket Start');
     $.ajax({
         url: '/Basket/BasketItems',
         type: 'post',
@@ -7,6 +10,7 @@
             $(".content-ajax").empty();
             $(".content-ajax").append(data);
             // goToUp();
+            console.log('Load Basket Success')
         },
         error: function (request, error) {
             toastr.error(request.stat, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
@@ -50,9 +54,7 @@ $(document).ready(function () {
     LoadBasket();
 });
 
-
 $(document).ajaxSuccess(function () {
-
 
     // checkout quantity counter
     var quantityCounter = $(".quantity-counter"),
@@ -69,6 +71,15 @@ $(document).ajaxSuccess(function () {
         });
     }
    
+
+
+
+    $("div.remove").click(function myfunction() {
+
+        console.log('remove');
+
+    });
+
 
     $("div.wishlist").click(function myfunction() {
         console.log('wishlist click');

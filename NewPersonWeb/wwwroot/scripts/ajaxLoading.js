@@ -13,3 +13,28 @@ $(document).on({
         console.log("ajax Stop !");
     }
 });
+
+$(document).ajaxSuccess(function () {
+    console.log('ajax Success');
+});
+
+
+$(document).ajaxComplete(function () {
+    console.log('ajax Complete');
+});
+
+$(document).ajaxError(function () {
+    console.log('ajax Error');
+});
+
+$(document).ajaxSend(function () {
+    console.log('ajax Send');
+});
+
+//$(document).ajaxStart(function () {
+//    console.log('ajax Start');
+//});
+
+//$(document).ajaxStop(function () {
+//    console.log('ajaxStop');
+//});

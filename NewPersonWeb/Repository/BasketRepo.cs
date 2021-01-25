@@ -93,5 +93,23 @@ namespace NewPersonWeb.Repository
             return (affectedRows != 0);
         }
 
+
+        public bool RemoveProductFromBasket(string Ssn, long ID_Product)
+        {
+            int affectedRows;
+            string SpName = "Web.RemoveProductFromBasket";
+            var param = new DynamicParameters(
+                new
+                {
+                    Ssn = Ssn,
+                    ID_Product = ID_Product
+                });
+            using (var con = new SqlConnection(db.GetConnectionString()))
+            {
+                affectedRows = con.Execute(SpName, param, commandType: CommandType.StoredProcedure);
+            }
+            return (affectedRows != 0);
+        }
+
     }
 }
