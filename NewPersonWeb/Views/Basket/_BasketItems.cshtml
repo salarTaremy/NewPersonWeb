@@ -31,6 +31,7 @@
                                     <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@(item.ID)"> @item.GroupName   @item.Name  @item.BrandName    @item.Weight.ToString()</a>
                                     <span></span>
                                     <p class="item-company">نام تجاری : <span class="company-name">@item.BrandName </span></p>
+                                    <p class="text">@item.Code</p>
                                     <p class="stock-status-in">مجاز برای خرید پرسنل</p>
                                 </div>
                                 @{

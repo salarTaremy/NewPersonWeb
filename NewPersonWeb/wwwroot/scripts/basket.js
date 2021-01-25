@@ -75,8 +75,31 @@ $(document).ajaxSuccess(function () {
 
 
     $("div.remove").click(function myfunction() {
-
+        var $this = $(this)
+        var ID_Product = $this.attr('id');
         console.log('remove');
+        $.ajax({
+            url: '/Basket/RemoveProductFromBasket',
+            type: 'post',
+            data: {
+                ID_Product: ID_Product
+            },
+            success: function (data) {
+                var result = JSON.stringify(data);
+                var obj = jQuery.parseJSON(result);
+                if (obj.status === 1) {
+                    toastr.info(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                } else {
+                    toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                }
+                LoadBasket();
+            },
+            error: function (request, error) {
+                toastr.error("انجام عملیات با خطا مواجه شد", 'خطا', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+            }
+        });
+
+
 
     });
 

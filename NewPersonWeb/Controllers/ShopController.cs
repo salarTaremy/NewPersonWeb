@@ -47,6 +47,17 @@ namespace NewPersonWeb.Controllers
         public IActionResult AddProductToBasket(long ID_Product, short Qty)
         {
 
+            var buyHistory = new Repository.BasketRepo().GetBuyHistory(ssn, ID_Product);
+            if (buyHistory.RemainingQty <= 0 )
+            {
+                return Ok(new ApiResult
+                {
+                    Status = 3,
+                    Title = "عملیات نا موفق",
+                    Message = "سقف سفارش شما برای این محصول به اتمام رسیده است"
+                });
+            }
+
 
             BasketRepo basketRepo = new BasketRepo();
             var item = basketRepo.GetBasketDetailIfExistsProduct(ssn, ID_Product);
