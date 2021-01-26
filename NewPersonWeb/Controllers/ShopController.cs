@@ -52,7 +52,7 @@ namespace NewPersonWeb.Controllers
             {
                 return Ok(new ApiResult
                 {
-                    Status = 3,
+                    Status = 0,
                     Title = "عملیات نا موفق",
                     Message = "سقف سفارش شما برای این محصول به اتمام رسیده است"
                 });

@@ -72,21 +72,7 @@ $(document).ready(function () {
     listViewBtn.addClass("active");
   });
 
-   ////For View in cart
-   // cart.on("click", function () {
-   //     alert('1');
-   // var $this = $(this),
-   // addToCart = $this.find(".add-to-cart"),
-   // viewInCart = $this.find(".view-in-cart");
-   // if(addToCart.is(':visible')) {
-   //   addToCart.addClass("d-none");
-   //   viewInCart.addClass("d-inline-block");
-   // }
-   // else{
-   //   var href= viewInCart.attr('href');
-   //   window.location.href = href;
-   // }
-   // });
+
 
 
 
@@ -94,12 +80,7 @@ $(document).ready(function () {
     e.preventDefault();
   });
 
-  // For Wishlist Icon
-  //wishlist.on("click", function () {
-  //  var $this = $(this)
-  //  $this.find("i").toggleClass("fa-heart-o fa-heart")
-  //  $this.toggleClass("added");
-  //})
+
 
   // Checkout Wizard
   var checkoutWizard = $(".checkout-tab-steps"),
@@ -243,13 +224,6 @@ $(document).ajaxSuccess(function () {
     });
 
 
-    // For Wishlist Icon
-    //wishlist.on("click", function () {
-    //    var $this = $(this)
-    //    $this.find("i").toggleClass("fa-heart-o fa-heart")
-    //    $this.toggleClass("added");
-    //})
-
     // Checkout Wizard
     var checkoutWizard = $(".checkout-tab-steps"),
         checkoutValidation = checkoutWizard.show();
@@ -295,98 +269,6 @@ $(document).ajaxSuccess(function () {
     }
 
    
-              
-    //function LoadBasket() {
-    //    console.log('LoadBasketAfterAjaxLoad');
-    //    $.ajax({
-    //        url: '/Basket/BasketItems',
-    //        type: 'post',
-    //        success: function (data) {
-    //            $(".content-ajax").empty();
-    //            $(".content-ajax").append(data);
-    //            // goToUp();
-    //        },
-    //        error: function (request, error) {
-    //            toastr.error(request.stat, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
-    //        }
-    //    });
-    //}
-    //function ChangeQty(ProductID, Qty) {
-    //    $.ajax({
-    //        url: '/Basket/ChangeQty',
-    //        type: 'post',
-    //        data: {
-    //            ProductID: ProductID,
-    //            Qty: Qty
-    //        },
-    //        success: function (data) {
-
-    //            var result = JSON.stringify(data);
-    //            var obj = jQuery.parseJSON(result);
-
-
-    //            if (obj.status === 1) {
-    //                toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
-                  
-    //            } else {
-    //                toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
-    //            }
-
-
-    //            LoadBasket();
-    //            // goToUp();
-    //        },
-    //        error: function (request, error) {
-
-
-    //            //console.log(request);
-    //            console.log(error);
-
-    //            toastr.error(request.responseText, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
-    //        }
-    //    });
-    //}
-    //$('input.quantity-counter').change(function () {
-
-    //    var $this = $(this);
-    //    var min = 1;
-    //    var max = parseInt($this.attr('max'));
-    //    var id = $this.attr('id');
-
-    //    if (parseInt($this.val()) < min) {
-    //        $this.val(min);
-    //    }
-    //    if (parseInt($this.val()) > max) {
-    //        $this.val(max);
-    //    }
-
-    //    if (parseInt($this.val()) == min && $(this).attr("is-min-value") == "false") {
-    //        $(this).siblings().find('.bootstrap-touchspin-down').addClass("disabled-max-min");
-    //        $(this).siblings().find('.bootstrap-touchspin-up').removeClass("disabled-max-min");
-    //        $(this).attr("is-min-value", "true");
-    //        $(this).attr("is-max-value", "false");
-    //        ChangeQty(id, $this.val());
-
-    //    }
-    //    if (parseInt($this.val()) == max && $(this).attr("is-max-value") == "false") {
-    //        $(this).siblings().find('.bootstrap-touchspin-up').addClass("disabled-max-min");
-    //        $(this).siblings().find('.bootstrap-touchspin-down').removeClass("disabled-max-min");
-    //        $(this).attr("is-min-value", "false");
-    //        $(this).attr("is-max-value", "true");
-    //        ChangeQty(id, $this.val());
-    //    }
-    //    if (parseInt($this.val()) > min && parseInt($this.val()) < max) {
-    //        $(this).siblings().find('.bootstrap-touchspin-up').removeClass("disabled-max-min");
-    //        $(this).siblings().find('.bootstrap-touchspin-down').removeClass("disabled-max-min");
-    //        $(this).attr("is-min-value", "false");
-    //        $(this).attr("is-max-value", "false");
-    //        ChangeQty(id, $this.val());
-    //    }
-
-    //});
-
-
-
 
     // remove items from wishlist page
     $(".remove-wishlist , .move-cart").on("click", function () {

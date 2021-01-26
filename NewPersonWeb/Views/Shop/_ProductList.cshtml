@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="item-name">
-                        <a href="app-ecommerce-details.html"> @item.GroupName  @item.Name @item.BrandName @item.Weight </a>
+                        <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@(item.ID)"> @item.GroupName  @item.Name @item.BrandName @item.Weight </a>
                         <p class="item-company">نام تجاری: <span class="company-name">@item.BrandName</span></p>
                     </div>
                     <div>
@@ -93,6 +93,7 @@
                             </div>
                         }
                     }
+
                     <div class="cart" id="@(item.ID)">
                         <i class="feather icon-shopping-cart"></i>
                         @{

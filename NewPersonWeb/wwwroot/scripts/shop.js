@@ -1,4 +1,9 @@
-﻿var btnTop = document.getElementById("btnTop");
+﻿$(document).ready(function () {
+    postIt(1);
+});
+
+
+var btnTop = document.getElementById("btnTop");
 window.onscroll = function () { scrollFunction() };
 function scrollFunction() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -24,13 +29,13 @@ function goToUp(e) {
     var runAnimation = setInterval(animateScroll, 16);
 }
 function postIt(pageIndex) {
+    console.log('postIt :' + pageIndex)
     //var json = @Html.Raw(Json.Serialize(@Model));
     //console.log(JSON.stringify(json));
     var sortOrder = $("#ecommerce-price-options").val();
     var grp = $('input[name=ProductGrp]:checked').val();
     var selectedBr = [];
     var keyword = $('#TxtOldKeyword').val();
-    console.log('keyword is ' + keyword)
     $('#TxtKeyword').val(keyword);
 
     if (parseInt(pageIndex) == 0) {
@@ -142,14 +147,21 @@ function setBasketListener() {
                     Qty: 1
                 },
                 success: function (data) {
-                    addToCart.addClass("d-none");
-                    viewInCart.addClass("d-inline-block");
                     var result = JSON.stringify(data);
                     var obj = jQuery.parseJSON(result);
-                    if (obj.status === 1) {
+                    if (obj.status == 0) {
+                        toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 5000, positionClass: 'toast-top-right' });
+                        $this.remove();
+                        //addToCart.addClass("d-none");
+                        //viewInCart.addClass("d-inline-block");
+                    } else if (obj.status == 1) {
                         toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
-                    } else {
+                        addToCart.addClass("d-none");
+                        viewInCart.addClass("d-inline-block");
+                    }else {
                         toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                        addToCart.addClass("d-none");
+                        viewInCart.addClass("d-inline-block");
                     }
 
                 },
