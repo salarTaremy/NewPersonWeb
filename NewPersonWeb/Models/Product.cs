@@ -26,6 +26,7 @@ namespace NewPersonWeb.Models
 
         public int CountInBasket { get; set; }
         public bool HaveTax { get; set; }
+        public int TaxPercentage { get; set; }
         public bool ExistInBasket { get; set; }
 
         public int? BuyHistoryCount { get; set; }
