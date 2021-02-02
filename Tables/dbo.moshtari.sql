@@ -17,7 +17,7 @@ CREATE TABLE [dbo].[moshtari]
 [tel2] [nvarchar] (30) COLLATE Persian_100_CI_AS NULL,
 [Fax] [nvarchar] (30) COLLATE Persian_100_CI_AS NULL,
 [mob1] [nvarchar] (30) COLLATE Persian_100_CI_AS NULL,
-[mob2] [nvarchar] (30) COLLATE Persian_100_CI_AS NULL,
+[m] [nvarchar] (30) COLLATE Persian_100_CI_AS NULL,
 [vaziyt_melk] [nvarchar] (4) COLLATE Persian_100_CI_AS NULL,
 [code_posti] [nvarchar] (20) COLLATE Persian_100_CI_AS NULL,
 [Shomareh_sabt] [nvarchar] (20) COLLATE Persian_100_CI_AS NULL,
