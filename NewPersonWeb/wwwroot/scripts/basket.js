@@ -72,6 +72,14 @@ $(document).ajaxSuccess(function () {
     }
    
 
+    $("div.apply-coupon").click(function myfunction() {
+        LoadBasket();
+    });
+        
+
+
+
+    
 
 
     $("div.remove").click(function myfunction() {

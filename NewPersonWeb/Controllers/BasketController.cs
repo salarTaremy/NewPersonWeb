@@ -22,8 +22,22 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult BasketItems()
         {
-            var x = new BasketRepo().GetListOfBasketProducts(ssn);
-            return PartialView("_BasketItems" , x);
+            BasketViewModel basketVM = new BasketViewModel();
+            basketVM.Items = new BasketRepo().GetListOfBasketProducts(ssn);
+            basketVM.basket= new BasketRepo().GetBasket(ssn);
+            foreach (var item in basketVM.Items)
+            {
+
+                basketVM.TotalConsumer += (item.Qty * item.ConsumerPrices);
+                basketVM.Total += (item.Qty * item.Price);
+                if (item.HaveTax)
+                {
+                    basketVM.Tax += (item.Qty * item.Price) *  item.TaxPercentage / 100;
+                }
+                
+            }
+
+            return PartialView("_BasketItems" , basketVM);
         }
 
 

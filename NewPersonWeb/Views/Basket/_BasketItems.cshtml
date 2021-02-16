@@ -1,6 +1,6 @@
 ﻿
 
-@model List<Product>
+@model BasketViewModel
 
 
 
@@ -9,13 +9,12 @@
 
 
 <form action="#" class="icons-tab-steps checkout-tab-steps wizard-circle">
-     Checkout Place order starts 
-    <h6><i class="step-icon step feather icon-shopping-cart"></i>Cart</h6>
+    <h6><i class="step-icon step feather icon-shopping-cart"></i>سبد خرید</h6>
     <fieldset class="checkout-step-1 px-0">
         <section id="place-order" class="list-view product-checkout">
             <div class="checkout-items">
 
-                @foreach (var item in Model)
+                @foreach (var item in Model.Items)
                 {
                     long Percent = 100 - (item.Price * 100 / item.ConsumerPrices);
                     string imgName = item.Code + ".jpg";
@@ -113,8 +112,7 @@
                                                 </p>
                                             }
                                         }
-
-                                    </div>
+                                     </div>
                                 </div>
                                 @if (item.IsFavorite)
                                 {
@@ -143,74 +141,74 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <p class="options-title">Options</p>
+                            <p>  <span>@Model.Items.Count </span>  قلم </p>
                             <div class="coupons">
                                 <div class="coupons-title">
-                                    <p>Coupons</p>
+                                    <p>شماره  <span>@Model.basket.ID </span>  </p>
                                 </div>
                                 <div class="apply-coupon">
-                                    <p>Apply</p>
+                                    <p>به روز رسانی</p>
                                 </div>
                             </div>
                             <hr>
                             <div class="price-details">
-                                <p>Price Details</p>
+                                <p>جزئیات پرداخت</p>
                             </div>
                             <div class="detail">
                                 <div class="detail-title">
-                                    Total MRP
+                                   ارزش واقعی سبد
                                 </div>
                                 <div class="detail-amt">
-                                    $598
+                                    @String.Format("{0:n0}", Model.TotalConsumer) ریال
                                 </div>
                             </div>
                             <div class="detail">
                                 <div class="detail-title">
-                                    Bag Discount
+                                    مبلغ برای شما
                                 </div>
-                                <div class="detail-amt discount-amt">
-                                    -25$
+                                <div class="detail-amt discount-amt text-primary">
+                                    @String.Format("{0:n0}", Model.Total ) ریال
                                 </div>
                             </div>
                             <div class="detail">
                                 <div class="detail-title">
-                                    Estimated Tax
+                                    تخفیف ویژه
                                 </div>
                                 <div class="detail-amt">
-                                    $1.3
+                                   0 ریال
                                 </div>
                             </div>
                             <div class="detail">
                                 <div class="detail-title">
-                                    EMI Eligibility
+                                    ارزش افزوده
                                 </div>
-                                <div class="detail-amt emi-details">
-                                    Details
+                                <div class="detail-amt emi-details text-danger">
+                                    @String.Format("{0:n0}", Model.Tax) ریال
                                 </div>
                             </div>
                             <div class="detail">
                                 <div class="detail-title">
-                                    Delivery Charges
+                                    سود شما
                                 </div>
                                 <div class="detail-amt discount-amt">
-                                    Free
+                                    @String.Format("{0:n0}", Model.TotalConsumer - (Model.Total +   Model.Tax)   ) ریال
                                 </div>
                             </div>
                             <hr>
                             <div class="detail">
-                                <div class="detail-title detail-total">Total</div>
-                                <div class="detail-amt total-amt">$574</div>
+                                <div class="detail-title detail-total">مبلغ نهایی</div>
+                                <div class="detail-amt total-amt">
+                                    @String.Format("{0:n0}", Model.Total + Model.Tax) ریال
+                                </div>
                             </div>
-                            <div class="btn btn-primary btn-block place-order">PLACE ORDER</div>
+                            <div class="btn btn-primary btn-block place-order">تایید سفارش</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </fieldset>
-     Checkout Place order Ends 
-     Checkout Customer Address Starts 
-    <h6><i class="step-icon step feather icon-home"></i>Address</h6>
+    <h6><i class="step-icon step feather icon-home"></i>بازبینی مشخصات پرسنلی</h6>
     <fieldset class="checkout-step-2 px-0">
         <section id="checkout-address" class="list-view product-checkout">
             <div class="card">
@@ -300,10 +298,7 @@
             </div>
         </section>
     </fieldset>
-
-     Checkout Customer Address Ends 
-     Checkout Payment Starts 
-    <h6><i class="step-icon step feather icon-credit-card"></i>Payment</h6>
+    <h6><i class="step-icon step feather icon-credit-card"></i>تایید نهایی</h6>
     <fieldset class="checkout-step-3 px-0">
         <section id="checkout-payment" class="list-view product-checkout">
             <div class="payment-type">
@@ -439,5 +434,4 @@
         </section>
     </fieldset>
 
-     Checkout Payment Starts 
 </form>
