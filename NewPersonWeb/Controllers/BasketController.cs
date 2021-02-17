@@ -25,6 +25,7 @@ namespace NewPersonWeb.Controllers
             BasketViewModel basketVM = new BasketViewModel();
             basketVM.Items = new BasketRepo().GetListOfBasketProducts(ssn);
             basketVM.basket= new BasketRepo().GetBasket(ssn);
+            basketVM.customer = new CustomerRepo().GetCustomer(ssn);
             foreach (var item in basketVM.Items)
             {
 

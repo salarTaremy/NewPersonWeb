@@ -213,68 +213,62 @@
         <section id="checkout-address" class="list-view product-checkout">
             <div class="card">
                 <div class="card-header flex-column align-items-start">
-                    <h4 class="card-title">Add New Address</h4>
-                    <p class="text-muted mt-25">Be sure to check "Deliver to this address" when you have finished</p>
+                    <h4 class="card-title"> مشخصات پرسنلی</h4>
+                    <p class="text-muted mt-25">لطفا اطلاعات حساب خودرا بررسی و در صورت صحت ، تایید نمایید</p>
                 </div>
                 <div class="card-content">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="checkout-name">Full Name:</label>
-                                    <input type="text" id="checkout-name" class="form-control required" name="fname">
+                                    <label asp-for="customer.Name"></label>
+                                    <input asp-for="customer.Name" class="form-control required">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="checkout-number">Mobile Number:</label>
-                                    <input type="number" id="checkout-number" class="form-control required" name="mnumber">
+                                    <label asp-for="customer.Famil"></label>
+                                    <input asp-for="customer.Famil"  class="form-control required" >
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="checkout-apt-number">Flat, House No:</label>
-                                    <input type="number" id="checkout-apt-number" class="form-control required" name="apt-number">
+                                    <label asp-for="customer.Code_meli"></label>
+                                    <input asp-for="customer.Code_meli"   class="form-control required" >
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="checkout-landmark">Landmark e.g. near apollo hospital:</label>
-                                    <input type="text" id="checkout-landmark" class="form-control required" name="landmark">
+                                    <label asp-for="customer.Sh_Sh"></label>
+                                    <input asp-for="customer.Sh_Sh"  class="form-control required" >
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="checkout-city">Town/City:</label>
-                                    <input type="text" id="checkout-city" class="form-control required" name="city">
+                                    <label asp-for="customer.CustomerCode"></label>
+                                    <input asp-for="customer.CustomerCode" class="form-control required" >
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="checkout-pincode">Pincode:</label>
-                                    <input type="number" id="checkout-pincode" class="form-control required" name="pincode">
+                                    <label asp-for="customer.CustomerTypeName"></label>
+                                    <input asp-for="customer.CustomerTypeName" class="form-control required" >
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-12">
+                            @*<div class="col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for="checkout-state">State:</label>
-                                    <input type="text" id="checkout-state" class="form-control required" name="state">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="add-type">Address Type:</label>
+                                    <label for="add-type"></label>
                                     <select class="form-control" id="add-type">
                                         <option>Home</option>
                                         <option>Work</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 offset-md-6">
+                            </div>*@
+                            @*<div class="col-sm-6 offset-md-6">
                                 <div class="btn btn-primary delivery-address float-right">
                                     SAVE AND DELIVER HERE
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -282,16 +276,16 @@
             <div class="customer-card">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">John Doe</h4>
+                        <h4 class="card-title">@Model.customer.Name @Model.customer.Famil</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body actions">
-                            <p class="mb-0">9447 Glen Eagles Drive</p>
-                            <p>Lewis Center, OH 43035</p>
-                            <p>UTC-5: Eastern Standard Time (EST) </p>
-                            <p>202-555-0140</p>
+                            <p >اعتبار کنونی:250000</p>
+                            <p>مبلغ فکتورهای باز : 558888</p>
+                            <p>درخواست های فاکتور نشده: 150000</p>
+                            <p>مانده سیستم حسابداری:0</p>
                             <hr>
-                            <div class="btn btn-primary btn-block delivery-address">DELIVER TO THIS ADDRESS</div>
+                            <div class="btn btn-primary btn-block delivery-address">تایید وادامه</div>
                         </div>
                     </div>
                 </div>
