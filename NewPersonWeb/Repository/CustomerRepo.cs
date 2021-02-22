@@ -10,10 +10,10 @@ namespace NewPersonWeb.Repository
     public class CustomerRepo
     {
         private Data.Dal db = new Data.Dal(Data.DataBase.AvandP);
-        public Customer GetCustomer(string Ssn)
+        public Customer GetCustomerInfo(string Ssn)
         {
             var param = new DynamicParameters(new { Ssn = Ssn });
-            Customer customer = db.GetList<Customer>("Web.GetCustomer", param, System.Data.CommandType.StoredProcedure).FirstOrDefault();
+            Customer customer = db.GetList<Customer>("Web.GetCustomerInfo", param, System.Data.CommandType.StoredProcedure).FirstOrDefault();
             if (customer == null)
             {
                 return null;

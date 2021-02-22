@@ -25,10 +25,10 @@ namespace NewPersonWeb.Controllers
             BasketViewModel basketVM = new BasketViewModel();
             basketVM.Items = new BasketRepo().GetListOfBasketProducts(ssn);
             basketVM.basket= new BasketRepo().GetBasket(ssn);
-            basketVM.customer = new CustomerRepo().GetCustomer(ssn);
+            basketVM.customer = new CustomerRepo().GetCustomerInfo(ssn);
             foreach (var item in basketVM.Items)
             {
-
+                
                 basketVM.TotalConsumer += (item.Qty * item.ConsumerPrices);
                 basketVM.Total += (item.Qty * item.Price);
                 if (item.HaveTax)

@@ -222,37 +222,37 @@
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label asp-for="customer.Name"></label>
-                                    <input asp-for="customer.Name" class="form-control required">
+                                    <input asp-for="customer.Name" class="form-control required" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label asp-for="customer.Famil"></label>
-                                    <input asp-for="customer.Famil"  class="form-control required" >
+                                    <input asp-for="customer.Famil"  class="form-control required" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label asp-for="customer.Code_meli"></label>
-                                    <input asp-for="customer.Code_meli"   class="form-control required" >
+                                    <input asp-for="customer.Code_meli"   class="form-control required" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label asp-for="customer.Sh_Sh"></label>
-                                    <input asp-for="customer.Sh_Sh"  class="form-control required" >
+                                    <input asp-for="customer.Sh_Sh"  class="form-control required" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label asp-for="customer.CustomerCode"></label>
-                                    <input asp-for="customer.CustomerCode" class="form-control required" >
+                                    <input asp-for="customer.CustomerCode" class="form-control required" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label asp-for="customer.CustomerTypeName"></label>
-                                    <input asp-for="customer.CustomerTypeName" class="form-control required" >
+                                    <input asp-for="customer.CustomerTypeName" class="form-control required" readonly>
                                 </div>
                             </div>
                             @*<div class="col-md-6 col-sm-12">
@@ -280,10 +280,10 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body actions">
-                            <p >اعتبار کنونی:250000</p>
-                            <p>مبلغ فکتورهای باز : 558888</p>
-                            <p>درخواست های فاکتور نشده: 150000</p>
-                            <p>مانده سیستم حسابداری:0</p>
+                            <p >  <label asp-for="customer.DefaultCreditRls"> : </label>@Model.customer.DefaultCreditRls</p>
+                            <p>مبلغ فاکتورهای باز : @Model.customer.FactorRls</p>
+                            <p>درخواست های فاکتور نشده: @Model.customer.OrderRls</p>
+                            <p>مانده سیستم حسابداری:@Model.customer.AccountingRls</p>
                             <hr>
                             <div class="btn btn-primary btn-block delivery-address">تایید وادامه</div>
                         </div>

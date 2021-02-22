@@ -24,6 +24,19 @@ namespace NewPersonWeb.Models
 		[Display(Name = "کد مشتری")]
 		public string CustomerCode { get; set; }
 
+		[Display(Name = "اعتبار اولیه")]
+		public long DefaultCreditRls { get; set; }
+		[Display(Name = "مبلغ درخواست باز")]
+		public long OrderRls { get; set; }
+		[Display(Name = "مبلغ فاکتور باز")]
+		public long FactorRls { get; set; }
+		[Display(Name = "مانده بدهی حسابداری")]
+		public long AccountingRls { get; set; }
+
+
+
+
+
 
 	}
 }
