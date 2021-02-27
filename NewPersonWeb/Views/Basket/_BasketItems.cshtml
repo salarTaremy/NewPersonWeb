@@ -280,10 +280,10 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body actions">
-                            <p >  <label asp-for="customer.DefaultCreditRls"> : </label>@Model.customer.DefaultCreditRls</p>
-                            <p>مبلغ فاکتورهای باز : @Model.customer.FactorRls</p>
-                            <p>درخواست های فاکتور نشده: @Model.customer.OrderRls</p>
-                            <p>مانده سیستم حسابداری:@Model.customer.AccountingRls</p>
+                            <p><span asp-for="customer.DefaultCreditRls"> </span><label>:</label>@Model.customer.DefaultCreditRls</p>
+                            <p><label asp-for="customer.FactorRls"> </label><span>:</span> @Model.customer.FactorRls</p>
+                            <p><label asp-for="customer.OrderRls"> </label><span>:</span>@Model.customer.OrderRls</p>
+                            <p><label asp-for="customer.AccountingRls"> </label><span>:</span>@Model.customer.AccountingRls</p>
                             <hr>
                             <div class="btn btn-primary btn-block delivery-address">تایید وادامه</div>
                         </div>
