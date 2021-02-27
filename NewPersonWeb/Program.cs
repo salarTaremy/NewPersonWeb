@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 //ddddd
-
 namespace NewPersonWeb
 {
     public class Program
