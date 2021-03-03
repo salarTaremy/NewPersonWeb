@@ -164,17 +164,17 @@ $(document).ajaxSuccess(function () {
         wishlist = $(".wishlist");
 
 
-    // show sidebar
-    sidebarToggler.on("click", function () {
-        sidebarShop.toggleClass("show");
-        shopOverlay.toggleClass("show");
-    });
+    //// show sidebar
+    //sidebarToggler.on("click", function () {
+    //    sidebarShop.toggleClass("show");
+    //    shopOverlay.toggleClass("show");
+    //});
 
-    // remove sidebar
-    $(".shop-content-overlay, .sidebar-close-icon").on("click", function () {
-        sidebarShop.removeClass("show");
-        shopOverlay.removeClass("show");
-    })
+    //// remove sidebar
+    //$(".shop-content-overlay, .sidebar-close-icon").on("click", function () {
+    //    sidebarShop.removeClass("show");
+    //    shopOverlay.removeClass("show");
+    //})
 
     //price slider
     var slider = document.getElementById("price-slider");
