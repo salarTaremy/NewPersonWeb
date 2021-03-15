@@ -1,4 +1,4 @@
-﻿
+﻿@model  Customer
 
 @{
     ViewData["Title"] = "SD";
@@ -20,7 +20,7 @@
                                             <i class="feather icon-eye text-info font-medium-5"></i>
                                         </div>
                                     </div>
-                                    <h2 class="text-bold-700">1,210,000</h2>
+                                    <h2 class="text-bold-700"> @String.Format("{0:n0}", @Model.BasicSalaryPerDayRls)  </h2>
                                     <p class="mb-0 line-ellipsis">پایه حقوق روزانه</p>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                                             <i class="feather icon-bar-chart text-primary font-medium-5"></i>
                                         </div>
                                     </div>
-                                    <h2 class="text-bold-700">28,000,000</h2>
+                                    <h2 class="text-bold-700">@String.Format("{0:n0}", @Model.DefaultCreditRls) </h2>
                                     <p class="mb-0 line-ellipsis">اعتبار اولیه</p>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                                             <i class="feather icon-shopping-bag text-danger font-medium-5"></i>
                                         </div>
                                     </div>
-                                    <h2 class="text-bold-700">1,200,000</h2>
+                                    <h2 class="text-bold-700">@String.Format("{0:n0}", @Model.Loan) </h2>
                                     <p class="mb-0 line-ellipsis">اقساط وام</p>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                             <i class="feather icon-bar-chart-2 text-warning font-medium-5"></i>
                                         </div>
                                     </div>
-                                    <h2 class="text-bold-700">3,200,000</h2>
+                                    <h2 class="text-bold-700">@String.Format("{0:n0}", @Model.AccountingRls) </h2>
                                     <p class="mb-0 line-ellipsis">بدهی سیستم حسابداری</p>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                                             <i class="feather icon-file-text text-danger font-medium-5"></i>
                                         </div>
                                     </div>
-                                    <h2 class="text-bold-700">850,000</h2>
+                                    <h2 class="text-bold-700">@String.Format("{0:n0}", @Model.FactorRls) </h2>
                                     <p class="mb-0 line-ellipsis">فاکتورهای باز</p>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                                             <i class="feather icon-file text-warning font-medium-5"></i>
                                         </div>
                                     </div>
-                                    <h2 class="text-bold-700">0</h2>
+                                    <h2 class="text-bold-700">@String.Format("{0:n0}", @Model.OrderRls) </h2>
                                     <p class="mb-0 line-ellipsis">درخواست های فاکتور نشده</p>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-start pb-0">
                                 <div>
-                                    <h2 class="text-bold-700">1,210,000</h2>
+                                    <h2 class="text-bold-700">@String.Format("{0:n0}", @Model.BoosterCredit) </h2>
                                     <p class="mb-0">جمع عوامل افزاینده اعتبار</p>
                                 </div>
                                 <div class="avatar bg-rgba-success p-50">
@@ -125,7 +125,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-start pb-0">
                                 <div>
-                                    <h2 class="text-bold-700">0</h2>
+                                    <h2 class="text-bold-700">@String.Format("{0:n0}", @Model.ReducerCredit) </h2>
                                     <p class="mb-0">جمع عوامل کاهنده اعتبار</p>
                                 </div>
                                 <div class="avatar bg-rgba-danger p-50">
@@ -143,7 +143,7 @@
                         <div class="card">
                             <div class="card-header d-flex align-items-start pb-0">
                                 <div>
-                                    <h2 class="text-bold-700">1,210,000</h2>
+                                    <h2 class="text-bold-700">@String.Format("{0:n0}", @Model.CurrentCredit) </h2>
                                     <p class="mb-0">مانده اعتبار شما جهت خرید پرسنلی</p>
                                 </div>
                                 <div class="avatar bg-rgba-primary p-50">

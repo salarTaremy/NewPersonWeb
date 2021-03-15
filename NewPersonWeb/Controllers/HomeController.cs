@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NewPersonWeb.Models;
+using NewPersonWeb.Repository;
 
 namespace NewPersonWeb.Controllers
 {
     public class HomeController : BaseController
     {
 
+        private string ssn = "0072374586";
         public IActionResult Index()
         {
-            return View();
+            var  cus = new CustomerRepo().GetCustomerInfo(ssn);
+            return View(cus);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

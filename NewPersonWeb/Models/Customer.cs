@@ -8,7 +8,8 @@ namespace NewPersonWeb.Models
 {
     public class Customer:BaseEntity<int>
     {
-
+        public bool HaveCustomerCode { get; set; }
+         
 		[Display(Name="نام")]
         public string Name { get; set; }
 		[Display(Name = "نام خانوادگی")]
@@ -18,7 +19,7 @@ namespace NewPersonWeb.Models
 		[Display(Name = "تاریخ تولد")]
 		public int BirthDay { get; set; }
 		[Display(Name = "کد ملی")]
-		public string Code_meli { get; set; }
+		public string Code_melli { get; set; }
 		[Display(Name = "نوع مشتری")]
 		public string CustomerTypeName { get; set; }
 		[Display(Name = "کد مشتری")]
@@ -32,6 +33,23 @@ namespace NewPersonWeb.Models
 		public long FactorRls { get; set; }
 		[Display(Name = "مانده بدهی حسابداری")]
 		public long AccountingRls { get; set; }
+
+		[Display(Name = "پایه حقوق روزانه")]
+		public long BasicSalaryPerDayRls { get; set; }
+		[Display(Name = "پایه حقوق ماهانه")]
+		public long BasicSalaryPerMonthRls { get; set; }
+		[Display(Name = "بدهی وام")]
+		public long Loan { get; set; }
+		[Display(Name = "جمع عوامل کاهنده اعتبار")]
+		public long ReducerCredit { get; set; }
+		[Display(Name = "جمع عوامل افزاینده اعتبار")]
+		public long BoosterCredit { get; set; }
+		[Display(Name = "تراز مالی(مانده اعتبار)")]
+		public long CurrentCredit { get; set; }
+
+
+
+
 
 
 
