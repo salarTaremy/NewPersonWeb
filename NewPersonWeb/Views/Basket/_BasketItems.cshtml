@@ -298,13 +298,13 @@
             <div class="payment-type">
                 <div class="card">
                     <div class="card-header flex-column align-items-start">
-                        <h4 class="card-title">Payment options</h4>
-                        <p class="text-muted mt-25">Be sure to click on correct payment option</p>
+                        <h4 class="card-title">تایید نهایی سفارش</h4>
+                        <p class="text-muted mt-25">در صورت نیاز توضیحات خود را وارد و سفارش خود را تایید نهایی کنید.</p>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
                             <div class="d-flex justify-content-between flex-wrap">
-                                <div class="vs-radio-con vs-radio-primary">
+                                @*<div class="vs-radio-con vs-radio-primary">
                                     <input type="radio" name="vueradio" checked="" value="false">
                                     <span class="vs-radio">
                                         <span class="vs-radio--border"></span>
@@ -320,16 +320,17 @@
                                 </div>
                                 <div class="card-expiration-date mt-75">
                                     11/2020
-                                </div>
+                                </div>*@
                             </div>
                             <div class="customer-cvv mt-1">
                                 <div class="form-inline">
-                                    <label class="mb-50" for="card-holder-cvv">Enter CVV:</label>
-                                    <input type="number" class="form-control ml-75 mb-50 input-cvv" id="card-holder-cvv">
-                                    <div class="btn btn-primary btn-cvv ml-50 mb-50">Continue</div>
+                                    <label class="mb-50" for="card-holder-cvv">توضیحات</label>
+                                    <textarea class="form-control ml-75 mb-50"  rows="5"  placeholder="توضیحات را وارد کنید" style="width:100%"  id="card-holder-cvv" >
+    
+                                    </textarea>
                                 </div>
                             </div>
-                            <hr class="my-2">
+                            @*<hr class="my-2">
                             <ul class="other-payment-options list-unstyled">
                                 <li>
                                     <div class="vs-radio-con vs-radio-primary py-25">
@@ -386,7 +387,7 @@
                                     <i class="feather icon-plus-square mr-25 font-medium-5"></i>
                                     Add Gift Card
                                 </p>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -394,21 +395,21 @@
             <div class="amount-payable checkout-options">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Price Details</h4>
+                        <h4 class="card-title">اعتبارات ریالی</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <div class="detail">
+                            @*<div class="detail">
                                 <div class="details-title">
                                     Price of 3 items
                                 </div>
                                 <div class="detail-amt">
                                     <strong>$699.30</strong>
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="detail">
                                 <div class="details-title">
-                                    Delivery Charges
+                                    تراز مالی شما
                                 </div>
                                 <div class="detail-amt discount-amt">
                                     Free
@@ -416,10 +417,7 @@
                             </div>
                             <hr>
                             <div class="detail">
-                                <div class="details-title">
-                                    Amount Payable
-                                </div>
-                                <div class="detail-amt total-amt">$699.30</div>
+                                <div class="btn btn-primary btn-block ">تایید و ثبت سفارش</div>
                             </div>
                         </div>
                     </div>
