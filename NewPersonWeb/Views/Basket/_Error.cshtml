@@ -1,4 +1,4 @@
-﻿
+﻿@model string
 
 <div class="app-content content">
     <div class="content-overlay"></div>
@@ -7,16 +7,16 @@
         <div class="content-body">
 
             <div class="mt-md-2">
-                <img src="~/app-assets/images/Basket/Empty.png" class="rounded mx-auto d-block " />
+                <img src="~/app-assets/images/dialogs/Error.png" class="rounded mx-auto d-block " />
             </div>
 
             <div>
-                <p class="text-center text-primary">سبد شما خالی است </p>
+                <p class="text-center text-danger">@Model</p>
             </div>
 
 
             <div class="justify-content-center d-flex">
-                <a  asp-controller="shop"  asp-action="index"   class="btn btn-primary  mb-1 waves-effect waves-light"><i class="feather icon-shopping-bag"></i>ورود به فروشگاه</a>
+                <a asp-controller="home" asp-action="index" class="btn btn-warning  mb-1 waves-effect waves-light"><i class="feather icon-shopping-bag"></i>قبول </a>
             </div>
 
         </div>

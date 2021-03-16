@@ -31,7 +31,8 @@ namespace NewPersonWeb.Controllers
                 return View(Th);
             }
             Th.FullName = "Salar";
-            HttpContext.Session.SetInt32("Th_ID", (int)Th.Id);
+            //HttpContext.Session.SetInt32("Th_ID", (int)Th.Id);
+            HttpContext.Session.SetInt32("Th_ID", 256);
             HttpContext.Session.SetString("Th_Name", Th.FullName);
 
             return RedirectToAction("index", "home");

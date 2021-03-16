@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace NewPersonWeb.Controllers
 {
@@ -16,36 +17,16 @@ namespace NewPersonWeb.Controllers
 
         public IActionResult Index()
         {
-
-            //var Lst = new BasketRepo().GetListOfBasketProducts(ssn);
-            //if (Lst.Count == 0)
-            //{
-            //    return View("BasketIsEmpty");
-            //}
             return View();
         }
 
         [HttpPost]
         public IActionResult BasketItems()
         {
-            BasketViewModel basketVM = new BasketViewModel();
-            basketVM.Items = new BasketRepo().GetListOfBasketProducts(ssn);
+            BasketViewModel basketVM = GetBasketViewModel(ssn);
             if (basketVM.Items.Count == 0)
             {
                 return  PartialView("_Empty");
-            }
-            basketVM.basket = new BasketRepo().GetBasket(ssn);
-            basketVM.customer = new CustomerRepo().GetCustomerInfo(ssn);
-            foreach (var item in basketVM.Items)
-            {
-                
-                basketVM.TotalConsumer += (item.Qty * item.ConsumerPrices);
-                basketVM.Total += (item.Qty * item.Price);
-                if (item.HaveTax)
-                {
-                    basketVM.Tax += (item.Qty * item.Price) *  item.TaxPercentage / 100;
-                }
-                
             }
 
             return PartialView("_BasketItems" , basketVM);
@@ -113,9 +94,58 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult Confirm(string description)
         {
-            return null;
+            BasketViewModel basketVM = GetBasketViewModel(ssn);
+
+            if (basketVM.basket is null)
+            {
+                return PartialView("_error","این سبد در حال حاضر وجود ندارد یا قبلا تایید شده است");
+            }
+            if (basketVM.basket.OrderID !=  null )
+            {
+                return PartialView("_error", "سبد فعلی قبلا تایید شده است");
+            }
+            if (basketVM.Items.Count == 0)
+            {
+                return PartialView("_error", "هیچ محصولی در سبد فعلی وجود ندارد");
+            }
+            if (basketVM.customer is null)
+            {
+                return PartialView("_error", "هیچ محصولی در سبد فعلی وجود ندارد");
+            }
+            long Balance = basketVM.customer.CurrentCredit - (basketVM.Total + basketVM.Tax);
+            if (Balance < 0)
+            {
+                return PartialView("_error", "اعتبار مالی شما کافی نیست");
+            }
+
+
+            HttpContext.Session.GetInt32("Th_ID");
+            var x = HttpContext.Session.GetInt32("Th_ID");
+            return PartialView("_Success" ,"درخواست شما با موفقیت ثبت شد");
         }
 
+
+
+        private BasketViewModel GetBasketViewModel(string ssn)
+        {
+            BasketViewModel basketVM = new BasketViewModel();
+            basketVM.Items = new BasketRepo().GetListOfBasketProducts(ssn);
+            basketVM.basket = new BasketRepo().GetBasket(ssn);
+            basketVM.customer = new CustomerRepo().GetCustomerInfo(ssn);
+            //basketVM.Total = 0;
+            //basketVM.TotalConsumer = 0;
+            //basketVM.Tax = 0;
+            foreach (var item in basketVM.Items)
+            {
+                basketVM.TotalConsumer += (item.Qty * item.ConsumerPrices);
+                basketVM.Total += (item.Qty * item.Price);
+                if (item.HaveTax)
+                {
+                    basketVM.Tax += (item.Qty * item.Price) * item.TaxPercentage / 100;
+                }
+            }
+            return basketVM;
+        }
 
 
     }

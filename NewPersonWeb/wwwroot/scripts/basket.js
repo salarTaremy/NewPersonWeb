@@ -19,6 +19,30 @@ function LoadBasket() {
 }
 
 
+function ConfirmBasket() {
+    console.log('Send Request for Confirm Basket');
+    $.ajax({
+        url: '/Basket/Confirm',
+        type: 'post',
+        data: {
+            description: 'ssss'
+        },
+        success: function (data) {
+            $(".content-ajax").empty();
+            $(".content-ajax").append(data);
+            // goToUp();
+            console.log('Load Basket Success')
+        },
+        error: function (request, error) {
+            toastr.error(request.stat, 'خطا در عملیات', { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000 });
+        }
+    });
+}
+
+
+
+
+
 function ChangeQty(ProductID, Qty) {
     $.ajax({
         url: '/Basket/ChangeQty',
@@ -75,7 +99,12 @@ $(document).ajaxSuccess(function () {
     $("div.apply-coupon").click(function myfunction() {
         LoadBasket();
     });
-        
+
+    $("div.btn-confirm").click(function myfunction() {
+        ConfirmBasket();
+    });
+
+    
 
 
 
