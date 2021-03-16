@@ -16,6 +16,12 @@ namespace NewPersonWeb.Controllers
 
         public IActionResult Index()
         {
+
+            //var Lst = new BasketRepo().GetListOfBasketProducts(ssn);
+            //if (Lst.Count == 0)
+            //{
+            //    return View("BasketIsEmpty");
+            //}
             return View();
         }
 
@@ -24,7 +30,11 @@ namespace NewPersonWeb.Controllers
         {
             BasketViewModel basketVM = new BasketViewModel();
             basketVM.Items = new BasketRepo().GetListOfBasketProducts(ssn);
-            basketVM.basket= new BasketRepo().GetBasket(ssn);
+            if (basketVM.Items.Count == 0)
+            {
+                return  PartialView("_Empty");
+            }
+            basketVM.basket = new BasketRepo().GetBasket(ssn);
             basketVM.customer = new CustomerRepo().GetCustomerInfo(ssn);
             foreach (var item in basketVM.Items)
             {
@@ -40,7 +50,6 @@ namespace NewPersonWeb.Controllers
 
             return PartialView("_BasketItems" , basketVM);
         }
-
 
         [HttpPost]
         public IActionResult RemoveProductFromBasket(long ID_Product)
