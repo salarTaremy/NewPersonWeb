@@ -8,7 +8,7 @@
 
 
 
-<form action="#" class="icons-tab-steps checkout-tab-steps wizard-circle">
+<form asp-action="Confirm" asp-controller="Basket" method="post" class=" icons-tab-steps checkout-tab-steps wizard-circle">
     <h6><i class="step-icon step feather icon-shopping-cart"></i>سبد خرید</h6>
     <fieldset class="checkout-step-1 px-0">
         <section id="place-order" class="list-view product-checkout">
@@ -36,7 +36,7 @@
                                 @{
                                     bool IsMinValue;
                                     bool IsMaxValue;
-                                    if (item.Qty <=1)
+                                    if (item.Qty <= 1)
                                     {
                                         IsMinValue = true;
                                     }
@@ -112,7 +112,7 @@
                                                 </p>
                                             }
                                         }
-                                     </div>
+                                    </div>
                                 </div>
                                 @if (item.IsFavorite)
                                 {
@@ -156,7 +156,7 @@
                             </div>
                             <div class="detail">
                                 <div class="detail-title">
-                                   ارزش واقعی سبد
+                                    ارزش واقعی سبد
                                 </div>
                                 <div class="detail-amt">
                                     @String.Format("{0:n0}", Model.TotalConsumer) ریال
@@ -167,7 +167,7 @@
                                     مبلغ برای شما
                                 </div>
                                 <div class="detail-amt discount-amt text-primary">
-                                    @String.Format("{0:n0}", Model.Total ) ریال
+                                    @String.Format("{0:n0}", Model.Total) ریال
                                 </div>
                             </div>
                             <div class="detail">
@@ -175,7 +175,7 @@
                                     تخفیف ویژه
                                 </div>
                                 <div class="detail-amt">
-                                   0 ریال
+                                    0 ریال
                                 </div>
                             </div>
                             <div class="detail">
@@ -191,7 +191,7 @@
                                     سود شما
                                 </div>
                                 <div class="detail-amt discount-amt">
-                                    @String.Format("{0:n0}", Model.TotalConsumer - (Model.Total +   Model.Tax)   ) ریال
+                                    @String.Format("{0:n0}", Model.TotalConsumer - (Model.Total + Model.Tax)) ریال
                                 </div>
                             </div>
                             <hr>
@@ -228,19 +228,19 @@
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label asp-for="customer.Famil"></label>
-                                    <input asp-for="customer.Famil"  class="form-control required" readonly>
+                                    <input asp-for="customer.Famil" class="form-control required" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label asp-for="customer.Code_melli"></label>
-                                    <input asp-for="customer.Code_melli"   class="form-control required" readonly>
+                                    <input asp-for="customer.Code_melli" class="form-control required" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label asp-for="customer.Sh_Sh"></label>
-                                    <input asp-for="customer.Sh_Sh"  class="form-control required" readonly>
+                                    <input asp-for="customer.Sh_Sh" class="form-control required" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
@@ -256,19 +256,19 @@
                                 </div>
                             </div>
                             @*<div class="col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label for="add-type"></label>
-                                    <select class="form-control" id="add-type">
-                                        <option>Home</option>
-                                        <option>Work</option>
-                                    </select>
-                                </div>
-                            </div>*@
+                                    <div class="form-group">
+                                        <label for="add-type"></label>
+                                        <select class="form-control" id="add-type">
+                                            <option>Home</option>
+                                            <option>Work</option>
+                                        </select>
+                                    </div>
+                                </div>*@
                             @*<div class="col-sm-6 offset-md-6">
-                                <div class="btn btn-primary delivery-address float-right">
-                                    SAVE AND DELIVER HERE
-                                </div>
-                            </div>*@
+                                    <div class="btn btn-primary delivery-address float-right">
+                                        SAVE AND DELIVER HERE
+                                    </div>
+                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -280,7 +280,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body actions">
-                            <p><span asp-for="customer.DefaultCreditRls"> </span><label>:</label>@Model.customer.DefaultCreditRls</p>
+                            <p><span>  <label asp-for="customer.DefaultCreditRls"></label>       </span><label>:</label>@Model.customer.DefaultCreditRls</p>
                             <p><label asp-for="customer.FactorRls"> </label><span>:</span> @Model.customer.FactorRls</p>
                             <p><label asp-for="customer.OrderRls"> </label><span>:</span>@Model.customer.OrderRls</p>
                             <p><label asp-for="customer.AccountingRls"> </label><span>:</span>@Model.customer.AccountingRls</p>
@@ -305,87 +305,87 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between flex-wrap">
                                 @*<div class="vs-radio-con vs-radio-primary">
-                                    <input type="radio" name="vueradio" checked="" value="false">
-                                    <span class="vs-radio">
-                                        <span class="vs-radio--border"></span>
-                                        <span class="vs-radio--circle"></span>
-                                    </span>
-                                    <img src="~/app-assets/images/pages/eCommerce/bank.png" alt="img-placeholder" height="40">
-                                    <span>
-                                        US Unlocked Debit Card 12XX XXXX XXXX 0000
-                                    </span>
-                                </div>
-                                <div class="card-holder-name mt-75">
-                                    John Doe
-                                </div>
-                                <div class="card-expiration-date mt-75">
-                                    11/2020
-                                </div>*@
+                                        <input type="radio" name="vueradio" checked="" value="false">
+                                        <span class="vs-radio">
+                                            <span class="vs-radio--border"></span>
+                                            <span class="vs-radio--circle"></span>
+                                        </span>
+                                        <img src="~/app-assets/images/pages/eCommerce/bank.png" alt="img-placeholder" height="40">
+                                        <span>
+                                            US Unlocked Debit Card 12XX XXXX XXXX 0000
+                                        </span>
+                                    </div>
+                                    <div class="card-holder-name mt-75">
+                                        John Doe
+                                    </div>
+                                    <div class="card-expiration-date mt-75">
+                                        11/2020
+                                    </div>*@
                             </div>
                             <div class="customer-cvv mt-1">
                                 <div class="form-inline">
                                     <label class="mb-50" for="card-holder-cvv">توضیحات</label>
-                                    <textarea class="form-control ml-75 mb-50"  rows="5"  placeholder="توضیحات را وارد کنید" style="width:100%"  id="card-holder-cvv" />
+                                    <textarea name="description" class="form-control ml-75 mb-50" rows="5" placeholder="توضیحات را وارد کنید" style="width:100%" id="" />
                                 </div>
                             </div>
                             @*<hr class="my-2">
-                            <ul class="other-payment-options list-unstyled">
-                                <li>
-                                    <div class="vs-radio-con vs-radio-primary py-25">
-                                        <input type="radio" name="vueradio" value="false">
-                                        <span class="vs-radio">
-                                            <span class="vs-radio--border"></span>
-                                            <span class="vs-radio--circle"></span>
-                                        </span>
-                                        <span>
-                                            Credit / Debit / ATM Card
-                                        </span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="vs-radio-con vs-radio-primary py-25">
-                                        <input type="radio" name="vueradio" value="false">
-                                        <span class="vs-radio">
-                                            <span class="vs-radio--border"></span>
-                                            <span class="vs-radio--circle"></span>
-                                        </span>
-                                        <span>
-                                            Net Banking
-                                        </span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="vs-radio-con vs-radio-primary py-25">
-                                        <input type="radio" name="vueradio" value="false">
-                                        <span class="vs-radio">
-                                            <span class="vs-radio--border"></span>
-                                            <span class="vs-radio--circle"></span>
-                                        </span>
-                                        <span>
-                                            EMI (Easy Installment)
-                                        </span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="vs-radio-con vs-radio-primary py-25">
-                                        <input type="radio" name="vueradio" value="false">
-                                        <span class="vs-radio">
-                                            <span class="vs-radio--border"></span>
-                                            <span class="vs-radio--circle"></span>
-                                        </span>
-                                        <span>
-                                            Cash On Delivery
-                                        </span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <hr>
-                            <div class="gift-card">
-                                <p>
-                                    <i class="feather icon-plus-square mr-25 font-medium-5"></i>
-                                    Add Gift Card
-                                </p>
-                            </div>*@
+                                <ul class="other-payment-options list-unstyled">
+                                    <li>
+                                        <div class="vs-radio-con vs-radio-primary py-25">
+                                            <input type="radio" name="vueradio" value="false">
+                                            <span class="vs-radio">
+                                                <span class="vs-radio--border"></span>
+                                                <span class="vs-radio--circle"></span>
+                                            </span>
+                                            <span>
+                                                Credit / Debit / ATM Card
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="vs-radio-con vs-radio-primary py-25">
+                                            <input type="radio" name="vueradio" value="false">
+                                            <span class="vs-radio">
+                                                <span class="vs-radio--border"></span>
+                                                <span class="vs-radio--circle"></span>
+                                            </span>
+                                            <span>
+                                                Net Banking
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="vs-radio-con vs-radio-primary py-25">
+                                            <input type="radio" name="vueradio" value="false">
+                                            <span class="vs-radio">
+                                                <span class="vs-radio--border"></span>
+                                                <span class="vs-radio--circle"></span>
+                                            </span>
+                                            <span>
+                                                EMI (Easy Installment)
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="vs-radio-con vs-radio-primary py-25">
+                                            <input type="radio" name="vueradio" value="false">
+                                            <span class="vs-radio">
+                                                <span class="vs-radio--border"></span>
+                                                <span class="vs-radio--circle"></span>
+                                            </span>
+                                            <span>
+                                                Cash On Delivery
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <hr>
+                                <div class="gift-card">
+                                    <p>
+                                        <i class="feather icon-plus-square mr-25 font-medium-5"></i>
+                                        Add Gift Card
+                                    </p>
+                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -397,25 +397,67 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            @*<div class="detail">
+
+
+                            <div class="detail">
                                 <div class="details-title">
-                                    Price of 3 items
+                                    مانده اعتبار جهت خرید
                                 </div>
                                 <div class="detail-amt">
-                                    <strong>$699.30</strong>
+                                    <strong> @String.Format("{0:n0}", Model.customer.CurrentCredit) ریال</strong>
                                 </div>
-                            </div>*@
+                            </div>
+
+                            <div class="detail">
+                                <div class="details-title">
+                                    مبلغ نهایی سبد
+                                </div>
+                                <div class="detail-amt">
+                                    <strong> @String.Format("{0:n0}", (Model.Total + Model.Tax)) ریال</strong>
+                                </div>
+                            </div>
                             <div class="detail">
                                 <div class="details-title">
                                     تراز مالی شما
                                 </div>
-                                <div class="detail-amt discount-amt">
-                                    Free
-                                </div>
+
+
+                                @{
+                                    long Balance = Model.customer.CurrentCredit - (Model.Total + Model.Tax);
+
+                                    if (Balance >= 0)
+                                    {
+                                        <div class="detail-amt discount-amt">
+                                            @String.Format("{0:n0}", Balance) ریال
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="detail-amt discount-amt text-danger">
+                                            @String.Format("{0:n0}", Balance) ریال
+                                        </div>
+                                    }
+                                }
+
                             </div>
                             <hr>
                             <div class="detail">
-                                <div class="btn btn-primary btn-block ">تایید و ثبت سفارش</div>
+
+                                @{
+
+                                    if (Balance >= 0)
+                                    {
+                                        @*<div class="btn btn-primary btn-block ">تایید و ثبت سفارش</div>*@
+                                        <input type="submit" class="btn btn-primary btn-block " value="تایید و ثبت سفارش" />
+                                    }
+                                    else
+                                    {
+                                        <div class="btn btn-danger btn-block  disabled">تایید و ثبت سفارش</div>
+                                    }
+                                }
+
+
+
                             </div>
                         </div>
                     </div>
@@ -425,3 +467,4 @@
     </fieldset>
 
 </form>
+
