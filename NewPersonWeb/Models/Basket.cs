@@ -14,6 +14,7 @@ namespace NewPersonWeb.Models
 		public string Ssn { get; set; }
 		public string Description { get; set; }
 		public string OrderID { get; set; }
+		public bool IsConfirm { get; set; }
 
 		public IEnumerable<BasketDetail> Details;
 	}

@@ -111,5 +111,41 @@ namespace NewPersonWeb.Repository
             return (affectedRows != 0);
         }
 
+
+        public bool ConfirmBasket(string Ssn)
+        {
+            int affectedRows;
+            string SpName = "Web.ConfirmBasket";
+            var param = new DynamicParameters(
+                new
+                {
+                    Ssn = Ssn
+                });
+            using (var con = new SqlConnection(db.GetConnectionString()))
+            {
+                affectedRows = con.Execute(SpName, param, commandType: CommandType.StoredProcedure);
+            }
+            return (affectedRows != 0);
+        }
+
+
+
+        public bool ConfirmBasket(int Id_Basket)
+        {
+            int affectedRows;
+            string SpName = "Web.ConfirmBasket";
+            var param = new DynamicParameters(
+                new
+                {
+                    Id_Basket = Id_Basket
+                });
+            using (var con = new SqlConnection(db.GetConnectionString()))
+            {
+                affectedRows = con.Execute(SpName, param, commandType: CommandType.StoredProcedure);
+            }
+            return (affectedRows != 0);
+        }
+
+
     }
 }

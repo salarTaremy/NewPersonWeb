@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NewPersonWeb.Models
 {
-    public class BasketViewModel : Basket
+    public class BasketViewModel 
     {
         public BasketViewModel()
         {

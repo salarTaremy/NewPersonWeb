@@ -94,34 +94,51 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult Confirm(string description)
         {
-            BasketViewModel basketVM = GetBasketViewModel(ssn);
+            try
+            {
+                BasketViewModel basketVM = GetBasketViewModel(ssn);
 
-            if (basketVM.basket is null)
-            {
-                return PartialView("_error","این سبد در حال حاضر وجود ندارد یا قبلا تایید شده است");
+                if (basketVM.basket is null)
+                {
+                    return PartialView("_error", "این سبد در حال حاضر وجود ندارد یا قبلا تایید شده است");
+                }
+                if (basketVM.basket.OrderID != null)
+                {
+                    return PartialView("_error", "سبد فعلی قبلا تایید شده است");
+                }
+                if (basketVM.Items.Count == 0)
+                {
+                    return PartialView("_error", "هیچ محصولی در سبد فعلی وجود ندارد");
+                }
+                if (basketVM.customer is null)
+                {
+                    return PartialView("_error", "هیچ محصولی در سبد فعلی وجود ندارد");
+                }
+                long Balance = basketVM.customer.CurrentCredit - (basketVM.Total + basketVM.Tax);
+                if (Balance < 0)
+                {
+                    return PartialView("_error", "اعتبار مالی شما کافی نیست");
+                }
+
+                var rep = new BasketRepo();
+
+                if (rep.ConfirmBasket(basketVM.basket.ID))
+                {
+                    return PartialView("_Success", "درخواست شما با موفقیت ثبت شد");
+                }
+                else
+                {
+                    return PartialView("_error", "متاسفانه سفارش شما ثبت نشد");
+                }
             }
-            if (basketVM.basket.OrderID !=  null )
+            catch (Exception)
             {
-                return PartialView("_error", "سبد فعلی قبلا تایید شده است");
-            }
-            if (basketVM.Items.Count == 0)
-            {
-                return PartialView("_error", "هیچ محصولی در سبد فعلی وجود ندارد");
-            }
-            if (basketVM.customer is null)
-            {
-                return PartialView("_error", "هیچ محصولی در سبد فعلی وجود ندارد");
-            }
-            long Balance = basketVM.customer.CurrentCredit - (basketVM.Total + basketVM.Tax);
-            if (Balance < 0)
-            {
-                return PartialView("_error", "اعتبار مالی شما کافی نیست");
+
+                return PartialView("_error", "متاسفانه ثبت سفارش شما با خطا مواجه شد");
             }
 
-
-            HttpContext.Session.GetInt32("Th_ID");
-            var x = HttpContext.Session.GetInt32("Th_ID");
-            return PartialView("_Success" ,"درخواست شما با موفقیت ثبت شد");
+             
+            
         }
 
 
