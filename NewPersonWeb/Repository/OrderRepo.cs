@@ -19,6 +19,12 @@ namespace NewPersonWeb.Repository
             return db.GetList<Order>("Web.GetOrderList", param, System.Data.CommandType.StoredProcedure);
         }
 
+        public List<OrderItemViewModel> GetItems(string ssn , long ID)
+        {
+            var param = new DynamicParameters(new { ssn = ssn , ID = ID });
+            return db.GetList<OrderItemViewModel>("Web.GetOrderDetail", param, System.Data.CommandType.StoredProcedure);
+        }
+
 
 
     }

@@ -181,16 +181,19 @@ namespace NewPersonWeb.Controllers
 
 
 
-
+        [HttpGet]
         public IActionResult OrderList()
         {
             var Lst = new OrderRepo().GetList(ssn);
             return View(Lst);
         }
+
+        [HttpGet]
+        [Route("[Controller]/[Action]/{ID}")]
         public IActionResult OrderDetail(long ID)
         {
-            
-            return View(ID);
+            var Lst = new OrderRepo().GetItems(ssn,ID);
+            return View(Lst);
         }
 
 
