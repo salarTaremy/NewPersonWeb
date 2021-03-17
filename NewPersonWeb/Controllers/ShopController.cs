@@ -178,5 +178,21 @@ namespace NewPersonWeb.Controllers
             Product.RelatedProducts = new ProductRepo().GetRelated(ssn, ProductId);
             return View(Product);
         }
+
+
+
+
+        public IActionResult OrderList()
+        {
+            var Lst = new OrderRepo().GetList(ssn);
+            return View(Lst);
+        }
+        public IActionResult OrderDetail(long ID)
+        {
+            
+            return View(ID);
+        }
+
+
     }
 }

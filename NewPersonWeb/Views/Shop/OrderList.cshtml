@@ -1,0 +1,89 @@
+﻿@model List<Order>
+
+
+@section Styles{
+
+
+
+
+}
+
+
+
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-left mb-0">سوابق خرید</h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="content-body">
+            <!-- Hoverable rows start -->
+            <div class="row" id="table-hover-row  ">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <p>لیست سفارشات قبلی شما</p>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover    table-hover-animation  table-responsive-md   mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center1"></th>
+                                            <th class="text-center1">سریال</th>
+                                            <th class="text-center1">تاریخ</th>
+                                            <th class="text-center1">مبلغ درخواست</th>
+                                            <th class="text-center1">مبلغ فاکتور</th>
+                                            <th class="text-center1"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.Count; i++)
+                                        {
+                                            <tr>
+                                                <th scope="row">@(i+1)</th>
+                                                <td>@Model[i].ID</td>
+                                                <td>@Model[i].Date</td>
+                                                <td>@String.Format("{0:n0}", Model[i].OrderRls)</td>
+                                                <td>@String.Format("{0:n0}", Model[i].FactorRls)</td>
+                                                <td>
+                                                    <a  asp-action="OrderDetail"  asp-controller="Shop"     asp-route-id="@(@Model[i].ID)"  class ="btn btn-icon btn-icon rounded-circle btn-flat-primary mr-1 mb-1 waves-effect waves-light  text-primary"><i class="feather icon-eye"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Hoverable rows end -->
+
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+
+
+
+@section Scripts{
+
+
+
+
+
+}
