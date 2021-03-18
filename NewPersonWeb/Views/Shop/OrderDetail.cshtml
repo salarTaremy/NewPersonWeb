@@ -43,28 +43,7 @@
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Thumb View</h2>
-                        <div class="breadcrumb-wrapper col-12">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="index.html">Home</a>
-                                </li>
-                                <li class="breadcrumb-item">
-                                    <a href="#">Data List</a>
-                                </li>
-                                <li class="breadcrumb-item active">
-                                    Thumb View
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
-                <div class="form-group breadcrum-right">
-                    <div class="dropdown">
-                        <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
-                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Chat</a><a class="dropdown-item" href="#">Email</a><a class="dropdown-item" href="#">Calendar</a></div>
+                        <h2 class="content-header-title float-left mb-0">جزئیات سفارش</h2>
                     </div>
                 </div>
             </div>
@@ -93,13 +72,15 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Image</th>
-                                <th>NAME</th>
-                                <th>CATEGORY</th>
-                                <th>POPULARITY</th>
-                                <th>ORDER STATUS</th>
-                                <th>PRICE</th>
-                                <th>ACTION</th>
+                                <th>تصویر محصول</th>
+                                <th>نام کالا</th>
+                                <th>برند</th>
+                                <th>امتیاز</th>
+                                <th>وضعیت </th>
+                                <th>تعداد</th>
+                                <th>مبلغ واحد</th>
+                                <th>مبلغ کل</th>
+                                <th>عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,25 +89,85 @@
                             @foreach (var item in Model)
                             {
                                 string imgName = item.ProductCode + ".jpg";
+                                string ChipType;
+                                string ChipText;
+                                string progressBarClass;
+                                int ProgresPercent = item.Rate * 20;
+
+                                switch (item.Rate)
+                                {
+                                    case 0:
+                                        progressBarClass = "progress-bar-danger";
+                                        break;
+                                    case 1:
+                                        progressBarClass = "progress-bar-danger";
+                                        break;
+                                    case 2:
+                                        progressBarClass = "progress-bar-warning";
+                                        break;
+                                    case 3:
+                                        progressBarClass = "progress-bar-warning";
+                                        break;
+                                    case 4:
+                                        progressBarClass = "progress-bar-primary";
+                                        break;
+                                    case 5:
+                                        progressBarClass = "progress-bar-success";
+                                        break;
+                                    default:
+                                        progressBarClass = "progress-bar-dark";
+                                        break;
+                                }
+
+
+
+                                if (item.HaveFactor)
+                                {
+                                    if (item.HaveFactorItem)
+                                    {
+                                        ChipType = "chip-success";
+                                        ChipText = "تایید شده";
+                                    }
+                                    else
+                                    {
+                                        ChipType = "chip-danger";
+                                        ChipText = "لغو شده";
+                                    }
+                                }
+                                else
+                                {
+                                    ChipType = "chip-warning";
+                                    ChipText = "در حال بررسی";
+                                }
+
+
+
+
                                 <tr>
                                     <td></td>
                                     <td class="product-img">
-                                        <img src="~/app-assets/images/Products/@imgName" alt="Img placeholder">
+                                        <img onerror="imgError(this);" src="~/app-assets/images/Products/@imgName" alt="فاقد تصویر">
                                     </td>
                                     <td class="product-name">@item.name</td>
                                     <td class="product-category">@item.Brand</td>
                                     <td>
-                                        <div class="progress progress-bar-success">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:97%"></div>
+
+
+
+
+                                        <div class="progress @progressBarClass ">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="@(ProgresPercent)" aria-valuemin="0" aria-valuemax="100" style="width:@(ProgresPercent)%"></div>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="chip chip-warning">
+                                        <div class="chip @ChipType">
                                             <div class="chip-body">
-                                                <div class="chip-text">on hold</div>
+                                                <div class="chip-text">@ChipText</div>
                                             </div>
                                         </div>
                                     </td>
+                                    <td class="product-price">@item.Qty</td>
+                                    <td class="product-price">@item.Price</td>
                                     <td class="product-price">@item.TotalPrice</td>
                                     <td class="product-action">
                                         <span class="action-edit"><i class="feather icon-edit"></i></span>
@@ -215,7 +256,14 @@
 
 @section Scripts{
 
-
+    <script>
+        function imgError(image) {
+            console.log("SD");
+            image.onerror = "";
+            image.src = "/app-assets/images/NoImg.png";
+            return true;
+        };
+    </script>
     <!-- BEGIN: Vendor JS-->
     <script src="~/app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
@@ -237,6 +285,4 @@
     <!-- BEGIN: Page JS-->
     <script src="~/app-assets/js/scripts/ui/data-list-view.js"></script>
     <!-- END: Page JS-->
-
-
 }
