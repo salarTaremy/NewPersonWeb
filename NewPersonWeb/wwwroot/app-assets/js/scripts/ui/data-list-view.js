@@ -25,7 +25,7 @@ $(document).ready(function() {
       sLengthMenu: "_MENU_",
       sSearch: ""
     },
-    aLengthMenu: [[4, 10, 15, 20], [4, 10, 15, 20]],
+      aLengthMenu: [[4, 8, 15], [4, 8, 15]],
     select: {
       style: "multi"
     },
@@ -69,12 +69,12 @@ $(document).ready(function() {
       }
     ],
     dom:
-      '<"top"<"actions action-btns"B><"action-filters"lf>><"clear">rt<"bottom"<"actions">p>',
+      '<"top"<"actions action-btns d-none "B><"action-filters"lf>><"clear">rt<"bottom"<"actions">p>',
     oLanguage: {
       sLengthMenu: "_MENU_",
       sSearch: ""
     },
-    aLengthMenu: [[4, 10, 15, 20], [4, 10, 15, 20]],
+      aLengthMenu: [[4, 8, 15], [4, 8, 15]],
     select: {
       style: "multi"
     },
@@ -89,7 +89,7 @@ $(document).ready(function() {
           $(".add-new-data").addClass("show")
           $(".overlay-bg").addClass("show")
         },
-        className: "btn-outline-primary"
+        className: "btn-outline-primary d-none"
       }
     ],
     initComplete: function(settings, json) {

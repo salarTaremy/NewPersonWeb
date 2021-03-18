@@ -75,7 +75,7 @@
                                 <th>تصویر محصول</th>
                                 <th>نام کالا</th>
                                 <th>برند</th>
-                                <th>امتیاز</th>
+                                <th>امتیاز محصول</th>
                                 <th>وضعیت </th>
                                 <th>تعداد</th>
                                 <th>مبلغ واحد</th>
@@ -166,12 +166,13 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="product-price">@item.Qty</td>
-                                    <td class="product-price">@item.Price</td>
-                                    <td class="product-price">@item.TotalPrice</td>
+                                    <td class="product-price">@String.Format("{0:n0}", item.Qty)</td>
+                                    <td class="product-price">@String.Format("{0:n0}", item.Price)</td>
+                                    <td class="product-price">@String.Format("{0:n0}", item.TotalPrice)</td>
                                     <td class="product-action">
-                                        <span class="action-edit"><i class="feather icon-edit"></i></span>
-                                        <span class="action-delete"><i class="feather icon-trash"></i></span>
+                                        <span class=""  ><a asp-action="ProductDetail" asp-controller="Shop"   asp-route-id="@(item.ProductID)"  ><i class="feather icon-shopping-bag"></i></a></span>
+                                        @*<span class="action-edit"><i class="feather icon-edit"></i></span>*@
+                                        @*<span class="action-delete"><i class="feather icon-trash"></i></span>*@
                                     </td>
                                 </tr>
                             }
@@ -255,15 +256,7 @@
 
 
 @section Scripts{
-
-    <script>
-        function imgError(image) {
-            console.log("SD");
-            image.onerror = "";
-            image.src = "/app-assets/images/NoImg.png";
-            return true;
-        };
-    </script>
+    <script src="~/scripts/noImage.js"></script>
     <!-- BEGIN: Vendor JS-->
     <script src="~/app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
@@ -271,6 +264,7 @@
     <script src="~/app-assets/vendors/js/ui/jquery.sticky.js"></script>
     <script src="~/app-assets/vendors/js/extensions/dropzone.min.js"></script>
     <script src="~/app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+
     <script src="~/app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
     <script src="~/app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
     <script src="~/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
@@ -285,4 +279,7 @@
     <!-- BEGIN: Page JS-->
     <script src="~/app-assets/js/scripts/ui/data-list-view.js"></script>
     <!-- END: Page JS-->
+
+
+
 }

@@ -53,7 +53,7 @@
                                         {
                                             <tr>
                                                 <th scope="row">@(i+1)</th>
-                                                <td>@Model[i].ID</td>
+                                                <td><a asp-action="OrderDetail"  asp-controller="Shop"     asp-route-id="@(@Model[i].ID)"  >@Model[i].ID</a></td>
                                                 <td>@Model[i].Date</td>
                                                 <td>@String.Format("{0:n0}", Model[i].OrderRls)</td>
                                                 <td>@String.Format("{0:n0}", Model[i].FactorRls)</td>

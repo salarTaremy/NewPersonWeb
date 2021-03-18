@@ -16,11 +16,11 @@ namespace NewPersonWeb.Data
     {
 
         private DataBase db;
-        private String Ip = "192.168.200.220";
+        private String Ip = ".";
         private String DbAvandP = "AvandP99";
         private String DbPerson = "Personnel";
         private String User = "sa";
-        private String Password = "Ba2015th2";
+        private String Password = "Accp080012";
         private String AppName = "PersonWeb";
 
         public Dal(DataBase dataBase)
