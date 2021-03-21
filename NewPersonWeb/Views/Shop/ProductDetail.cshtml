@@ -150,7 +150,11 @@
                         </div>
                     </div>
                     @{
-                        long Percent = 100 - (Model.Price * 100 / Model.ConsumerPrices);
+                        long Percent = 0;
+                        if (Model.ConsumerPrices > 0 )
+                        {
+                            Percent = 100 - (Model.Price * 100 / Model.ConsumerPrices);
+                        }
                     }
                     <div class="item-features py-5">
                         <div class="row text-center pt-2">

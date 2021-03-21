@@ -158,6 +158,11 @@ function setBasketListener() {
                         toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
                         addToCart.addClass("d-none");
                         viewInCart.addClass("d-inline-block");
+                    } else if (obj.status == 3 || obj.status == 4 || obj.status == 5) {
+                        console.log(obj.status)
+                        toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
+                        //addToCart.addClass("d-none");
+                        //viewInCart.addClass("d-inline-block");
                     }else {
                         toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
                         addToCart.addClass("d-none");

@@ -16,7 +16,6 @@ namespace NewPersonWeb.Controllers
             shop.paging.CountInPage = CountInPage;
             shop.paging.CurentPgae = 1;
             shop.Filter.Brands = new ProductRepo().GetBrands(ssn);
-
             shop = new ShopRepo().GetPage(ssn, shop);
             return View(shop);
         }
@@ -47,44 +46,84 @@ namespace NewPersonWeb.Controllers
         public IActionResult AddProductToBasket(long ID_Product, short Qty)
         {
 
-            var buyHistory = new Repository.BasketRepo().GetBuyHistory(ssn, ID_Product);
-            if (buyHistory.RemainingQty <= 0 )
+            try
             {
+
+                var buyHistory = new Repository.BasketRepo().GetBuyHistory(ssn, ID_Product);
+                if (buyHistory.RemainingQty <= 0)
+                {
+                    return Ok(new ApiResult
+                    {
+                        Status = 0,
+                        Title = "عملیات نا موفق",
+                        Message = "سقف سفارش شما برای این محصول به اتمام رسیده است"
+                    });
+                }
+
+
+                BasketRepo basketRepo = new BasketRepo();
+                var item = basketRepo.GetBasketDetailIfExistsProduct(ssn, ID_Product);
+                if (item != null)
+                {
+                    return Ok(new ApiResult
+                    {
+                        Status = 2,
+                        Title = "عملیات نا موفق",
+                        Message = "این محصول قبلا به  سبد شما اضافه شده است"
+                    });
+                }
+
+                ShopRepo shopRepo = new ShopRepo();
+                Product product = shopRepo.GetProduct(ssn, ID_Product);
+                if (product == null)
+                {
+                    return Ok(new ApiResult
+                    {
+                        Status = 4,
+                        Title = "عملیات نا موفق",
+                        Message = "درحال حاضر امکان افزودن این محصول به سبد کالا وجود ندارد"
+                    });
+                }
+
+
+                if (product.Inventory == null || product.Inventory <=0  )
+                {
+                    return Ok(new ApiResult
+                    {
+                        Status = 5,
+                        Title = "عملیات نا موفق",
+                        Message = "متاسفانه در حال حاضر موجودی این محصول به اتمام رسیده است"
+                    });
+                }
+
+
+
+
+                Qty = 1;
+                var result = new ShopRepo().AddProductToBasket(ssn, ID_Product, Qty);
+                if (result)
+                {
+                    return Ok(new ApiResult
+                    {
+                        Status = 1,
+                        Title = "عملیات موفق",
+                        Message = "محصول مورد نظر با موفقیت به سبد شما اضافه شد"
+                    });
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
+            }
+            catch (System.Exception)
+            {
+
                 return Ok(new ApiResult
                 {
-                    Status = 0,
+                    Status = 3,
                     Title = "عملیات نا موفق",
-                    Message = "سقف سفارش شما برای این محصول به اتمام رسیده است"
+                    Message = "متاسفانه عملیات با خطا مواجه شد.لطفا در فرصتی دیگر  نسبت به این کار اقدام بفرمایید"
                 });
-            }
-
-
-            BasketRepo basketRepo = new BasketRepo();
-            var item = basketRepo.GetBasketDetailIfExistsProduct(ssn, ID_Product);
-            if (item != null)
-            {
-                return Ok(new ApiResult
-                {
-                    Status = 2,
-                    Title = "عملیات نا موفق",
-                    Message = "این محصول قبلا به  سبد شما اضافه شده است"
-                });
-            }
-
-            Qty = 1;
-            var result = new ShopRepo().AddProductToBasket(ssn, ID_Product, Qty);
-            if (result)
-            {
-                return Ok(new ApiResult
-                {
-                    Status = 1,
-                    Title = "عملیات موفق",
-                    Message = "محصول مورد نظر با موفقیت به سبد شما اضافه شد"
-                });
-            }
-            else
-            {
-                return BadRequest(false);
             }
         }
 
@@ -175,7 +214,7 @@ namespace NewPersonWeb.Controllers
         public IActionResult ProductDetail(long ProductId)
         {
             var Product =  new ShopRepo().GetProduct(ssn, ProductId);
-            Product.RelatedProducts = new ProductRepo().GetRelated(ssn, ProductId);
+            Product.RelatedProducts =  new ProductRepo().GetRelated(ssn, ProductId);
             return View(Product);
         }
 
