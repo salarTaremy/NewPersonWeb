@@ -92,22 +92,32 @@ namespace NewPersonWeb.Controllers
                     {
                         Status = 5,
                         Title = "عملیات نا موفق",
-                        Message = "متاسفانه در حال حاضر موجودی این محصول به اتمام رسیده است"
+                        Message = "متاسفانه در حال حاضر این محصول فاقد موجودی میباشد"
                     });
                 }
 
-
+                if (product.Price == 0 )
+                {
+                    return Ok(new ApiResult
+                    {
+                        Status = 6,
+                        Title = "عملیات نا موفق",
+                        Message = "متاسفانه درحال حاضر این محصول فاقد فی کالای فعال میباشد"
+                    });
+                }
 
 
                 Qty = 1;
                 var result = new ShopRepo().AddProductToBasket(ssn, ID_Product, Qty);
                 if (result)
                 {
+                    var basket = basketRepo.GetBasket(ssn);
                     return Ok(new ApiResult
                     {
                         Status = 1,
                         Title = "عملیات موفق",
-                        Message = "محصول مورد نظر با موفقیت به سبد شما اضافه شد"
+                        Message = "محصول مورد نظر با موفقیت به سبد شما اضافه شد",
+                        Data =  new { ItemCount = basket.ItemCount }
                     });
                 }
                 else
@@ -233,6 +243,28 @@ namespace NewPersonWeb.Controllers
         {
             var Lst = new OrderRepo().GetItems(ssn,ID);
             return View(Lst);
+        }
+
+        [HttpGet]
+        [Route("[Controller]/[Action]")]
+        public int GetBasketItemCount()
+        {
+            try
+            {
+                BasketRepo basketRepo = new BasketRepo();
+                var basket = basketRepo.GetBasket(ssn);
+                if (basket is null )
+                {
+                    return 0;
+                }
+
+                return basket.ItemCount;
+            }
+            catch (System.Exception)
+            {
+                return 0;
+            }
+            
         }
 
 

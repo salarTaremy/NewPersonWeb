@@ -62,10 +62,19 @@
                                     </span>
                                 </div>
                                 <hr>
-                                <p>
-                                    قیمت برای پرسنل:
-                                    @String.Format("{0:n0}", @Model.Price) ریال
-                                </p>
+                                @if (Model.Price > 0)
+                                {
+                                    <p>
+                                        قیمت برای پرسنل:
+                                        @String.Format("{0:n0}", @Model.Price) ریال
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="text-danger">
+                                        در حال حاضر فی فعالی برای این محصول وجود ندارد
+                                    </p>
+                                }
                                 @{if (Model.HaveTax)
                                     {
                                         <p class="text-danger">
@@ -80,10 +89,13 @@
                                     }
                                 }
 
-                                <p>
-                                    قیمت مصرف کننده:
-                                    @String.Format("{0:n0}", @Model.ConsumerPrices) ریال
-                                </p>
+                                @if (Model.Price >0 )
+                                {
+                                    <p>
+                                        قیمت مصرف کننده:
+                                        @String.Format("{0:n0}", @Model.ConsumerPrices) ریال
+                                    </p>
+                                }
                                 <p class="font-weight-bold mb-25">
                                     <i class="feather icon-truck mr-50 font-medium-2"></i> <span>ارسال از </span><span>@Model.AnbarName</span>
                                 </p>
@@ -103,7 +115,7 @@
                                 }
 
                                 <div class="d-flex flex-column flex-sm-row" id="@(Model.ID)">
-                                    @if (@Model.Inventory > 0)
+                                    @if (@Model.Inventory > 0 && Model.Price > 0 )
                                     {
                                         @if (Model.ExistInBasket)
                                         {
@@ -114,7 +126,7 @@
                                         else
                                         {
                                             <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart add-to-basket" id="@(Model.ID)"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
-                                            <a class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart view-in-basket d-none " asp-action="Index" asp-controller="Basket" ><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</a>
+                                            <a class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart view-in-basket d-none " asp-action="Index" asp-controller="Basket"><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</a>
 
                                         }
                                     }

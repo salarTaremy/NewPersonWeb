@@ -18,11 +18,13 @@ cart.on("click", function () {
                 Qty: 1
             },
             success: function (data) {
-                AddToBasket.addClass("d-none");
-                ViewInBasket.removeClass("d-none");
                 var result = JSON.stringify(data);
                 var obj = jQuery.parseJSON(result);
                 if (obj.status === 1) {
+                    AddToBasket.addClass("d-none");
+                    ViewInBasket.removeClass("d-none");
+                    $("#cnt1").text(obj.data.itemCount);
+                    $("#cnt2").text(obj.data.itemCount);
                     toastr.success(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
                 } else {
                     toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });

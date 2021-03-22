@@ -112,14 +112,16 @@ namespace NewPersonWeb.Repository
         }
 
 
-        public bool ConfirmBasket(string Ssn)
+        public bool ConfirmBasket( int Id_Basket, string Ssn, string description)
         {
             int affectedRows;
             string SpName = "Web.ConfirmBasket";
             var param = new DynamicParameters(
                 new
                 {
-                    Ssn = Ssn
+                    Id_Basket= Id_Basket,
+                    Ssn = Ssn,
+                    description = description
                 });
             using (var con = new SqlConnection(db.GetConnectionString()))
             {

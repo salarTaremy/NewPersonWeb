@@ -122,7 +122,7 @@ namespace NewPersonWeb.Controllers
 
                 var rep = new BasketRepo();
 
-                if (rep.ConfirmBasket(basketVM.basket.ID))
+                if (rep.ConfirmBasket(basketVM.basket.ID,ssn , description))
                 {
                     return PartialView("_Success", "درخواست شما با موفقیت ثبت شد");
                 }

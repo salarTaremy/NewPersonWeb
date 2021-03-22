@@ -21,11 +21,12 @@ function LoadBasket() {
 
 function ConfirmBasket() {
     console.log('Send Request for Confirm Basket');
+    var description = $('#description').val();
     $.ajax({
         url: '/Basket/Confirm',
         type: 'post',
         data: {
-            description: 'ssss'
+            description: description
         },
         success: function (data) {
             $(".content-ajax").empty();
@@ -125,6 +126,7 @@ $(document).ajaxSuccess(function () {
                 var result = JSON.stringify(data);
                 var obj = jQuery.parseJSON(result);
                 if (obj.status === 1) {
+                    SetBasketCount();
                     toastr.info(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
                 } else {
                     toastr.warning(obj.message, obj.title, { "showMethod": "fadeIn", "hideMethod": "fadeOut", timeOut: 3000, positionClass: 'toast-top-right' });
