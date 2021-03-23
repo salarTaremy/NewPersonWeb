@@ -1,0 +1,64 @@
+﻿@model  List<Payroll>
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <!-- Dashboard Analytics Start -->
+            <section id="dashboard-analytics">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">لیست فیش های حقوقی</h4>
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive mt-1">
+                                    <table class="table table-hover-animation mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>شماره فیش</th>
+                                                <th>وضعیت</th>
+                                                <th>ماه حقوقی</th>
+                                                <th>سال</th>
+                                                <th>خالص دریافتی</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var item in Model)
+                                            {
+                                            <tr>
+                                                <td><a asp-action="PayrollDetail" asp-controller="Employment" , asp-route-id="@item.ID">@item.ID</a> </td>
+                                                <td><i class="fa fa-circle font-small-3 text-success mr-50"></i>@item.StatusName</td>
+
+                                                <td>@item.MonthName</td>
+                                                <td>@item.Year</td>
+                                                <td>@item.NetSalary</td>
+
+                                                <td>
+                                                    <a  asp-action="PayrollDetail" asp-controller="Employment"  , asp-route-id="@item.ID"  class="btn btn-icon btn-icon rounded-circle btn-flat-primary mr-1 mb-1 waves-effect waves-light  text-primary"   ><i class="fa fa-address-card-o"></i></a>
+                                                </td>
+                                            </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Dashboard Analytics end -->
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->

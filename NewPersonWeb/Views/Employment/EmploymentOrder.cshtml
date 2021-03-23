@@ -1,0 +1,191 @@
+﻿@model   EmploymentOrder
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <!-- page users view start -->
+            <section class="page-users-view">
+                <div class="row">
+                    <!-- account start -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                @*<div class="card-title"><span>حکم کارگزینی</span><span>(</span><span>@Model.id</span><span>)</span></div>*@
+                                <div class="card-title">حکم کارگزینی</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="users-view-image">
+                                        @{ 
+                                            string ImgName;
+                                            if (Model.GenderID==1)
+                                            {
+                                                ImgName = "Profile2.png";
+                                            }
+                                            else
+                                            {
+                                                ImgName = "Profile.png";
+                                            }
+                                        }
+
+                                        <img src="~/app-assets/images/portrait/small/@ImgName" class="users-avatar-shadow w-100 rounded mb-2 pr-2 ml-1" alt="avatar">
+                                    </div>
+                                    <div class="col-12 col-sm-9 col-md-6 col-lg-5">
+                                        <table>
+                                            <tr>
+                                                <td class="font-weight-bold">شماره بیمه<span>:</span></td>
+                                                <td>@Model.ShomarehBime</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">کد پرسنلی<span>:</span></td>
+                                                <td>@Model.ID_Pr</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">نام<span>:</span></td>
+                                                <td>@Model.Name</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">نام خانوادگی<span>:</span></td>
+                                                <td>@Model.Famil</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-5">
+                                        <table class="ml-0 ml-sm-0 ml-lg-0">
+                                            <tr>
+                                                <td class="font-weight-bold">وضعیت<span>:</span></td>
+                                                <td>مشغول به کار</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">شغل/سمت<span>:</span></td>
+                                                <td>@Model.JobName</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">کارفرما<span>:</span></td>
+                                                <td>@Model.Company</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">کارگاه<span>:</span></td>
+                                                <td>@Model.kargah</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">تحصیلات<span>:</span></td>
+                                                <td>@Model.Tahsilat</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">تاریخ استخدام<span>:</span></td>
+                                                <td>@Model.Estekhdam</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-12">
+                                        <a href="app-user-edit.html" class="btn btn-primary mr-1 disabled"><i class="feather icon-edit-1"></i> ویرایش مشخصات</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- account end -->
+                    <!-- information start -->
+                    <div class="col-md-6 col-12 ">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title mb-2">سایر اطلاعات</div>
+                            </div>
+                            <div class="card-body">
+                                <table>
+                                    <tr>
+                                        <td class="font-weight-bold">تاریخ تولد <span>:</span></td>
+                                        <td>
+                                          @Model.BirthDate
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">نام پدر<span>:</span></td>
+                                        <td>@Model.NamePedar</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">شماره شناسنامه<span>:</span></td>
+                                        <td>@Model.Sh_Sh</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">تلفن<span>:</span></td>
+                                        <td>@Model.tel</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">تلفن همراه<span>:</span></td>
+                                        <td>
+                                            @Model.Mobile
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">جنسیت<span>:</span></td>
+                                        <td>@Model.Gender</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- information start -->
+                    <!-- social links end -->
+                    <div class="col-md-6 col-12 ">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title mb-2">عوامل حقوقی</div>
+                            </div>
+                            <div class="card-body">
+                                <table>
+                                    <tr>
+                                        <td class="font-weight-bold">پایه حقوق روزانه<span>:</span></td>
+                                        <td>
+                                            @String.Format("{0:n0}", Model.BasicSalaryPerDayRls) ریال
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">پایه حقوق ماهانه<span>:</span></td>
+                                        <td>
+                                            @String.Format("{0:n0}", Model.BasicSalaryPerMonthRls) ریال
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">مبلغ هر ساعت اضافه کار<span>:</span></td>
+                                        <td>
+                                            @String.Format("{0:n0}", Model.MabEzafeKarPerHour) ریال
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">حق اولاد<span>:</span></td>
+                                        <td>
+                                            @String.Format("{0:n0}", Model.MabOladRls) ریال
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">بن کارگری<span>:</span></td>
+                                        <td>
+                                            @String.Format("{0:n0}", Model.MabBoneKargari) ریال
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-weight-bold">حق مسکن</td>
+                                        <td>
+                                            @String.Format("{0:n0}", Model.MabMaskan) ریال
+                                        </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- social links end -->
+            </div>
+        </section>
+        <!-- page users view end -->
+
+    </div>
+</div>
+</div>
+<!-- END: Content-->
