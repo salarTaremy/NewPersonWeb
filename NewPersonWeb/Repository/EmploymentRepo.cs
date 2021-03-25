@@ -38,7 +38,7 @@ namespace NewPersonWeb.Repository
 
         public PayrollViewModel GetPayrollDetail(int ID)
         {
-            PayrollViewModel PVM = new PayrollViewModel();
+            
 
             // Begin Create Datatable
             var Dt = new DataTable();
@@ -49,26 +49,22 @@ namespace NewPersonWeb.Repository
             // End Create Datatable
 
 
-            //var param = new DynamicParameters(
-            //    new
-            //    {
-            //        ssn = Ssn,
-            //        sortOrder = shop.paging.SortOrder,
-            //        countInPage = shop.paging.CountInPage,
-            //        curentPgae = shop.paging.CurentPgae,
-            //        keyword = shop.Filter.Keyword,
-            //        GroupID = GroupID,
-            //        brands = DtBr
-            //    });
+            var param = new DynamicParameters(
+                new
+                {
+                    ID_Array = Dt
+                });
 
+            PayrollViewModel PVM = new PayrollViewModel();
             string SpName = "[Sl].[UspGetPayroll]";
             using (var con = new SqlConnection(db_person.GetConnectionString()))
             {
-                var Result = con.QueryMultiple(SpName, null, commandType: CommandType.StoredProcedure);
-                shop.Products = Result.Read<Product>().ToList();
-                shop.paging = Result.Read<Paging>().FirstOrDefault();
-                shop.Filter.Brands = Result.Read<ProductBrand>().ToList();
-                shop.Filter.Groups = Result.Read<ProductGroup>().ToList();
+                var Result = con.QueryMultiple(SpName, param, commandType: CommandType.StoredProcedure);
+                PVM.IncParams = Result.Read<PayrollViewModel.parameter>().ToList();
+                PVM.DecParams = Result.Read<PayrollViewModel.parameter>().ToList();
+                PVM.header = Result.Read<PayrollViewModel.Header>().FirstOrDefault();
+                PVM.Details = Result.Read<PayrollViewModel.Detail>().ToList();
+                PVM.Loans = Result.Read<PayrollViewModel.Loan>().ToList();
             }
 
             return PVM;

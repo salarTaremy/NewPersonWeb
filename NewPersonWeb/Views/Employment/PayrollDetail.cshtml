@@ -1,0 +1,231 @@
+﻿
+@model PayrollViewModel
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body ">
+            <!-- Dashboard Analytics Start -->
+            <section>
+                <div class=" card">
+
+                    <div class="row  card-header ">
+                        <div class="col-4  mt-4">
+                            <p>
+                                شماره:
+                                @Model.header.ID
+                            </p>
+                            <p>
+                                کد پرسنلی:
+                                @Model.header.ID_Person
+                            </p>
+                            <p>
+                                @*@VahedKhedmat*@
+                            </p>
+                        </div>
+                        <div class="col-4  mt-1 ">
+                            <p class="justify-content-center d-flex   font-weight-bold  ">
+                                فیش حقوقی ماهانه
+                            </p>
+                            <p class="justify-content-center d-flex font-weight-normal">
+                                @Model.header.CompanyName
+                            </p>
+                            <p class="justify-content-center d-flex  font-weight-light">
+                                @Model.header.NameKargah
+                            </p>
+                            <p class="justify-content-center d-flex ">
+                                @Model.header.Month
+                                @Model.header.Year
+
+                            </p>
+                        </div>
+                        <div class="col-4    justify-content-end d-flex  mt-2">
+                            @{
+                                var data = "";
+                                //var data = ViewData["ImageBase64"].ToString();
+                                if (data == "")
+                                {
+                                    <img src="~/app-assets/images/User_Accounts_alt.png" class="rounded float-right" alt="..." style="max-width:100px; max-height:100px">
+                                }
+                                else
+                                {
+                                    <img src="data:image/png;base64,@data" class="rounded float-right" alt="..." style="max-width:100px; max-height:100px">
+                                }
+
+                            }
+                        </div>
+                    </div>
+                    <div class="row    card-header  d-none d-lg-flex d-xl-flex ">
+
+                        <div class="col-5    bg-primary ">
+                            <p class="d-flex justify-content-center text-white ">
+                                خلاصه کارکرد
+                            </p>
+                        </div>
+
+                        <div class="col-4    bg-primary">
+                            <p class="d-flex justify-content-center text-white">
+                                مزایا
+                            </p>
+                        </div>
+
+                        <div class="col-3  bg-primary">
+                            <p class="d-flex justify-content-center text-white">
+                                کسورات
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row  card-body">
+                        <div class="col-lg-5 col-xl-5 col-md-12 col-sm-12 col-xs-12   border-right  ">
+                            <table class="table ">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">شرح</th>
+                                        <th scope="col">مبلغ</th>
+                                        <th scope="col">روز</th>
+                                        <th scope="col">ساعت</th>
+                                        <th scope="col">دقیقه</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.Details)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.Name
+                                            </td>
+                                            <td>
+                                                @String.Format("{0:n0}", item.Rls)
+                                            </td>
+                                            <td>
+                                                @item.D
+                                            </td>
+                                            <td>
+                                                @item.H
+                                            </td>
+                                            <td>
+                                                @item.M
+                                            </td>
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-4 col-xl-4 col-md-12 col-sm-12 col-xs-12  ">
+                            <table class="table ">
+                                <tbody>
+
+                                    @foreach (var item in Model.IncParams)
+                                    {
+                                        <tr>
+                                            <td class="text-primary">
+                                                @item.Name
+                                            </td>
+                                            <td class="text-primary">
+                                                @String.Format("{0:n0}", item.Value)
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-3 col-xl-3 col-md-12 col-sm-12 col-xs-12   border-left  ">
+                            <table class="table ">
+                                <tbody>
+                                    @foreach (var item in Model.DecParams)
+                                    {
+                                        <tr>
+                                            <td class="text-danger">
+                                                @item.Name
+                                            </td>
+                                            <td class="text-danger">
+                                                @String.Format("{0:n0}", item.Value)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row   border  pl-3 pr-3 pt-2 ">
+                        <div class="col-5 ">
+                            <p>
+                                دستمزد روزانه:
+                                @{
+                                    var BasicSalaryPerDay = Model.header.DailySalary_Rls - Model.header.Paye_Sanavat;
+
+                                }
+                                @String.Format("{0:n0}", BasicSalaryPerDay)
+
+                            </p>
+                            <p>
+                                پایه سنوات روزانه:
+                                @String.Format("{0:n0}", Model.header.PayeSanavat)
+                            </p>
+                            <p>
+                                دستمزد ماهانه :
+                                @{
+                                    var BasicSalaryMonth = Model.header.DailySalary_Rls * Model.header.DayCount;
+                                }
+                                @String.Format("{0:n0}", BasicSalaryMonth)
+                            </p>
+                            <p class="text-primary">
+                                جمع حقوق و مزایا:
+                                @String.Format("{0:n0}", Model.header.TotalSalary)
+                            </p>
+                        </div>
+                        <div class="col-4 ">
+                            <p>
+                                جمع مزایا مشمول مالیات:
+                                @String.Format("{0:n0}", Model.header.TotalSalaryTaxable)
+                            </p>
+                            <p>
+                                جمع مزایا مشمول بیمه:
+                                @String.Format("{0:n0}", Model.header.TotalSalaryInsurable)
+                            </p>
+                            <p>
+                                مالیات:
+                                @String.Format("{0:n0}", Model.header.Tax)
+                            </p>
+                            <p>
+                                بیمه:
+                                @String.Format("{0:n0}", Model.header.Insurable)
+                            </p>
+                        </div>
+                        <div class="col-3 ">
+                            <p class="text-danger">
+                                جمع کسورات:
+                                @String.Format("{0:n0}", Model.header.Discount)
+                            </p>
+                            <p class="text-success">
+                                خالص دریافتی:
+                                @String.Format("{0:n0}", Model.header.NetSalary)
+                            </p>
+                        </div>
+                        @*<div class="col-12 ">
+                <p class="text-success">
+                    @RlsName
+                </p>
+            </div>*@
+                    </div>
+
+                </div>
+            </section>
+            <!-- Dashboard Analytics end -->
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+
+
