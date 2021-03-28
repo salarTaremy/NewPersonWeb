@@ -13,10 +13,9 @@ namespace NewPersonWeb.Controllers
 {
     public class HomeController : BaseController
     {
-
-        private string ssn = "0072374586";
         public IActionResult Index()
         {
+            string ssn = User.Identity.Name;
             var  cus = new CustomerRepo().GetCustomerInfo(ssn);
             return View(cus);
         }

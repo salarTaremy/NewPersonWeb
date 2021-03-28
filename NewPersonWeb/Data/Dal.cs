@@ -49,7 +49,7 @@ namespace NewPersonWeb.Data
                 return Result;
             }
         }
-        public List<TEntity> GetList<TEntity>(string SpName, DynamicParameters? param, CommandType? commandType = null)
+        public List<TEntity> GetList<TEntity>(string SpName, DynamicParameters param, CommandType? commandType = null)
         {
             //var param = new DynamicParameters(new { CARID = 66, CARNAME = "Volvo" });
             using (var con = new SqlConnection(GetConnectionString()))

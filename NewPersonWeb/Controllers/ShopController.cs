@@ -8,10 +8,10 @@ namespace NewPersonWeb.Controllers
     public class ShopController : BaseController
     {
         private int CountInPage = 18;
-        private string ssn = "0072374586";
 
         public IActionResult Index()
         {
+            string ssn = User.Identity.Name;
             Shop shop = new Shop();
             shop.paging.CountInPage = CountInPage;
             shop.paging.CurentPgae = 1;
@@ -27,7 +27,7 @@ namespace NewPersonWeb.Controllers
             {
                 CurentPgae = 1;
             }
-
+            string ssn = User.Identity.Name;
             Shop shop = new Shop();
             shop.paging.CountInPage = CountInPage;
             shop.paging.SortOrder = SortOrder;
@@ -48,7 +48,7 @@ namespace NewPersonWeb.Controllers
 
             try
             {
-
+                string ssn = User.Identity.Name;
                 var buyHistory = new Repository.BasketRepo().GetBuyHistory(ssn, ID_Product);
                 if (buyHistory.RemainingQty <= 0)
                 {
@@ -140,6 +140,7 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult AddProductToFavorite(long ID_Product)
         {
+            string ssn = User.Identity.Name;
             ShopRepo shopRepo = new ShopRepo();
             Product product = shopRepo.GetProduct(ssn, ID_Product);
 
@@ -181,6 +182,7 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult RemoveProductFromFavorite(long ID_Product)
         {
+            string ssn = User.Identity.Name;
             ShopRepo shopRepo = new ShopRepo();
             Product product = shopRepo.GetProduct(ssn, ID_Product);
 
@@ -223,6 +225,7 @@ namespace NewPersonWeb.Controllers
         [Route("[Controller]/[Action]/{ProductId}")]
         public IActionResult ProductDetail(long ProductId)
         {
+            string ssn = User.Identity.Name;
             var Product =  new ShopRepo().GetProduct(ssn, ProductId);
             Product.RelatedProducts =  new ProductRepo().GetRelated(ssn, ProductId);
             return View(Product);
@@ -233,6 +236,7 @@ namespace NewPersonWeb.Controllers
         [HttpGet]
         public IActionResult OrderList()
         {
+            string ssn = User.Identity.Name;
             var Lst = new OrderRepo().GetList(ssn);
             return View(Lst);
         }
@@ -241,6 +245,7 @@ namespace NewPersonWeb.Controllers
         [Route("[Controller]/[Action]/{ID}")]
         public IActionResult OrderDetail(long ID)
         {
+            string ssn = User.Identity.Name;
             var Lst = new OrderRepo().GetItems(ssn,ID);
             return View(Lst);
         }
@@ -251,6 +256,7 @@ namespace NewPersonWeb.Controllers
         {
             try
             {
+                string ssn = User.Identity.Name;
                 BasketRepo basketRepo = new BasketRepo();
                 var basket = basketRepo.GetBasket(ssn);
                 if (basket is null )

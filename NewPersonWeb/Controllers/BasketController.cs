@@ -13,7 +13,7 @@ namespace NewPersonWeb.Controllers
 {
     public class BasketController: BaseController
     {
-        private string ssn = "0072374586";
+
 
         public IActionResult Index()
         {
@@ -23,6 +23,7 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult BasketItems()
         {
+            string ssn = User.Identity.Name;
             BasketViewModel basketVM = GetBasketViewModel(ssn);
             if (basketVM.Items.Count == 0)
             {
@@ -35,7 +36,7 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult RemoveProductFromBasket(long ID_Product)
         {
-
+            string ssn = User.Identity.Name;
             var result = new BasketRepo().RemoveProductFromBasket(ssn, ID_Product);
             if (result)
             {
@@ -61,9 +62,8 @@ namespace NewPersonWeb.Controllers
         [HttpPost]
         public IActionResult ChangeQty(long ProductID, short Qty)
         {
+            string ssn = User.Identity.Name;
             var rep = new BasketRepo();
-
-
             var history = rep.GetBuyHistory(ssn, ProductID);
 
             if (history.RemainingQty == 0 )
@@ -77,8 +77,7 @@ namespace NewPersonWeb.Controllers
                 return Ok(new ApiResult { Status = 4, Title = "عملیات ناموفق", Message = $"سقف سفارش شما برای این محصول {history.RemainingQty} عدد میباشد" });
             }
 
-
-            if (rep.ChangeQty(this.ssn,ProductID,Qty ))
+            if (rep.ChangeQty(ssn,ProductID,Qty ))
             {
                 return Ok(new ApiResult { Status = 1, Title = "عملیات موفق", Message = $"تعداد این محصول به {Qty} عدد تغییر یافت" });
             }
@@ -96,6 +95,7 @@ namespace NewPersonWeb.Controllers
         {
             try
             {
+                string ssn = User.Identity.Name;
                 BasketViewModel basketVM = GetBasketViewModel(ssn);
 
                 if (basketVM.basket is null)

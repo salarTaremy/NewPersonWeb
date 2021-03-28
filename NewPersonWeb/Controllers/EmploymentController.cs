@@ -10,9 +10,6 @@ namespace NewPersonWeb.Controllers
     
     public class EmploymentController : BaseController
     {
-
-        private string ssn = "0072374586";
-
         public IActionResult Index()
         {
             return View();
@@ -20,6 +17,7 @@ namespace NewPersonWeb.Controllers
 
         public IActionResult EmploymentOrder()
         {
+            string ssn = User.Identity.Name;
             var repo = new Repository.EmploymentRepo();
             var EmpOrd = repo.GetEmploymentOrder(ssn);
 
@@ -28,6 +26,7 @@ namespace NewPersonWeb.Controllers
 
         public IActionResult PayrollList()
         {
+            string ssn = User.Identity.Name;
             var repo = new Repository.EmploymentRepo();
             var Lst = repo.GetPayrollList(ssn);
 
