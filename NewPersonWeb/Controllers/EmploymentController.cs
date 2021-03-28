@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace NewPersonWeb.Controllers
 {
+    
     public class EmploymentController : BaseController
     {
 
@@ -32,6 +34,7 @@ namespace NewPersonWeb.Controllers
             return View(Lst);
         }
 
+        
         [HttpGet]
         [Route("[Controller]/[Action]/{Id:int}")]
         public IActionResult PayrollDetail(int id)

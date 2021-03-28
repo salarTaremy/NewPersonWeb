@@ -29,7 +29,7 @@ namespace NewPersonWeb.Models
         [Required(ErrorMessage = "ورود کد ملی الزامی است")]
         [Display(Name = "کد ملی", Description = "Description", Prompt = "کد ملی")]
         [UIHint("UIHint")]
-        public string CodeMelli { get; set; }
+        public string Code_melli { get; set; }
         public string CodeEghtesadi { get; set; }
         [Display(Name = "تولد", Description = "Description", Prompt = "تولد")]
         public int? BirthDay { get; set; }
