@@ -21,6 +21,7 @@ namespace NewPersonWeb.Controllers
             var repo = new Repository.EmploymentRepo();
             var EmpOrd = repo.GetEmploymentOrder(ssn);
 
+            Menu.AppMenu.SwichMenu(new Menu.SubMenu { Action = "EmploymentOrder", Controller = "Employment" });
             return View(EmpOrd);
         }
 

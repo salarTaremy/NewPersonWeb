@@ -1,4 +1,10 @@
-﻿<div class="horizontal-menu-wrapper">
+﻿
+
+@model List<NewPersonWeb.Menu.MenuItem>
+
+
+
+<div class="horizontal-menu-wrapper">
     <div class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav navbar-light navbar-without-dd-arrow navbar-shadow menu-border" role="navigation" data-menu="menu-wrapper">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
@@ -16,10 +22,79 @@
         <div class="navbar-container main-menu-content" data-menu="menu-container">
             <!-- include ~/includes/mixins-->
             <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
+                @foreach (var item in Model)
+                {
+                    <li class="dropdown nav-item" data-menu="dropdown">
+                        <a class="dropdown-toggle nav-link"  data-toggle="dropdown"><i class="feather icon-home"></i><span >@item.Name</span></a>
+                        <ul class="dropdown-menu">
+                            @foreach (var subitem in item.Items)
+                            {
+                                <li data-menu="" class="@subitem.Class()">
+                                    <a class="dropdown-item" asp-action="@subitem.Action" asp-controller="@subitem.Controller" data-toggle="dropdown" data-i18n="Analytics"><i class="feather icon-activity"></i>@subitem.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
                 <li class="dropdown nav-item" data-menu="dropdown">
-                    <a class="dropdown-toggle nav-link" asp-action="index" asp-controller="Home" data-toggle="dropdown"><i class="feather icon-home"></i><span data-i18n="Dashboard">خانه</span></a>
+                    <a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-edit-2"></i><span data-i18n="Forms &amp; Tables">ورود و خروج</span></a>
                     <ul class="dropdown-menu">
-                        <li class="active" data-menu="">
+                        <li data-menu="">
+                            <a class="dropdown-item" href="form-layout.html" data-toggle="dropdown" data-i18n="Form Layout"><i class="feather icon-box"></i>فهرست تردد روزانه</a>
+                        </li>
+                        <li data-menu="">
+                            <a class="dropdown-item" href="form-wizard.html" data-toggle="dropdown" data-i18n="Form Wizard"><i class="feather icon-package"></i>عدم ثبت ورود/خروج</a>
+                        </li>
+                        <li data-menu="">
+                            <a class="dropdown-item" href="form-wizard.html" data-toggle="dropdown" data-i18n="Form Wizard"><i class="feather icon-package"></i>کسرکار و اضافه کار</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="horizontal-menu-wrapper">
+    <div class="header-navbar navbar-expand-sm navbar navbar-horizontal floating-nav navbar-light navbar-without-dd-arrow navbar-shadow menu-border" role="navigation" data-menu="menu-wrapper">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item mr-auto">
+                    <a class="navbar-brand" href="~/html/rtl/horizontal-menu-template/index.html">-->
+                        @*<div class="brand-logo"></div>*@
+                        <!--<img src="~/app-assets/images/logo/logo-primary.png" />
+                        <h2 class="brand-text mb-0">-->@*logoname*@<!--</h2>
+                    </a>
+                </li>
+                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
+            </ul>
+        </div>-->
+        <!-- Horizontal menu content-->
+        <!--<div class="navbar-container main-menu-content" data-menu="menu-container">-->
+            <!-- include ~/includes/mixins-->
+            <!--<ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
+                <li class="dropdown nav-item" data-menu="dropdown">
+                    <a class="dropdown-toggle nav-link" asp-action="index" asp-controller="Home" data-toggle="dropdown"><i class="feather icon-home"></i><span data-i18n="Dashboard">UUUUUUU</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="" data-menu="">
                             <a class="dropdown-item" asp-action="index" asp-controller="Home" data-toggle="dropdown" data-i18n="Analytics"><i class="feather icon-activity"></i>اعتبار ریالی</a>
                         </li>
                     </ul>
@@ -27,10 +102,10 @@
                 <li class="dropdown nav-item" data-menu="dropdown">
                     <a class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="feather icon-shopping-bag"></i><span data-i18n="UI Elements">فروشگاه</span></a>
                     <ul class="dropdown-menu">
-                        <li data-menu="">
+                        <li data-menu="" >
                             <a class="dropdown-item" asp-action="index" asp-controller="Shop" data-toggle="dropdown" data-i18n="Colors"><i class="feather icon-grid"></i>محصولات</a>
                         </li>
-                        <li data-menu="">
+                        <li data-menu="" >
                             <a class="dropdown-item" asp-action="index" asp-controller="Basket" data-toggle="dropdown" data-i18n="Colors"><i class="feather icon-shopping-cart"></i>سبد خرید</a>
                         </li>
                         <li data-menu="">
@@ -77,4 +152,5 @@
             </ul>
         </div>
     </div>
-</div>
+</div>-->
+

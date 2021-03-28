@@ -56,15 +56,13 @@ namespace NewPersonWeb.Controllers
                 return View(Th);
             }
 
+            
             await _signInManager.SignInAsync(user, false);
 
+            
 
-
-
-            //HttpContext.Session.SetInt32("Th_ID", (int)Th.Id);
-            //HttpContext.Session.SetInt32("Th_ID", 256);
-            //HttpContext.Session.SetString("FullName", user.FullName);
-
+            HttpContext.Session.SetString("FullName", user.FullName);
+            
             return RedirectToAction("index", "home");
         }
 

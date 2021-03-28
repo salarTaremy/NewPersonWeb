@@ -2,7 +2,9 @@
 <html class="loading" lang="en" data-textdirection="rtl">
 <!-- BEGIN: Head-->
 
+
 <head>
+    <title>@ViewBag.Title</title>
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/vendors-rtl.min.css">
     <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/charts/apexcharts.css">
@@ -48,7 +50,7 @@
     <partial name="_Header" />
     <!-- END: Header-->
     <!-- BEGIN: Main Menu-->
-    <partial name="_MainMenu" />
+    <partial name="_MainMenu" model="@NewPersonWeb.Menu.AppMenu.menu" view-data='@new ViewDataDictionary(ViewData) { { "SampleName1", "value" }, { "SampleName2", 1 } }' />
     <!-- END: Main Menu-->
     <!-- BEGIN: Content-->
     @RenderBody()
@@ -80,6 +82,39 @@
     <!-- BEGIN: Page JS-->
 
     @RenderSection("Scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+
+            //$("a.dropdown-item").each(function (index) {
+            //    //console.log(index + ": " + $(this).text());
+            //    console.log($(this).parent());
+            //    $(this).addClass("text-danger");
+
+            //});
+
+            //$("li").each(function (index) {
+            //    //console.log(index + ": " + $(this).text());
+            //    console.log($(this).parent());
+            //    $(this).remove();
+
+            //});
+
+
+            //$("a.dropdown-item").click(function myfunction() {
+            //    $(this).addClass("active");
+            //    alert('ddsd');
+            //    console.log("ccccccccccccccccccccccccccccccccccccccccccc");
+            //});
+
+
+        });
+
+    </script>
+
+
+
+
     <!-- END: Page JS-->
 </body>
 <!-- END: Body-->
