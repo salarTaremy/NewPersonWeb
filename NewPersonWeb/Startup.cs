@@ -71,14 +71,13 @@ namespace NewPersonWeb
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.Cookie.Name = "PersonWeb";
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 options.LoginPath = "/login/index";
                 // ReturnUrlParameter requires 
                 //using Microsoft.AspNetCore.Authentication.Cookies;
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                 options.SlidingExpiration = true;
                 options.Cookie.IsEssential = true;
-                options.ExpireTimeSpan = TimeSpan.FromSeconds(10);// here 2
             });
 
 
