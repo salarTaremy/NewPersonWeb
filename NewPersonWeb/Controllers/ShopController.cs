@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NewPersonWeb.Filters;
 using NewPersonWeb.Models;
 using NewPersonWeb.Repository;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace NewPersonWeb.Controllers
     public class ShopController : BaseController
     {
         private int CountInPage = 18;
-
+        [SwichMenu]
         public IActionResult Index()
         {
             string ssn = User.Identity.Name;
@@ -232,7 +233,7 @@ namespace NewPersonWeb.Controllers
         }
 
 
-
+        [SwichMenu]
         [HttpGet]
         public IActionResult OrderList()
         {

@@ -11,7 +11,7 @@ using NewPersonWeb.Models;
 namespace NewPersonWeb.Controllers
 {
 
-    public class LoginController : BaseController
+    public class LoginController : Controller
     {
 
         private UserManager<ApplicationUser> _userManager;

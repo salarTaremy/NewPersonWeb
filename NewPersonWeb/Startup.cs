@@ -102,7 +102,8 @@ namespace NewPersonWeb
 
             app.UseSession();
 
-           
+            //app.UseResponseCompression();
+
             app.UseAuthentication();
 
             app.UseAuthorization();

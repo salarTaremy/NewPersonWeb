@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Http;
+using NewPersonWeb.Filters;
 
 namespace NewPersonWeb.Controllers
 {
     public class BasketController: BaseController
     {
 
-
+        [SwichMenu]
         public IActionResult Index()
         {
             return View();

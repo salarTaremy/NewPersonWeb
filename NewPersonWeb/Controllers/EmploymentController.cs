@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NewPersonWeb.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace NewPersonWeb.Controllers
         {
             return View();
         }
-
+        [SwichMenu]
         public IActionResult EmploymentOrder()
         {
             string ssn = User.Identity.Name;
@@ -25,6 +26,7 @@ namespace NewPersonWeb.Controllers
             return View(EmpOrd);
         }
 
+        [SwichMenu]
         public IActionResult PayrollList()
         {
             string ssn = User.Identity.Name;

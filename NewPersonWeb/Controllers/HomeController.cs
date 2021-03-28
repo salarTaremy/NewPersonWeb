@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NewPersonWeb.Filters;
 using NewPersonWeb.Menu;
 using NewPersonWeb.Models;
 using NewPersonWeb.Repository;
@@ -14,6 +15,7 @@ namespace NewPersonWeb.Controllers
 {
     public class HomeController : BaseController
     {
+        [SwichMenu]
         public IActionResult Index()
         {
             InitMenu();
@@ -41,7 +43,7 @@ namespace NewPersonWeb.Controllers
 
             menuItem = new MenuItem("فروشگاه");
             menuItem.Items.Add(new SubMenu { Name = "محصولات", Controller = "Shop", Action = "Index", IsActive = false });
-            menuItem.Items.Add(new SubMenu { Name = "سبد خرید", Controller = "Sasket", Action = "Index", IsActive = false });
+            menuItem.Items.Add(new SubMenu { Name = "سبد خرید", Controller = "Basket", Action = "Index", IsActive = false });
             menuItem.Items.Add(new SubMenu { Name = "سوابق خرید", Controller = "Shop", Action = "OrderList", IsActive = false });
             AppMenu.menu.Add(menuItem);
 
