@@ -24,8 +24,10 @@ namespace NewPersonWeb.Models
 		public string CustomerTypeName { get; set; }
 		[Display(Name = "کد مشتری")]
 		public string CustomerCode { get; set; }
+		[Display(Name = "تلفن همراه")]
+		public string Mobile { get; set; }
 
-		[Display(Name = "اعتبار اولیه")]
+        [Display(Name = "اعتبار اولیه")]
 		public long DefaultCreditRls { get; set; }
 		[Display(Name = "مبلغ درخواست باز")]
 		public long OrderRls { get; set; }

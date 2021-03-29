@@ -47,5 +47,8 @@ namespace NewPersonWeb.Models
 
         [NotMapped]
         public string ErrorMessageForLogin { get; set; }
+
+        [Display(Name = "مرا به خاطر بسپار")]
+        public bool RememberMe { get; set; }
     }
 }

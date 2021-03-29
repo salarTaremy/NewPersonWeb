@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using NewPersonWeb.Filters;
+using System.Threading;
 
 namespace NewPersonWeb.Controllers
 {
@@ -125,7 +126,8 @@ namespace NewPersonWeb.Controllers
 
                 if (rep.ConfirmBasket(basketVM.basket.ID,ssn , description))
                 {
-                    return PartialView("_Success", "درخواست شما با موفقیت ثبت شد");
+                    SendConfirmSms(basketVM);
+                    return PartialView("_Success", "سفارش شما با موفقیت ثبت شد");
                 }
                 else
                 {
@@ -141,7 +143,6 @@ namespace NewPersonWeb.Controllers
              
             
         }
-
 
 
         private BasketViewModel GetBasketViewModel(string ssn)
@@ -164,6 +165,29 @@ namespace NewPersonWeb.Controllers
             }
             return basketVM;
         }
+
+
+
+
+        public static async void SendConfirmSms(BasketViewModel BVM)
+        {
+            try
+            {
+                string Mob = BVM.customer.Mobile;
+                string Message = "سفارش شما با موفقیت ثبت شده";
+                Message += "\n";
+                Message += "ایران آوند فر";
+                Message += "\n";
+                Message += $"تراکنش:{BVM.basket.ID.ToString()}";
+                Farapayamak.SMS SMS = new Farapayamak.SMS();
+                await SMS.SendMessageAsync(Mob, Message);
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
+        }
+
 
 
     }

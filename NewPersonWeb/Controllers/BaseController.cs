@@ -11,6 +11,7 @@ namespace NewPersonWeb.Controllers
 {
     
     [Authorize]
+    [AuthorizeActionFilter]
     public class BaseController : Controller
     {
     }

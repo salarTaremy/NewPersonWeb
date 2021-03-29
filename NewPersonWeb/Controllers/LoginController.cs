@@ -27,8 +27,15 @@ namespace NewPersonWeb.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            TarafHesab th = new TarafHesab { Id = 0, Code_melli = "", RememberMe = false };
+            if (User.Identity.IsAuthenticated)
+            {
+                th.Code_melli = User.Identity.Name;
+                th.RememberMe = true;
+            }
 
-            return View(new TarafHesab { Id = 0, Code_melli = "" });
+
+            return View(th);
         }
 
         [AllowAnonymous]
@@ -56,15 +63,24 @@ namespace NewPersonWeb.Controllers
                 return View(Th);
             }
 
-            
-            await _signInManager.SignInAsync(user, false);
 
-            
-
+            await _signInManager.SignInAsync(user, Th.RememberMe);
             HttpContext.Session.SetString("FullName", user.FullName);
-            
+            HttpContext.Session.SetString("UserID", user.Id);
+            //SendSms();
             return RedirectToAction("index", "home");
         }
+
+
+        //private async Task<bool> SendSms()
+        //{
+        //    string Message = "ورود به سیستم ایران آوندفر";
+        //    Message += "\n";
+        //    Message += DateTime.Now.ToString();
+        //    new Farapayamak.SMS().SendMessage("09123589893" , Message);
+
+        //    return true;
+        //}
 
 
         private bool IsValidSsn(string ssn)
