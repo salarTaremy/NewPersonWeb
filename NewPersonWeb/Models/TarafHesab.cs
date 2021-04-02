@@ -18,7 +18,7 @@ namespace NewPersonWeb.Models
         public string Famil { get; set; }
         [Required(ErrorMessage = "شماره شناسنامه الزامی است")]
         [Display(Name = "شماره شناسنامه", Description = "Description", Prompt = "شماره شناسنامه")]
-        public string ShSh { get; set; }
+        public string Sh_Sh { get; set; }
         [Required(ErrorMessage = "نام پدر الزامی است")]
         [Display(Name = "نام پدر", Description = "Description", Prompt = "نام پدر")]
         public string NamePedar { get; set; }
@@ -48,6 +48,11 @@ namespace NewPersonWeb.Models
         [NotMapped]
         public string ErrorMessageForLogin { get; set; }
 
+        [NotMapped]
+        [Display(Name = "تلفن همرا")]
+        public string Mobile { get; set; }
+
+        [NotMapped]
         [Display(Name = "مرا به خاطر بسپار")]
         public bool RememberMe { get; set; }
     }

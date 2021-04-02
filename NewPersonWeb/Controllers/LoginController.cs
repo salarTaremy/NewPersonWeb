@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NewPersonWeb.Models;
+using NewPersonWeb.Repository;
 
 namespace NewPersonWeb.Controllers
 {
@@ -37,7 +38,6 @@ namespace NewPersonWeb.Controllers
 
             return View(th);
         }
-
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Index(TarafHesab Th)
@@ -50,7 +50,6 @@ namespace NewPersonWeb.Controllers
             }
 
             var user = await _userManager.FindByNameAsync(Th.Code_melli);
-
             if (user is null)
             {
                 Th.ErrorMessageForLogin = " کد ملی در سیستم ثبت نشده است";
@@ -59,28 +58,116 @@ namespace NewPersonWeb.Controllers
             }
             if (user.WebPassword.Trim() != Th.WebPassword.Trim())
             {
-                Th.ErrorMessageForLogin = "رمز عبور یا نام کاربری صحیح نمیباشد";
-                return View(Th);
+                bool IsResetPass = Authentication.PasswordManager.ISValidToken(Th.Code_melli, Th.WebPassword);
+                if (!IsResetPass)
+                {
+                    Th.ErrorMessageForLogin = "رمز عبور یا نام کاربری صحیح نمیباشد";
+                    return View(Th);
+                }
             }
 
 
             await _signInManager.SignInAsync(user, Th.RememberMe);
             HttpContext.Session.SetString("FullName", user.FullName);
             HttpContext.Session.SetString("UserID", user.Id);
-            //SendSms();
+            //SendWelcomeSms("0912XXXXXXXX");
             return RedirectToAction("index", "home");
         }
 
 
-        //private async Task<bool> SendSms()
-        //{
-        //    string Message = "ورود به سیستم ایران آوندفر";
-        //    Message += "\n";
-        //    Message += DateTime.Now.ToString();
-        //    new Farapayamak.SMS().SendMessage("09123589893" , Message);
 
-        //    return true;
-        //}
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult ForgotPassword(TarafHesab Th)
+        {
+            var res = new ApiResult();
+
+            if (Th is null)
+            {
+                res.Message = "اطلاعات شما معتبر نمیباشد";
+                return View("NotAuthorized", res);
+            }
+
+            if (Th.Code_melli is null  || Th.Sh_Sh is null ||Th.Mobile is null  )
+            {
+                res.Message = "اطلاعات شما معتبر نمیباشد";
+                return View( "NotAuthorized" , res);
+            }
+
+            CustomerRepo rep = new CustomerRepo();
+             TarafHesab ExistTh =  rep.GetTarafHesab(Th.Code_melli);
+
+            if (ExistTh is null)
+            {
+                res.Message = "اطلاعات شما معتبر نمیباشد";
+                return View("NotAuthorized", res);
+            }
+
+
+
+            if (ExistTh.Code_melli.Trim() == Th.Code_melli.Trim() && 
+                ExistTh.Sh_Sh.Trim() == Th.Sh_Sh.Trim() && 
+                ExistTh.Mobile.Trim() == Th.Mobile.Trim())
+            {
+                string token =  Authentication.PasswordManager.AddToken(ExistTh.Code_melli);
+                if (token != null)
+                {
+
+                    Farapayamak.SMS sms = new Farapayamak.SMS();
+                    string Msg = $"ایران آوند فر \n رمز عبور شما: {token} ";
+                    sms.SendMessageAsync(ExistTh.Mobile, Msg);
+                    return RedirectToAction("Success");
+                }
+                else
+                {
+                    res.Message = "درحال حاضر سیستم قادر به بازیابی رمز عبور شما نمیباشد";
+                    return View("NotAuthorized", res);
+                }
+
+                
+            }
+            else
+            {
+                res.Message = "اطلاعات شما معتبر نمیباشد";
+                return View("NotAuthorized", res);
+            }
+
+        }
+
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult NotAuthorized()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Success()
+        {
+            return View();
+        }
+
+
+
+        private async Task<bool> SendWelcomeSms( string Tel)
+        {
+            string Message = "ورود به سیستم ایران آوندفر";
+            Message += "\n";
+            Message += DateTime.Now.ToString();
+            new Farapayamak.SMS().SendMessage(Tel, Message);
+
+            return true;
+        }
 
 
         private bool IsValidSsn(string ssn)
