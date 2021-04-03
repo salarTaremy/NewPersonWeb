@@ -40,13 +40,27 @@ namespace NewPersonWeb.Models
         [Display(Name = "نام کامل", Description = "Description", Prompt = "نام کامل(غیر قابل تغییر)")]
         public string FullName { get; set; }
         [Required(ErrorMessage = "ورود رمز عبور الزامی است")]
-        //[Display(Name = "کد ملی", Description = "Description", Prompt = "رمز عبور")]
+        [Display(Name = "رمز عبور", Description = "Description", Prompt = "رمز عبور")]
         [DataType(DataType.Password)]
         [UIHint("UIHint")]
         public string WebPassword { get; set; }
 
         [NotMapped]
+        [Display(Name = "تکرار رمز عبور", Description = "Description", Prompt = "تکرار رمز عبور")]
+        [DataType(DataType.Password)]
+        [Compare("WebPassword")]
+        public string ConfirmWebPassword { get; set; }
+
+        [NotMapped]
+        [Display(Name = "رمز فعلی", Description = "Description", Prompt = "رمز فعلی")]
+        [DataType(DataType.Password)]
+        public string ResetToken { get; set; }
+
+        [NotMapped]
         public string ErrorMessageForLogin { get; set; }
+
+        [NotMapped]
+        public string SuccessMessage { get; set; }
 
         [NotMapped]
         [Display(Name = "تلفن همرا")]

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NewPersonWeb.Authentication;
 using NewPersonWeb.Models;
 using NewPersonWeb.Repository;
 
@@ -123,7 +124,11 @@ namespace NewPersonWeb.Controllers
                     Farapayamak.SMS sms = new Farapayamak.SMS();
                     string Msg = $"ایران آوند فر \n رمز عبور شما: {token} ";
                     sms.SendMessageAsync(ExistTh.Mobile, Msg);
-                    return RedirectToAction("Success");
+                    //return RedirectToAction("Success");
+
+                    Th.SuccessMessage = "رمز عبور جدید برای شما پیامک شد";
+                    HttpContext.Session.SetString("UserID", Th.Code_melli);
+                    return View("ResetPassword", Th);
                 }
                 else
                 {
@@ -140,6 +145,59 @@ namespace NewPersonWeb.Controllers
             }
 
         }
+
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult ResetPassword()
+        {
+            return View(new TarafHesab());
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult ResetPassword(TarafHesab th)
+        {   
+            
+            string UserID =  HttpContext.Session.GetString("UserID");
+            if (UserID is null || UserID == "")
+            {
+                return RedirectToAction("Index");
+            }
+
+
+            bool IsAuthenticated = User.Identity.IsAuthenticated;
+            if (!IsAuthenticated )
+            {
+                if (th.ResetToken is null)
+                {
+                    th.ErrorMessageForLogin = "رمز فعلی نا معتبر است";
+                    return View(th);
+                }
+                if (th.WebPassword.Trim() != th.ConfirmWebPassword.Trim() )
+                {
+                    th.ErrorMessageForLogin = "رمز عبور جدید نا معتبر است";
+                    return View(th);
+                }
+                if (th.WebPassword.Trim() != th.ConfirmWebPassword.Trim())
+                {
+                    th.ErrorMessageForLogin = "رمز عبور جدید نمیتواند با رمز فعلی یکسان باشد";
+                    return View(th);
+                }
+                if (!PasswordManager.ISValidToken(UserID, th.ResetToken))
+                {
+                    th.ErrorMessageForLogin = "رمز عبور فعلی نا  معتبر میباشد";
+                    return View(th);
+                }
+
+            }
+
+
+            return RedirectToAction("Success");
+
+        }
+
 
 
 

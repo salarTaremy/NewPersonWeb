@@ -73,9 +73,12 @@
                                         <div class="divider">
                                             <div class="divider-text">توجه</div>
                                         </div>
-                                        @{  string Minute = (NewPersonWeb.Authentication.PasswordManager.ValidTime / 60).ToString();  }
+                                        @*@{  string Minute = (NewPersonWeb.Authentication.PasswordManager.ValidTime / 60).ToString();  }
                                         <p class="text-left">
                                             رمز عبور جدید از طریق پیامک ارسال شد. و فقط تا @Minute دقیقه معتبر میباشد.لطفا قبل از منقضی شدن وارد سامانه شوید.
+                                        </p>*@
+                                        <p class="text-left">
+                                            رمز عبور شما با موفقیت تغییر کرد. در صورت نیاز پس از ورود به سامانه میتوانید مجددا نسبت به تغییر رمز خود اقدام کنید.
                                         </p>
                                         <a  asp-action="index" asp-controller="login" class="btn btn-primary w-100">بازگشت به صفحه ورود</a>
                                     </div>

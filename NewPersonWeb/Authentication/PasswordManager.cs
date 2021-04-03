@@ -9,7 +9,7 @@ namespace NewPersonWeb.Authentication
     public  static class PasswordManager
     {
         public static int ValidTime =300 ;  // 5 min
-        public static int PasswordLen = 10; // 10 Character
+        public static int PasswordLen = 3; // 10 Character
 
         private static List<PasswordToken> PasswordTokens;
 
@@ -23,6 +23,17 @@ namespace NewPersonWeb.Authentication
                 {
                     PasswordTokens = new List<PasswordToken>();
                 }
+
+                // agar user ghablan  token gerefte bashad pak mishavad
+                for (int i = PasswordTokens.Count - 1; i >= 0; i--)
+                {
+                    if (PasswordTokens[i].UserID.Trim() == UserID.Trim())
+                    {
+                        PasswordTokens.RemoveAt(i);
+                    }
+                }
+
+
                 string Pass = GeneratePassword(PasswordLen);
                 PasswordTokens.Add(new PasswordToken { UserID = UserID, Token = Pass });
                 return Pass;
@@ -38,6 +49,14 @@ namespace NewPersonWeb.Authentication
         {
             try
             {
+                if (PasswordTokens is null)
+                {
+                    return false;
+                }
+                if (UserID is null || Pass is null)
+                {
+                    return false;
+                }
                 for (int i = PasswordTokens.Count - 1; i >= 0; i--)
                 {
                     var diff = DateTime.Now.Subtract(PasswordTokens[i].CreateDate).TotalSeconds;
@@ -45,14 +64,6 @@ namespace NewPersonWeb.Authentication
                     {
                         PasswordTokens.RemoveAt(i);
                     }
-                }
-
-
-
-
-                if (PasswordTokens is null)
-                {
-                    return false;
                 }
 
                 if (PasswordTokens.Count == 0 )
