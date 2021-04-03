@@ -8,7 +8,8 @@ namespace NewPersonWeb.Authentication
 {
     public  static class PasswordManager
     {
-        public static int ValidTime =300 ; // 5 min
+        public static int ValidTime =300 ;  // 5 min
+        public static int PasswordLen = 10; // 10 Character
 
         private static List<PasswordToken> PasswordTokens;
 
@@ -22,7 +23,7 @@ namespace NewPersonWeb.Authentication
                 {
                     PasswordTokens = new List<PasswordToken>();
                 }
-                string Pass = GeneratePassword(10);
+                string Pass = GeneratePassword(PasswordLen);
                 PasswordTokens.Add(new PasswordToken { UserID = UserID, Token = Pass });
                 return Pass;
             }
@@ -37,14 +38,15 @@ namespace NewPersonWeb.Authentication
         {
             try
             {
-                foreach (var item in PasswordTokens)
+                for (int i = PasswordTokens.Count - 1; i >= 0; i--)
                 {
-                    var diff = DateTime.Now.Subtract(item.CreateDate).TotalSeconds;
+                    var diff = DateTime.Now.Subtract(PasswordTokens[i].CreateDate).TotalSeconds;
                     if (diff > ValidTime)
                     {
-                        PasswordTokens.Remove(item);
+                        PasswordTokens.RemoveAt(i);
                     }
                 }
+
 
 
 
@@ -52,17 +54,18 @@ namespace NewPersonWeb.Authentication
                 {
                     return false;
                 }
+
                 if (PasswordTokens.Count == 0 )
                 {
                     return false;
                 }
-                
-                var result = PasswordTokens.Find(x => x.UserID ==  UserID.Trim()) ;
 
+                var result = PasswordTokens.Find(x => x.UserID ==  UserID.Trim()) ;
                 if (result is null)
                 {
                     return false;
                 }
+
                 if (result.Token.Trim() != Pass.Trim())
                 {
                     return false;
@@ -74,12 +77,10 @@ namespace NewPersonWeb.Authentication
                     return false;
                 }
 
-
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
