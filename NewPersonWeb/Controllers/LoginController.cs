@@ -77,11 +77,19 @@ namespace NewPersonWeb.Controllers
 
 
 
+        [HttpGet]
+        public async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("index");
+        }
+
+
         [AllowAnonymous]
         [HttpGet]
         public IActionResult ForgotPassword()
         {
-            return View();
+            return View( new TarafHesab());
         }
 
         [AllowAnonymous]

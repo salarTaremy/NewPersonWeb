@@ -9,7 +9,7 @@ namespace NewPersonWeb.Authentication
     public  static class PasswordManager
     {
         public static int ValidTime =300 ;  // 5 min
-        public static int PasswordLen = 3; // 10 Character
+        public static int PasswordLen = 6; // 6 Character
 
         private static List<PasswordToken> PasswordTokens;
 
@@ -32,6 +32,7 @@ namespace NewPersonWeb.Authentication
                         PasswordTokens.RemoveAt(i);
                     }
                 }
+                //-------------------------------------------------------
 
 
                 string Pass = GeneratePassword(PasswordLen);
