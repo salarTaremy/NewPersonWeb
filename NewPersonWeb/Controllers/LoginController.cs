@@ -110,7 +110,7 @@ namespace NewPersonWeb.Controllers
                 return View( "NotAuthorized" , res);
             }
 
-            CustomerRepo rep = new CustomerRepo();
+            ThRepo rep = new ThRepo();
              TarafHesab ExistTh =  rep.GetTarafHesab(Th.Code_melli);
 
             if (ExistTh is null)
@@ -129,8 +129,9 @@ namespace NewPersonWeb.Controllers
                 if (token != null)
                 {
 
+                    int ValidTime = PasswordManager.ValidTime / 60;
                     Farapayamak.SMS sms = new Farapayamak.SMS();
-                    string Msg = $"ایران آوند فر \n رمز عبور شما: {token} ";
+                    string Msg = $"ایران آوند فر \n رمز عبور شما: {token}  \n اعتبار {ValidTime.ToString()} دقیقه";
                     sms.SendMessageAsync(ExistTh.Mobile, Msg);
                     //return RedirectToAction("Success");
 
@@ -165,44 +166,84 @@ namespace NewPersonWeb.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult ResetPassword(TarafHesab th)
-        {   
-            
-            string UserID =  HttpContext.Session.GetString("UserID");
-            if (UserID is null || UserID == "")
+        public async Task<IActionResult> ResetPasswordAsync(TarafHesab th)
+        {
+            try
             {
-                return RedirectToAction("Index");
+                string UserID = HttpContext.Session.GetString("UserID");
+                if (UserID is null || UserID == "")
+                {
+                    return RedirectToAction("Index");
+                }
+                ThRepo thRepo = new ThRepo();
+                bool IsAuthenticated = User.Identity.IsAuthenticated;
+                if (!IsAuthenticated)
+                {
+                    if (th.ResetToken is null)
+                    {
+                        th.ErrorMessageForLogin = "رمز فعلی نا معتبر است";
+                        return View(th);
+                    }
+                    if (th.WebPassword.Trim() != th.ConfirmWebPassword.Trim())
+                    {
+                        th.ErrorMessageForLogin = "رمز عبور جدید نا معتبر است";
+                        return View(th);
+                    }
+                    if (th.ResetToken.Trim() == th.ConfirmWebPassword.Trim())
+                    {
+                        th.ErrorMessageForLogin = "رمز عبور جدید نمیتواند با رمز فعلی یکسان باشد";
+                        return View(th);
+                    }
+                    if (!PasswordManager.ISValidToken(UserID, th.ResetToken))
+                    {
+                        th.ErrorMessageForLogin = "رمز عبور فعلی نا  معتبر میباشد";
+                        return View(th);
+                    }
+
+                }
+                else
+                {
+                    TarafHesab ExistsTh = thRepo.GetTarafHesab(UserID.Trim());
+
+                    if (ExistsTh.WebPassword.Trim() != th.ResetToken.Trim())
+                    {
+                        th.ErrorMessageForLogin = "رمز عبور فعلی نا  معتبر میباشد";
+                        return View(th);
+                    }
+                    if (th.WebPassword.Trim() != th.ConfirmWebPassword.Trim())
+                    {
+                        th.ErrorMessageForLogin = "رمز عبور جدید با تکرار رمز عبور مغایرت دارد";
+                        return View(th);
+                    }
+                    int PassLen = 4;
+                    if (th.WebPassword.Trim().Length < PassLen)
+                    {
+                        th.ErrorMessageForLogin = $"رمز عبور جدید باید حداقل{PassLen} کاراکتر باشد";
+                        return View(th);
+                    }
+
+                }
+
+                bool ChangeThPass = thRepo.ChangeThPass(UserID, th.ConfirmWebPassword);
+                if (ChangeThPass)
+                {
+                    await _signInManager.SignOutAsync();
+                    return RedirectToAction("Success");
+                }
+                else
+                {
+                    th.ErrorMessageForLogin = "متاسفانه درحال حاضر امکان تغییر رمز وجود ندارد";
+                    return View(th);
+                }
+
+
+
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("NotAuthorized");
             }
 
-
-            bool IsAuthenticated = User.Identity.IsAuthenticated;
-            if (!IsAuthenticated )
-            {
-                if (th.ResetToken is null)
-                {
-                    th.ErrorMessageForLogin = "رمز فعلی نا معتبر است";
-                    return View(th);
-                }
-                if (th.WebPassword.Trim() != th.ConfirmWebPassword.Trim() )
-                {
-                    th.ErrorMessageForLogin = "رمز عبور جدید نا معتبر است";
-                    return View(th);
-                }
-                if (th.WebPassword.Trim() != th.ConfirmWebPassword.Trim())
-                {
-                    th.ErrorMessageForLogin = "رمز عبور جدید نمیتواند با رمز فعلی یکسان باشد";
-                    return View(th);
-                }
-                if (!PasswordManager.ISValidToken(UserID, th.ResetToken))
-                {
-                    th.ErrorMessageForLogin = "رمز عبور فعلی نا  معتبر میباشد";
-                    return View(th);
-                }
-
-            }
-
-
-            return RedirectToAction("Success");
 
         }
 

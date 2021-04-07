@@ -21,16 +21,7 @@ namespace NewPersonWeb.Repository
             return customer;
         }
 
-        public TarafHesab GetTarafHesab(string Ssn)
-        {
-            var param = new DynamicParameters(new { Ssn = Ssn });
-            TarafHesab tarafHesab = db.GetList<TarafHesab>("Web.GetTarafHesab", param, System.Data.CommandType.StoredProcedure).FirstOrDefault();
-            if (tarafHesab == null)
-            {
-                return null;
-            }
-            return tarafHesab;
-        }
+
 
     }
 }
