@@ -11,12 +11,15 @@ namespace NewPersonWeb.Menu
         {
             this.Items = new List<SubMenu>();
         }
-        public MenuItem(string Name)
+        public MenuItem(string Name ,string IconClass)
         {
             this.Name = Name;
+            this.IconClass = IconClass;
             this.Items = new List<SubMenu>();
         }
         public string Name { get; set; }
+
+        public string IconClass { get; set; }
         public List<SubMenu> Items { get; set; }
     }
 }

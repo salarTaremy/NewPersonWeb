@@ -25,13 +25,14 @@
                 @foreach (var item in Model)
                 {
                     <li class="dropdown nav-item" data-menu="dropdown">
-                        <a class="dropdown-toggle nav-link"  data-toggle="dropdown"><i class="feather icon-home"></i><span >@item.Name</span></a>
+                        <a class="dropdown-toggle nav-link"  data-toggle="dropdown"><i class="@item.IconClass"></i><span >@item.Name</span></a>
                         <ul class="dropdown-menu">
                             @foreach (var subitem in item.Items)
                             {
-                                <li data-menu="" class="@subitem.Class()">
-                                    <a class="dropdown-item" asp-action="@subitem.Action" asp-controller="@subitem.Controller" data-toggle="dropdown" data-i18n="Analytics"><i class="feather icon-activity"></i>@subitem.Name</a>
-                                </li>
+                            <li data-menu="" class="@subitem.Class()">
+                                @*<a class="dropdown-item" asp-action="@subitem.Action" asp-controller="@subitem.Controller" data-toggle="dropdown" data-i18n="Analytics"><i class="feather icon-activity"></i>@subitem.Name</a>*@
+                                <a class="dropdown-item" asp-action="@subitem.Action" asp-controller="@subitem.Controller" data-toggle="dropdown" data-i18n="Analytics"><i class="@subitem.IconClass"></i>@subitem.Name</a>
+                            </li>
                             }
                         </ul>
                     </li>
