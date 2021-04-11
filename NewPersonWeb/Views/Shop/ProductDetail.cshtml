@@ -2,6 +2,7 @@
 @{
     Layout = "_Layout";
     string imgName = Model.Code + ".jpg";
+    bool InventoryControl = (bool)ViewData["InventoryControl"];
 }
 
 @section Styles{
@@ -9,6 +10,9 @@
     <link rel="stylesheet" type="text/css" href="~/assets/css/ImageZoom.css">
 
 }
+
+
+
 
 <div class="app-content content">
     <div class="content-overlay"></div>
@@ -89,7 +93,7 @@
                                     }
                                 }
 
-                                @if (Model.Price >0 )
+                                @if (Model.Price > 0)
                                 {
                                     <p>
                                         قیمت مصرف کننده:
@@ -103,19 +107,20 @@
                                     <i class="fa fa-qrcode mr-50 font-medium-2"></i>@Model.ID
                                 </p>
                                 @{
-                                    if (Model.Inventory > 0)
+                                    
+                                    if (Model.Inventory <= 0)
                                     {
-                                        <p>وضعیت: <span class="text-success">موجود در انبار </span> <span class="text-success">(@Model.Inventory.ToString())</span></p>
+                                        <p>وضعیت: <span class="text-danger">ناموجود </span></p>
                                     }
                                     else
                                     {
-                                        <p>وضعیت: <span class="text-danger">ناموجود </span></p>
+                                        <p>وضعیت: <span class="text-success">موجود در انبار </span> <span class="text-success">(@Model.Inventory.ToString())</span></p>
                                     }
 
                                 }
 
                                 <div class="d-flex flex-column flex-sm-row" id="@(Model.ID)">
-                                    @if (@Model.Inventory > 0 && Model.Price > 0 )
+                                    @if ((@Model.Inventory > 0  || InventoryControl== false)  && Model.Price > 0)
                                     {
                                         @if (Model.ExistInBasket)
                                         {

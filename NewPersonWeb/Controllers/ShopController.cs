@@ -9,6 +9,15 @@ namespace NewPersonWeb.Controllers
     public class ShopController : BaseController
     {
         private int CountInPage = 18;
+        private bool InventoryControl = true;
+
+        public ShopController()
+        {
+            SettingRepo rep = new SettingRepo();
+            InventoryControl = rep.GetGetSettings(4).Value != 0;
+
+        }
+
         [SwichMenu]
         public IActionResult Index()
         {
@@ -89,12 +98,15 @@ namespace NewPersonWeb.Controllers
 
                 if (product.Inventory == null || product.Inventory <=0  )
                 {
-                    return Ok(new ApiResult
+                    if (InventoryControl)
                     {
-                        Status = 5,
-                        Title = "عملیات نا موفق",
-                        Message = "متاسفانه در حال حاضر این محصول فاقد موجودی میباشد"
-                    });
+                        return Ok(new ApiResult
+                        {
+                            Status = 5,
+                            Title = "عملیات نا موفق",
+                            Message = "متاسفانه در حال حاضر این محصول فاقد موجودی میباشد"
+                        });
+                    }
                 }
 
                 if (product.Price == 0 )
@@ -226,6 +238,8 @@ namespace NewPersonWeb.Controllers
         [Route("[Controller]/[Action]/{ProductId}")]
         public IActionResult ProductDetail(long ProductId)
         {
+
+            ViewData["InventoryControl"] = this.InventoryControl;
             string ssn = User.Identity.Name;
             var Product =  new ShopRepo().GetProduct(ssn, ProductId);
             Product.RelatedProducts =  new ProductRepo().GetRelated(ssn, ProductId);
