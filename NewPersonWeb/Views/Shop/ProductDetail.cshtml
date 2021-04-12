@@ -57,48 +57,48 @@
                                     <span class="pl-1 font-medium-3 ">
                                         @for (int i = 0; i < Model.Rate; i++)
                                         {
-                                            <i class="feather icon-star text-warning"></i>
+                                        <i class="feather icon-star text-warning"></i>
                                         }
                                         @for (int i = 0; i < 5 - Model.Rate; i++)
                                         {
-                                            <i class="feather icon-star text-secondary"></i>
+                                        <i class="feather icon-star text-secondary"></i>
                                         }
                                     </span>
                                 </div>
                                 <hr>
                                 @if (Model.Price > 0)
                                 {
-                                    <p>
-                                        قیمت برای پرسنل:
-                                        @String.Format("{0:n0}", @Model.Price) ریال
-                                    </p>
+                                <p>
+                                    قیمت برای پرسنل:
+                                    @String.Format("{0:n0}", @Model.Price) ریال
+                                </p>
                                 }
                                 else
                                 {
-                                    <p class="text-danger">
-                                        در حال حاضر فی فعالی برای این محصول وجود ندارد
-                                    </p>
+                                <p class="text-danger">
+                                    در حال حاضر فی فعالی برای این محصول وجود ندارد
+                                </p>
                                 }
                                 @{if (Model.HaveTax)
                                     {
-                                        <p class="text-danger">
-                                            <i class="feather icon-trending-up mr-50 font-medium-2"></i>به مبلغ فوق 9% به عنوان ارزش افزوده اضافه خواهد شد
-                                        </p>
+                                    <p class="text-danger">
+                                        <i class="feather icon-trending-up mr-50 font-medium-2"></i>به مبلغ فوق 9% به عنوان ارزش افزوده اضافه خواهد شد
+                                    </p>
                                     }
                                     else
                                     {
-                                        <p class="text-success">
-                                            <i class="feather icon-thumbs-up mr-50 font-medium-2"></i>این محصول فاقد ارزش افزوده می باشد
-                                        </p>
+                                    <p class="text-success">
+                                        <i class="feather icon-thumbs-up mr-50 font-medium-2"></i>این محصول فاقد ارزش افزوده می باشد
+                                    </p>
                                     }
                                 }
 
                                 @if (Model.Price > 0)
                                 {
-                                    <p>
-                                        قیمت مصرف کننده:
-                                        @String.Format("{0:n0}", @Model.ConsumerPrices) ریال
-                                    </p>
+                                <p>
+                                    قیمت مصرف کننده:
+                                    @String.Format("{0:n0}", @Model.ConsumerPrices) ریال
+                                </p>
                                 }
                                 <p class="font-weight-bold mb-25">
                                     <i class="feather icon-truck mr-50 font-medium-2"></i> <span>ارسال از </span><span>@Model.AnbarName</span>
@@ -107,43 +107,46 @@
                                     <i class="fa fa-qrcode mr-50 font-medium-2"></i>@Model.ID
                                 </p>
                                 @{
-                                    
-                                    if (Model.Inventory <= 0)
+
+                                    if (Model.Inventory <= 0 )
                                     {
-                                        <p>وضعیت: <span class="text-danger">ناموجود </span></p>
+                                        if(InventoryControl){
+                                                <p>وضعیت: <span class="text-danger">ناموجود </span></p>
+                                            }
+
                                     }
                                     else
                                     {
-                                        <p>وضعیت: <span class="text-success">موجود در انبار </span> <span class="text-success">(@Model.Inventory.ToString())</span></p>
+                                    <p>وضعیت: <span class="text-success">موجود در انبار </span> <span class="text-success">(@Model.Inventory.ToString())</span></p>
                                     }
 
                                 }
 
                                 <div class="d-flex flex-column flex-sm-row" id="@(Model.ID)">
-                                    @if ((@Model.Inventory > 0  || InventoryControl== false)  && Model.Price > 0)
+                                    @if ((@Model.Inventory > 0 || InventoryControl == false) && Model.Price > 0)
                                     {
-                                        @if (Model.ExistInBasket)
+                                    @if (Model.ExistInBasket)
                                         {
-                                            <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart add-to-basket d-none"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
-                                            <a class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart view-in-basket" asp-action="Index" asp-controller="Basket"><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</a>
+                                    <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart add-to-basket d-none"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
+                                    <a class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart view-in-basket" asp-action="Index" asp-controller="Basket"><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</a>
 
                                         }
                                         else
                                         {
-                                            <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart add-to-basket" id="@(Model.ID)"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
-                                            <a class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart view-in-basket d-none " asp-action="Index" asp-controller="Basket"><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</a>
+                                    <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart add-to-basket" id="@(Model.ID)"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
+                                    <a class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0  cart view-in-basket d-none " asp-action="Index" asp-controller="Basket"><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</a>
 
                                         }
                                     }
                                     else
                                     {
-                                        @if (Model.ExistInBasket)
+                                    @if (Model.ExistInBasket)
                                         {
-                                            <a class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0" asp-action="Index" asp-controller="Basket"><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</a>
+                                    <a class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0" asp-action="Index" asp-controller="Basket"><i class="feather icon-shopping-cart mr-25"></i>مشاهده در سبد</a>
                                         }
                                         else
                                         {
-                                            <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0 disabled"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
+                                    <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0 disabled"><i class="feather icon-shopping-cart mr-25"></i>افزودن به سبد</button>
                                         }
 
                                     }
@@ -151,15 +154,15 @@
                                     @{
                                         if (Model.IsFavorite)
                                         {
-                                            <button class="btn btn-outline-danger wishlist added" id="@(Model.ID)">
-                                                <i class="fa fa-heart mr-25"></i>علاقه مندی ها
-                                            </button>
+                                        <button class="btn btn-outline-danger wishlist added" id="@(Model.ID)">
+                                            <i class="fa fa-heart mr-25"></i>علاقه مندی ها
+                                        </button>
                                         }
                                         else
                                         {
-                                            <button class="btn btn-outline-danger wishlist" id="@(Model.ID)">
-                                                <i class="fa fa-heart-o mr-25"></i>علاقه مندی ها
-                                            </button>
+                                        <button class="btn btn-outline-danger wishlist" id="@(Model.ID)">
+                                            <i class="fa fa-heart-o mr-25"></i>علاقه مندی ها
+                                        </button>
                                         }
                                     }
                                 </div>
