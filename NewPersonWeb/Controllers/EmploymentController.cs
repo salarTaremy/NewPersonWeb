@@ -41,10 +41,21 @@ namespace NewPersonWeb.Controllers
         [Route("[Controller]/[Action]/{Id:int}")]
         public IActionResult PayrollDetail(int id)
         {
-            var repo = new Repository.EmploymentRepo();
-            var Lst = repo.GetPayrollDetail(id);
+            string ssn = User.Identity.Name;
 
-            return View(Lst);
+
+            var repo = new Repository.EmploymentRepo();
+            var Payroll = repo.GetPayrollDetail(id);
+
+
+
+            if (Payroll.header.Code_melli.Trim()  !=   ssn.Trim()  )
+            {
+                return NotFound();
+            }
+
+
+            return View(Payroll);
         }
 
 

@@ -36,6 +36,10 @@ namespace NewPersonWeb.Repository
             return Lst;
         }
 
+
+
+
+
         public PayrollViewModel GetPayrollDetail(int ID)
         {
             

@@ -42,5 +42,27 @@ namespace NewPersonWeb.Repository
             return (affectedRows != 0);
         }
 
+
+        public bool IsValidPerson(string Ssn)
+        {
+            bool result = false;
+            int affectedRows;
+            string SpName = "Web.IsValidPerson";
+            var param = new DynamicParameters(
+                new
+                {
+                    Ssn = Ssn
+                });
+            using (var con = new SqlConnection(db.GetConnectionString()))
+            {
+     
+                result = con.ExecuteScalar<bool>(SpName, param, commandType: CommandType.StoredProcedure);
+                
+            }
+            return result;
+        }
+
+
+
     }
 }

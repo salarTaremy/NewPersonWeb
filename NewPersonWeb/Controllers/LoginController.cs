@@ -67,6 +67,14 @@ namespace NewPersonWeb.Controllers
                 }
             }
 
+            ThRepo rep = new ThRepo();
+            if (!rep.IsValidPerson(Th.Code_melli.Trim()))
+            {
+                Th.ErrorMessageForLogin = "این حساب کاربری به حالت تعلیق در آمده است";
+                return View(Th);
+            }
+
+
 
             await _signInManager.SignInAsync(user, Th.RememberMe);
             HttpContext.Session.SetString("FullName", user.FullName);

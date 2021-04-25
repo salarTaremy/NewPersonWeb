@@ -174,7 +174,7 @@ namespace NewPersonWeb.Controllers
             try
             {
                 string Mob = BVM.customer.Mobile;
-                string Message = "سفارش شما با موفقیت ثبت شده";
+                string Message = "سفارش شما با موفقیت ثبت شد";
                 Message += "\n";
                 Message += "ایران آوند فر";
                 Message += "\n";
